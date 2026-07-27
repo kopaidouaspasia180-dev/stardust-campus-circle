@@ -1,0 +1,132 @@
+@font-face {
+  font-family: "Stardust Script";
+  src: url("../assets/fonts/Pacifico-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+.tenant-header {
+  padding: 2px 0 12px;
+}
+
+.mini-nav,
+.campus-bar,
+.brand-script-row,
+.wechat-capsule,
+.campus-title,
+.campus-pill {
+  display: flex;
+  align-items: center;
+}
+
+.mini-nav {
+  min-height: 53px;
+  justify-content: space-between;
+}
+
+.brand-lockup {
+  position: relative;
+}
+
+.brand-script {
+  color: #102a4b;
+  font-family: "Stardust Script", "Snell Roundhand", cursive;
+  font-size: 31px;
+  font-weight: 400;
+  letter-spacing: -1.4px;
+  line-height: 1;
+}
+
+.brand-star {
+  margin: -5px 0 0 3px;
+  color: #d1a13b;
+  font-size: 14px;
+}
+
+.brand-cn {
+  display: block;
+  margin-top: 2px;
+  color: #607087;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.wechat-capsule {
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(27, 35, 31, .13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .9);
+  gap: 10px;
+  color: #202722;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.capsule-line {
+  width: 1px;
+  height: 18px;
+  background: rgba(27, 35, 31, .11);
+}
+
+.capsule-ring {
+  font-size: 25px;
+  line-height: 1;
+}
+
+.campus-bar {
+  min-height: 48px;
+  padding: 4px 0 0;
+  justify-content: space-between;
+}
+
+.campus-title {
+  min-width: 0;
+  gap: 9px;
+}
+
+.tenant-name {
+  max-width: 200px;
+  overflow: hidden;
+  color: #17211d;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.campus-hint {
+  color: #9aa49f;
+  font-size: 13px;
+}
+
+.campus-pill {
+  max-width: 170px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: #edf5f0;
+  gap: 6px;
+}
+
+.campus-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #28a862;
+}
+
+.campus-name {
+  overflow: hidden;
+  color: #3e5549;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-chevron {
+  color: #0b7a43;
+  font-size: 14px;
+  font-weight: 900;
+}

@@ -1,0 +1,15 @@
+.profile-hero { padding: 38px 10px; display: flex; align-items: center; gap: 22px; }
+.profile-avatar { width: 104px; height: 104px; border-radius: 36px; background: #0f6a50; color: #fff; display: grid; place-items: center; font-size: 42px; font-weight: 900; }
+.profile-hero > view:last-child { display: grid; gap: 8px; }
+.profile-hero > view:last-child text:first-child { font-size: 34px; font-weight: 900; }
+.profile-hero > view:last-child text:last-child { color: #7d8780; font-size: 22px; }
+.profile-school { padding: 27px; display: flex; align-items: center; justify-content: space-between; }
+.profile-school > view { display: grid; gap: 5px; }
+.profile-school > view text:first-child { color: #89918c; font-size: 20px; }
+.profile-school > view text:last-child { font-size: 28px; font-weight: 800; }
+.profile-school > text { color: #0f6a50; font-size: 23px; }
+.profile-menu { margin-top: 20px; overflow: hidden; }
+.profile-menu > view { padding: 26px 28px; border-bottom: 1px solid #eef0ee; display: flex; align-items: center; justify-content: space-between; font-size: 25px; }
+.profile-menu > view:last-child { border-bottom: 0; }
+.profile-menu > view text:last-child { color: #a1a7a3; }
+.profile-version { display: block; margin-top: 30px; color: #9aa19c; font-size: 19px; text-align: center; }

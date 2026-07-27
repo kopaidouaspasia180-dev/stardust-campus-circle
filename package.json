@@ -1,0 +1,41 @@
+{
+  "name": "stardust-campus-ecosystem-miniapp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "星尘校园圈多高校校园生态微信小程序",
+  "scripts": {
+    "dev:weapp": "taro build --type weapp --watch",
+    "build:weapp": "taro build --type weapp",
+    "dev:h5": "taro build --type h5 --watch",
+    "build:h5": "taro build --type h5",
+    "typecheck": "tsc --noEmit",
+    "check:server": "npm --prefix server run check",
+    "check": "npm run typecheck && npm run check:server && npm run build:weapp && npm run build:h5"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.27.0",
+    "@tarojs/components": "4.2.1",
+    "@tarojs/helper": "4.2.1",
+    "@tarojs/plugin-framework-react": "4.2.1",
+    "@tarojs/plugin-platform-h5": "4.2.1",
+    "@tarojs/plugin-platform-weapp": "4.2.1",
+    "@tarojs/react": "4.2.1",
+    "@tarojs/runtime": "4.2.1",
+    "@tarojs/shared": "4.2.1",
+    "@tarojs/taro": "4.2.1",
+    "@tarojs/webpack5-runner": "4.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-react": "^7.27.0",
+    "@tarojs/cli": "4.2.1",
+    "@types/react": "^18.3.0",
+    "@types/webpack-env": "^1.18.8",
+    "babel-preset-taro": "4.2.1",
+    "react-refresh": "0.14.2",
+    "typescript": "^5.8.0",
+    "webpack": "5.91.0"
+  }
+}

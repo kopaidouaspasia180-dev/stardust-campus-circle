@@ -1,0 +1,10 @@
+.new-kicker { display: block; margin-top: 20px; color: #9a7138; font-size: 19px; font-weight: 900; letter-spacing: 3px; }
+.new-heading { display: block; margin-top: 13px; font-size: 42px; font-weight: 900; }
+.new-intro { display: block; margin-top: 14px; color: #7d867f; font-size: 23px; line-height: 1.7; }
+.topic-list { margin-top: 30px; display: grid; gap: 15px; }
+.topic-card { padding: 24px; display: grid; grid-template-columns: 68px 1fr 20px; align-items: center; gap: 18px; }
+.topic-card > text:first-child { width: 68px; height: 68px; border-radius: 22px; background: #0f6a50; color: #fff; display: grid; place-items: center; font-size: 21px; font-weight: 900; }
+.topic-card > view { display: grid; gap: 7px; }
+.topic-card > view text:first-child { font-size: 29px; font-weight: 900; }
+.topic-card > view text:last-child { color: #818a84; font-size: 21px; }
+.topic-card > text:last-child { color: #9ba19d; font-size: 32px; }

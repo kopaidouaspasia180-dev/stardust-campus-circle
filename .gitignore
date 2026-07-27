@@ -1,0 +1,9 @@
+node_modules/
+server/node_modules/
+.swc/
+.DS_Store
+*.log
+qa-*.png
+server/.env
+server/data/
+

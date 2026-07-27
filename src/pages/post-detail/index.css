@@ -1,0 +1,117 @@
+.post-detail-page {
+  padding-bottom: calc(92px + env(safe-area-inset-bottom));
+  background: #f5f7f5;
+}
+
+.post-detail-page .post-content {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+}
+
+.comment-section {
+  margin-top: 14px;
+  padding: 19px;
+  border-radius: 22px;
+  background: #fff;
+}
+
+.comment-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-title-row text:first-child {
+  color: #1d2923;
+  font-size: 29px;
+  font-weight: 900;
+}
+
+.comment-title-row text:last-child {
+  color: #89948e;
+  font-size: 20px;
+}
+
+.comment-list {
+  margin-top: 6px;
+}
+
+.comment-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #edf0ed;
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 10px;
+}
+
+.comment-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #e8f3eb;
+  color: #0b7a43;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-meta text:first-child { color: #415048; font-size: 22px; font-weight: 800; }
+.comment-meta text:last-child { color: #9aa39e; font-size: 18px; }
+
+.comment-content {
+  display: block;
+  margin-top: 6px;
+  color: #39443e;
+  font-size: 24px;
+  line-height: 1.55;
+}
+
+.no-comment {
+  display: block;
+  padding: 38px 0 24px;
+  color: #929d97;
+  font-size: 22px;
+  text-align: center;
+}
+
+.comment-composer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(25, 61, 49, .08);
+  background: rgba(255, 255, 255, .97);
+  display: grid;
+  grid-template-columns: 1fr 78px;
+  gap: 9px;
+}
+
+.comment-composer input {
+  height: 44px;
+  padding: 0 15px;
+  border-radius: 15px;
+  background: #f1f4f2;
+  font-size: 23px;
+}
+
+.comment-composer button {
+  width: 78px;
+  height: 44px;
+  margin: 0;
+  border-radius: 15px;
+  background: #0b7a43;
+  color: #fff;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 44px;
+}

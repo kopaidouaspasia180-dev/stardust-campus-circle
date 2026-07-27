@@ -1,0 +1,27 @@
+{
+  "miniprogramRoot": "dist/",
+  "projectname": "stardust-campus-circle",
+  "description": "星尘校园圈多高校校园生态平台",
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "packOptions": {
+    "ignore": [
+      {"type": "folder", "value": "node_modules"},
+      {"type": "folder", "value": "dist-h5"},
+      {"type": "folder", "value": "deploy"}
+    ]
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true,
+    "compileHotReLoad": true,
+    "useCompilerPlugins": ["typescript"],
+    "showShadowRootInWxmlPanel": true,
+    "useApiHook": true,
+    "useApiHostProcess": true
+  },
+  "condition": {}
+}

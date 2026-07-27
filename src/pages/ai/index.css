@@ -1,0 +1,14 @@
+.ai-page { padding-bottom:70px; }
+.ai-title-row { margin-top:22px; display:flex; align-items:center; gap:14px; }
+.ai-orb { width:62px; height:62px; border:5px solid #dff1df; border-radius:50%; background:#153457; color:#b8ef31; display:grid; place-items:center; box-shadow:0 10px 24px rgba(13,54,78,.18); }
+.ai-title-row > view:last-child { display:grid; gap:4px; }
+.ai-title-row > view:last-child text:first-child { font-size:32px; font-weight:900; }
+.ai-title-row > view:last-child text:last-child { color:#7b867e; font-size:18px; }
+.chat-card { margin-top:24px; padding:24px; text-align:left; }
+.chat-card text { color:#37423b; font-size:21px; line-height:1.7; }
+.ai-suggestions { margin-top:17px; display:flex; flex-wrap:wrap; gap:9px; }
+.ai-suggestions text { padding:10px 14px; border-radius:999px; background:#fff; color:#3e6552; font-size:17px; }
+.ai-compose { margin-top:20px; padding:9px 9px 9px 19px; display:flex; align-items:center; }
+.ai-compose input { flex:1; font-size:20px; }
+.ai-compose button { width:96px; margin:0; border-radius:18px; background:#0b7a43; color:#fff; font-size:19px; }
+.ai-demo-note { display:block; margin-top:15px; color:#929a95; font-size:15px; text-align:center; }

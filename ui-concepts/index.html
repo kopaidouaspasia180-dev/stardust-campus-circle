@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Stardust 校园生态 UI 概念</title>
+    <style>
+      * { box-sizing: border-box; }
+      :root {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      body {
+        margin: 0;
+        width: 100%;
+        min-height: 100vh;
+        overflow-x: hidden;
+        background: var(--bg);
+      }
+      button { font: inherit; }
+      .app {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        padding: 18px 16px 92px;
+        overflow: hidden;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+      .brand-mini {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .school-switch {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        border: 0;
+        border-radius: 999px;
+        padding: 8px 12px;
+      }
+      .school-switch strong { font-size: 13px; }
+      .avatar {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        font-weight: 900;
+      }
+      .eyebrow {
+        display: block;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+      }
+      .hero h1 {
+        margin: 7px 0 0;
+        font-size: 31px;
+        line-height: 1.16;
+        letter-spacing: -1.2px;
+      }
+      .hero p {
+        margin: 9px 0 0;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 17px;
+        padding: 12px 14px;
+        border-radius: 18px;
+      }
+      .search span { font-size: 13px; }
+      .search b { margin-left: auto; font-size: 12px; }
+      .section { margin-top: 20px; }
+      .section-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .section-head h2 {
+        margin: 0;
+        font-size: 19px;
+        letter-spacing: -.4px;
+      }
+      .section-head span { font-size: 11px; }
+      .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 9px;
+      }
+      .tool {
+        min-width: 0;
+        border-radius: 18px;
+        padding: 13px 7px 11px;
+        text-align: center;
+      }
+      .tool i {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        margin: 0 auto 9px;
+        border-radius: 12px;
+        font-size: 17px;
+        font-style: normal;
+      }
+      .tool strong { display: block; font-size: 12px; white-space: nowrap; }
+      .tool small { display: block; margin-top: 3px; font-size: 9px; white-space: nowrap; }
+      .feed {
+        display: grid;
+        grid-template-columns: 1.25fr .75fr;
+        gap: 10px;
+      }
+      .feed-card {
+        min-height: 138px;
+        border-radius: 22px;
+        padding: 15px;
+        overflow: hidden;
+      }
+      .feed-card .tag {
+        display: inline-flex;
+        border-radius: 999px;
+        padding: 5px 8px;
+        font-size: 9px;
+        font-weight: 800;
+      }
+      .feed-card h3 {
+        margin: 13px 0 0;
+        font-size: 17px;
+        line-height: 1.35;
+      }
+      .feed-card p {
+        margin: 8px 0 0;
+        font-size: 10px;
+        line-height: 1.45;
+      }
+      .feed-card.alt {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .feed-card .metric { font-size: 28px; font-weight: 900; }
+      .service-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 9px;
+      }
+      .service {
+        border-radius: 19px;
+        padding: 13px;
+      }
+      .service i { display: block; font-size: 20px; font-style: normal; }
+      .service strong { display: block; margin-top: 13px; font-size: 12px; }
+      .service small { display: block; margin-top: 4px; font-size: 9px; line-height: 1.35; }
+      .notice {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 16px;
+        border-radius: 18px;
+        padding: 12px 14px;
+      }
+      .notice b { font-size: 11px; }
+      .notice span { font-size: 10px; }
+      .notice em { margin-left: auto; font-style: normal; }
+      .tabbar {
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      }
+      .tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        font-size: 9px;
+      }
+      .tab i { font-size: 17px; font-style: normal; }
+
+      /* A — Ivy Editorial */
+      .theme-a {
+        --bg: #f3f0e8;
+        --ink: #173a31;
+        --muted: #6e7d76;
+        background:
+          radial-gradient(circle at 95% 0, rgba(184, 214, 112, .22), transparent 32%),
+          #f3f0e8;
+      }
+      .theme-a .app { padding-top: 20px; }
+      .theme-a .topbar { color: #173a31; }
+      .theme-a .school-switch { background: #e6e2d7; color: #173a31; }
+      .theme-a .avatar { background: #173a31; color: #eff2c0; }
+      .theme-a .hero {
+        position: relative;
+        padding: 24px 21px 21px;
+        border: 1px solid rgba(23,58,49,.14);
+        border-radius: 28px;
+        background: rgba(250,248,241,.7);
+        box-shadow: 0 18px 55px rgba(23,58,49,.08);
+      }
+      .theme-a .hero::after {
+        content: "01";
+        position: absolute;
+        top: 20px;
+        right: 21px;
+        color: #b0c64c;
+        font: 800 12px/1 Georgia, serif;
+      }
+      .theme-a .eyebrow { color: #779229; }
+      .theme-a .hero h1 { font-family: Georgia, "Songti SC", serif; font-weight: 700; }
+      .theme-a .hero p { color: var(--muted); }
+      .theme-a .search { border: 1px solid #d7d5c9; background: #fffdf7; color: #7a847f; }
+      .theme-a .search b { color: #173a31; }
+      .theme-a .section-head span { color: #819088; }
+      .theme-a .tool { border: 1px solid #dddcd3; background: rgba(255,255,255,.66); }
+      .theme-a .tool i { background: #e8edc5; }
+      .theme-a .tool small { color: #89928e; }
+      .theme-a .feed-card { background: #143d32; color: #f5f2e8; }
+      .theme-a .feed-card .tag { background: #d7eb72; color: #173a31; }
+      .theme-a .feed-card p { color: #b9c9c2; }
+      .theme-a .feed-card.alt { background: #dde7a8; color: #173a31; }
+      .theme-a .feed-card.alt p { color: #63705f; }
+      .theme-a .service { border: 1px solid #dedbd0; background: #faf8f2; }
+      .theme-a .service small { color: #858d88; }
+      .theme-a .notice { background: #e5e0d2; }
+      .theme-a .notice span { color: #68736e; }
+      .theme-a .tabbar { border-top: 1px solid #ddd8cc; background: rgba(248,246,239,.94); backdrop-filter: blur(18px); }
+      .theme-a .tab { color: #8b928e; }
+      .theme-a .tab.active { color: #173a31; font-weight: 800; }
+
+      /* B — Mist Glass */
+      .theme-b {
+        --bg: #e8eef4;
+        --ink: #10253d;
+        --muted: #6c7a89;
+        background:
+          radial-gradient(circle at 18% 4%, rgba(130, 202, 255, .54), transparent 35%),
+          radial-gradient(circle at 88% 30%, rgba(181, 151, 255, .34), transparent 34%),
+          linear-gradient(180deg, #eef5fa, #e6ebf1);
+      }
+      .theme-b .brand-mini { color: #486b8e; }
+      .theme-b .school-switch { border: 1px solid rgba(255,255,255,.85); background: rgba(255,255,255,.5); color: #17314e; box-shadow: 0 8px 24px rgba(42,65,92,.08); backdrop-filter: blur(20px); }
+      .theme-b .avatar { background: linear-gradient(135deg, #122d48, #3e6da0); color: #fff; }
+      .theme-b .hero {
+        position: relative;
+        min-height: 205px;
+        padding: 22px;
+        border: 1px solid rgba(255,255,255,.84);
+        border-radius: 30px;
+        background:
+          linear-gradient(180deg, rgba(8,28,49,.16), rgba(8,25,45,.78)),
+          url("assets/tangshan-campus.jpg") center/cover;
+        color: #fff;
+        box-shadow: 0 25px 60px rgba(28,53,79,.18);
+        overflow: hidden;
+      }
+      .theme-b .hero::after {
+        content: "LIVE";
+        position: absolute;
+        right: 19px;
+        top: 18px;
+        padding: 6px 9px;
+        border: 1px solid rgba(255,255,255,.6);
+        border-radius: 999px;
+        background: rgba(255,255,255,.18);
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        backdrop-filter: blur(10px);
+      }
+      .theme-b .eyebrow { color: #c9e7ff; }
+      .theme-b .hero p { color: #d9e5ee; }
+      .theme-b .search { position: absolute; left: 18px; right: 18px; bottom: 17px; background: rgba(255,255,255,.84); color: #64778a; backdrop-filter: blur(20px); }
+      .theme-b .search b { color: #193654; }
+      .theme-b .section-head span { color: #67809a; }
+      .theme-b .tool { border: 1px solid rgba(255,255,255,.88); background: rgba(255,255,255,.52); box-shadow: 0 12px 28px rgba(52,77,104,.07); backdrop-filter: blur(18px); }
+      .theme-b .tool i { background: linear-gradient(135deg, #dff1ff, #e7e0ff); }
+      .theme-b .tool small { color: #7e8d9a; }
+      .theme-b .feed-card { border: 1px solid rgba(255,255,255,.75); background: rgba(255,255,255,.62); box-shadow: 0 14px 30px rgba(52,77,104,.08); backdrop-filter: blur(22px); }
+      .theme-b .feed-card .tag { background: #d6edff; color: #24537c; }
+      .theme-b .feed-card p { color: #77889a; }
+      .theme-b .feed-card.alt { background: linear-gradient(145deg, #173959, #335f88); color: #fff; }
+      .theme-b .feed-card.alt p { color: #c8d9e8; }
+      .theme-b .service { border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.58); }
+      .theme-b .service small { color: #748697; }
+      .theme-b .notice { border: 1px solid rgba(255,255,255,.8); background: rgba(255,255,255,.42); }
+      .theme-b .notice span { color: #718397; }
+      .theme-b .tabbar { border-top: 1px solid rgba(255,255,255,.8); background: rgba(238,244,248,.83); box-shadow: 0 -12px 30px rgba(31,58,84,.07); backdrop-filter: blur(24px); }
+      .theme-b .tab { color: #758799; }
+      .theme-b .tab.active { color: #173d62; font-weight: 800; }
+
+      /* C — Campus OS */
+      .theme-c {
+        --bg: #f5f4ee;
+        --ink: #111411;
+        --muted: #6f736e;
+        background:
+          linear-gradient(rgba(10,10,10,.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(10,10,10,.035) 1px, transparent 1px),
+          #f5f4ee;
+        background-size: 22px 22px;
+      }
+      .theme-c .brand-mini { color: #111411; }
+      .theme-c .school-switch { border: 1px solid #111411; background: #f5f4ee; color: #111411; }
+      .theme-c .avatar { border-radius: 10px; background: #c8ff32; color: #111411; }
+      .theme-c .hero {
+        position: relative;
+        padding: 22px;
+        border: 2px solid #111411;
+        border-radius: 22px;
+        background: #111411;
+        color: #fff;
+        box-shadow: 7px 7px 0 #c8ff32;
+      }
+      .theme-c .hero::after {
+        content: "CAMPUS / 001";
+        position: absolute;
+        top: 17px;
+        right: 17px;
+        color: #c8ff32;
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 1.3px;
+      }
+      .theme-c .eyebrow { color: #c8ff32; }
+      .theme-c .hero p { color: #c8cbc7; }
+      .theme-c .search { border: 1px solid #3c403b; background: #252925; color: #aeb3ad; }
+      .theme-c .search b { color: #c8ff32; }
+      .theme-c .section-head span { color: #5e625d; text-decoration: underline; }
+      .theme-c .tool { border: 1px solid #111411; background: #f8f7f2; box-shadow: 3px 3px 0 #111411; }
+      .theme-c .tool i { border: 1px solid #111411; border-radius: 9px; background: #c8ff32; }
+      .theme-c .tool small { color: #747873; }
+      .theme-c .feed { grid-template-columns: 1fr 1fr; }
+      .theme-c .feed-card { border: 2px solid #111411; border-radius: 19px; background: #f8f7f2; }
+      .theme-c .feed-card .tag { border: 1px solid #111411; background: #c8ff32; color: #111411; }
+      .theme-c .feed-card p { color: #737772; }
+      .theme-c .feed-card.alt { background: #ff6f4d; color: #111411; }
+      .theme-c .feed-card.alt p { color: #3e302d; }
+      .theme-c .service { border: 1px solid #111411; border-radius: 16px; background: #f8f7f2; }
+      .theme-c .service i { width: max-content; padding: 3px 6px; border-radius: 6px; background: #c8ff32; }
+      .theme-c .service small { color: #747873; }
+      .theme-c .notice { border: 1px solid #111411; background: #c8ff32; }
+      .theme-c .notice span { color: #41463f; }
+      .theme-c .tabbar { border-top: 2px solid #111411; background: #f5f4ee; }
+      .theme-c .tab { color: #626661; }
+      .theme-c .tab.active { color: #111411; font-weight: 900; }
+      .theme-c .tab.active i { display: grid; place-items: center; width: 28px; height: 22px; border-radius: 7px; background: #c8ff32; }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <span class="brand-mini">Stardust Campus</span>
+        <button class="school-switch"><strong>唐山学院</strong><span>切换高校⌄</span></button>
+        <span class="avatar">唐</span>
+      </header>
+
+      <section class="hero">
+        <span class="eyebrow">Today on campus</span>
+        <h1>今天在唐院，<br />想做点什么？</h1>
+        <p>校园日常、同学动态和本地服务，一站搞定。</p>
+        <div class="search"><span>⌕</span><span>问问校园 AI，或搜索地点和服务</span><b>发送 →</b></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>常用工具</h2><span>全部工具 ›</span></div>
+        <div class="tool-grid">
+          <article class="tool"><i>⌖</i><strong>校园地图</strong><small>地点与导航</small></article>
+          <article class="tool"><i>▣</i><strong>快递查询</strong><small>校内取件点</small></article>
+          <article class="tool"><i>▥</i><strong>学习工具</strong><small>教务与图书</small></article>
+          <article class="tool"><i>↝</i><strong>校园交通</strong><small>校车与公交</small></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>校园正在发生</h2><span>进入校园圈 ›</span></div>
+        <div class="feed">
+          <article class="feed-card">
+            <span class="tag">失物招领</span>
+            <h3>校园卡和钥匙失物信息集中发布</h3>
+            <p>全校 · 校园圈 · 12 条更新</p>
+          </article>
+          <article class="feed-card alt">
+            <div><span class="tag">本周活动</span><h3>社团广场</h3></div>
+            <div><span class="metric">08</span><p>场活动正在报名</p></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>校园生活服务</h2><span>更多服务 ›</span></div>
+        <div class="service-strip">
+          <article class="service"><i>♨</i><strong>校园美食</strong><small>食堂与校内外卖</small></article>
+          <article class="service"><i>▤</i><strong>床品好物</strong><small>宿舍生活用品</small></article>
+          <article class="service"><i>▣</i><strong>校园通信</strong><small>校园卡与宽带</small></article>
+        </div>
+      </section>
+
+      <aside class="notice"><b>新同学专区</b><span>报到、宿舍与入学准备</span><em>›</em></aside>
+    </main>
+
+    <nav class="tabbar">
+      <span class="tab active"><i>⌂</i>首页</span>
+      <span class="tab"><i>◎</i>校园圈</span>
+      <span class="tab"><i>◇</i>服务</span>
+      <span class="tab"><i>✦</i>AI</span>
+      <span class="tab"><i>○</i>我的</span>
+    </nav>
+
+    <script>
+      const key = new URLSearchParams(location.search).get("theme") || "a";
+      document.body.className = `theme-${["a", "b", "c"].includes(key) ? key : "a"}`;
+    </script>
+  </body>
+</html>

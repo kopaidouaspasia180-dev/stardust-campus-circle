@@ -1,0 +1,10 @@
+.messages-kicker { display:block; margin-top:12px; color:#b48b2d; font-size:18px; font-weight:800; letter-spacing:3px; }
+.messages-title { display:block; margin-top:8px; font-size:39px; font-weight:900; }
+.message-list { margin-top:24px; overflow:hidden; }
+.message-row { padding:22px; border-bottom:1px solid #edf0ed; display:flex; align-items:center; gap:14px; }
+.message-row:last-child { border-bottom:0; }
+.message-icon { width:48px; height:48px; border-radius:16px; background:#eef7f0; color:#0b7a43; display:grid; place-items:center; font-size:24px; }
+.message-copy { min-width:0; flex:1; display:grid; gap:5px; }
+.message-copy text:first-child { font-size:21px; font-weight:800; }
+.message-copy text:last-child { overflow:hidden; color:#7f8982; font-size:17px; text-overflow:ellipsis; white-space:nowrap; }
+.message-time { color:#9aa29d; font-size:14px; }

@@ -1,0 +1,5 @@
+.service-page-header { padding:18px 0 16px; display:flex; align-items:center; gap:16px; }
+.service-back { width:58px; height:58px; border-radius:50%; background:#fff; color:#0b7a43; display:grid; place-items:center; font-size:48px; line-height:1; box-shadow:0 8px 24px rgba(28,69,53,.08); }
+.service-page-header > view { display:grid; gap:3px; }
+.service-page-header > view text:first-child { color:#17221e; font-size:38px; font-weight:900; }
+.service-page-header > view text:last-child { color:#7d8982; font-size:22px; }

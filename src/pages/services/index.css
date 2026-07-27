@@ -1,0 +1,16 @@
+.services-page { padding-bottom:120px; }
+.services-heading { margin:12px 4px 20px; display:flex; align-items:flex-end; justify-content:space-between; }
+.services-heading text:first-child { font-size:38px; font-weight:900; }
+.services-heading text:last-child { color:#7e8981; font-size:23px; }
+.service-search { padding:16px 20px; display:flex; align-items:center; gap:12px; }
+.service-search text { color:#587065; font-size:27px; }
+.service-search input { flex:1; font-size:25px; }
+.service-tabs { margin:18px -28px 16px; padding:0 28px 8px; overflow-x:auto; white-space:nowrap; }
+.service-tabs text { display:inline-block; margin-right:8px; padding:9px 16px; border-radius:999px; background:#fff; color:#707b73; font-size:23px; }
+.service-tabs text.active { background:#0b7a43; color:#fff; }
+.service-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.service-card { min-height:180px; padding:20px; display:flex; flex-direction:column; }
+.service-icon { width:44px; height:44px; border-radius:14px; background:#eff8f1; color:#0b7a43; display:grid; place-items:center; font-size:28px; }
+.service-name { margin-top:12px; font-size:28px; font-weight:900; }
+.service-sub { margin-top:6px; color:#78827b; font-size:23px; line-height:1.45; }
+.service-status { margin-top:auto; color:#0b7a43; font-size:22px; font-weight:700; }

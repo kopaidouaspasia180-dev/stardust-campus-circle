@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>校园岛 · 原生小程序首页概念</title>
+    <style>
+      * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+      :root {
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+        color: #18221e;
+        background: #f4f6f3;
+      }
+      body { margin: 0; background: #dfe4df; }
+      button { font: inherit; color: inherit; }
+      .phone {
+        position: relative;
+        width: min(100vw, 430px);
+        min-height: 100vh;
+        margin: 0 auto;
+        padding-bottom: 88px;
+        overflow: hidden;
+        background: #f5f7f4;
+      }
+      .safe {
+        height: 16px;
+        background: #fff;
+      }
+      .nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 50px;
+        padding: 0 16px;
+        background: #fff;
+      }
+      .nav-title {
+        width: 100%;
+        padding-right: 92px;
+        font-size: 17px;
+        font-weight: 650;
+        text-align: center;
+      }
+      .capsule {
+        position: absolute;
+        top: 9px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 84px;
+        height: 32px;
+        border: 1px solid #dedede;
+        border-radius: 18px;
+        background: rgba(255,255,255,.96);
+      }
+      .capsule span:first-child { letter-spacing: 2px; font-weight: 800; }
+      .capsule i { width: 1px; height: 17px; background: #ddd; }
+      .capsule span:last-child { width: 8px; height: 8px; border: 2px solid #222; border-radius: 50%; }
+      .campus-head {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 14px 16px 12px;
+        background: #fff;
+      }
+      .logo {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+        color: #fff;
+        background: #116a4d;
+        font: 800 18px/1 Georgia, serif;
+      }
+      .campus-copy { min-width: 0; flex: 1; }
+      .campus-copy strong { display: block; font-size: 17px; line-height: 1.3; }
+      .campus-copy span { display: block; margin-top: 2px; color: #839088; font-size: 11px; }
+      .switch {
+        border: 0;
+        border-radius: 9px;
+        padding: 7px 9px;
+        color: #4e5a54;
+        background: #f1f4f1;
+        font-size: 11px;
+      }
+      .main { padding: 12px 14px 20px; }
+      .today {
+        position: relative;
+        overflow: hidden;
+        border-radius: 18px;
+        padding: 18px 18px 16px;
+        color: #fff;
+        background:
+          radial-gradient(circle at 92% 15%, rgba(253, 194, 88, .95) 0 11%, transparent 11.5%),
+          linear-gradient(130deg, #0e654b, #248265);
+        box-shadow: 0 8px 24px rgba(19,93,70,.18);
+      }
+      .today::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        right: -60px;
+        bottom: -105px;
+        border: 22px solid rgba(255,255,255,.09);
+        border-radius: 50%;
+      }
+      .today-top { display: flex; justify-content: space-between; align-items: center; }
+      .today-top span { font-size: 12px; opacity: .82; }
+      .today-top b { font-size: 12px; }
+      .today-main { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 13px; }
+      .today-main h1 { margin: 0; font-size: 23px; line-height: 1.15; letter-spacing: -.5px; }
+      .today-main p { margin: 7px 0 0; font-size: 12px; opacity: .82; }
+      .weather { position: relative; z-index: 1; text-align: right; }
+      .weather strong { display: block; font-size: 25px; }
+      .weather small { font-size: 10px; opacity: .8; }
+      .today-action {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 17px;
+        padding-top: 13px;
+        border-top: 1px solid rgba(255,255,255,.18);
+        font-size: 11px;
+      }
+      .today-action b { font-weight: 650; }
+      .today-action span { opacity: .8; }
+      .section { margin-top: 18px; }
+      .section-head { display: flex; align-items: center; justify-content: space-between; margin: 0 2px 11px; }
+      .section-head h2 { margin: 0; font-size: 17px; }
+      .section-head span { color: #8b958f; font-size: 11px; }
+      .tools {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px 5px;
+        padding: 14px 8px 11px;
+        border-radius: 17px;
+        background: #fff;
+        box-shadow: 0 2px 11px rgba(32,59,46,.045);
+      }
+      .tool { min-width: 0; text-align: center; }
+      .tool i {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        margin: 0 auto 7px;
+        border-radius: 14px;
+        font-style: normal;
+        font-size: 19px;
+      }
+      .tool:nth-child(1) i, .tool:nth-child(5) i { color: #137554; background: #e7f5ee; }
+      .tool:nth-child(2) i, .tool:nth-child(6) i { color: #e08035; background: #fff1e4; }
+      .tool:nth-child(3) i, .tool:nth-child(7) i { color: #4d70be; background: #ecf1ff; }
+      .tool:nth-child(4) i, .tool:nth-child(8) i { color: #9d5d94; background: #f7eefa; }
+      .tool strong { display: block; overflow: hidden; font-size: 11px; font-weight: 520; white-space: nowrap; }
+      .state-row { display: grid; grid-template-columns: 1.2fr .8fr; gap: 9px; }
+      .state {
+        min-height: 108px;
+        border-radius: 17px;
+        padding: 14px;
+        background: #fff;
+      }
+      .state small { color: #87918c; font-size: 10px; }
+      .state h3 { margin: 7px 0 0; font-size: 17px; line-height: 1.25; }
+      .state p { margin: 6px 0 0; color: #77827c; font-size: 10px; line-height: 1.5; }
+      .state .badge { display: inline-flex; margin-top: 12px; border-radius: 6px; padding: 4px 6px; color: #116a4d; background: #e8f5ef; font-size: 9px; }
+      .state.delivery { background: #fff7e9; }
+      .state.delivery h3 { color: #9d5a1e; font-size: 20px; }
+      .tabs { display: flex; gap: 18px; border-bottom: 1px solid #e9ece9; }
+      .tabs span { position: relative; padding: 5px 0 11px; color: #8a938e; font-size: 13px; }
+      .tabs .active { color: #18221e; font-weight: 650; }
+      .tabs .active::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -1px;
+        width: 18px;
+        height: 3px;
+        border-radius: 3px;
+        background: #167655;
+        transform: translateX(-50%);
+      }
+      .post {
+        display: flex;
+        gap: 11px;
+        padding: 14px 2px;
+        border-bottom: 1px solid #e9ece9;
+      }
+      .post-avatar {
+        display: grid;
+        place-items: center;
+        flex: 0 0 36px;
+        height: 36px;
+        border-radius: 50%;
+        color: #fff;
+        background: #d5925f;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .post-body { min-width: 0; flex: 1; }
+      .post-meta { display: flex; align-items: center; gap: 6px; }
+      .post-meta strong { font-size: 12px; }
+      .post-meta em { border-radius: 5px; padding: 2px 4px; color: #167655; background: #e8f5ef; font-size: 8px; font-style: normal; }
+      .post-body p { margin: 7px 0 0; font-size: 13px; line-height: 1.55; }
+      .post-foot { display: flex; gap: 18px; margin-top: 8px; color: #929a96; font-size: 10px; }
+      .ai-fab {
+        position: fixed;
+        z-index: 10;
+        right: max(16px, calc((100vw - 430px) / 2 + 16px));
+        bottom: 79px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        border: 0;
+        border-radius: 24px;
+        padding: 11px 14px 11px 11px;
+        color: #fff;
+        background: #1a6f53;
+        box-shadow: 0 9px 26px rgba(18,93,68,.26);
+        font-size: 12px;
+        font-weight: 650;
+      }
+      .ai-fab i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; color: #1a6f53; background: #fff; font-style: normal; }
+      .tabbar {
+        position: fixed;
+        z-index: 9;
+        left: 50%;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        width: min(100vw, 430px);
+        padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+        border-top: 1px solid #e8ebe8;
+        background: rgba(255,255,255,.97);
+        transform: translateX(-50%);
+      }
+      .tab { display: flex; flex-direction: column; align-items: center; gap: 2px; color: #8e9691; font-size: 9px; }
+      .tab i { font-size: 18px; font-style: normal; }
+      .tab.active { color: #126c4e; font-weight: 650; }
+      @media (min-width: 431px) {
+        .phone { box-shadow: 0 0 70px rgba(29,49,39,.18); }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="phone">
+      <div class="safe"></div>
+      <header class="nav">
+        <div class="nav-title">校园岛</div>
+        <div class="capsule"><span>•••</span><i></i><span></span></div>
+      </header>
+      <section class="campus-head">
+        <div class="logo">TC</div>
+        <div class="campus-copy">
+          <strong>唐山学院</strong>
+          <span>大学西道校区 · 校园生活服务</span>
+        </div>
+        <button class="switch">切换高校⌄</button>
+      </section>
+
+      <div class="main">
+        <section class="today">
+          <div class="today-top"><span>7月26日 · 星期日</span><b>今日校园</b></div>
+          <div class="today-main">
+            <div>
+              <h1>晚上好，同学</h1>
+              <p>暑期校园服务时间已有 3 项调整</p>
+            </div>
+            <div class="weather"><strong>29°</strong><small>多云 · 唐山</small></div>
+          </div>
+          <div class="today-action"><b>下一项：图书馆 21:30 闭馆</b><span>查看详情 ›</span></div>
+        </section>
+
+        <section class="section">
+          <div class="section-head"><h2>常用服务</h2><span>管理 ›</span></div>
+          <div class="tools">
+            <div class="tool"><i>课</i><strong>课表</strong></div>
+            <div class="tool"><i>餐</i><strong>校园外卖</strong></div>
+            <div class="tool"><i>码</i><strong>校园卡</strong></div>
+            <div class="tool"><i>递</i><strong>快递</strong></div>
+            <div class="tool"><i>馆</i><strong>图书馆</strong></div>
+            <div class="tool"><i>失</i><strong>失物招领</strong></div>
+            <div class="tool"><i>圈</i><strong>校园圈</strong></div>
+            <div class="tool"><i>全</i><strong>全部</strong></div>
+          </div>
+        </section>
+
+        <section class="section state-row">
+          <article class="state">
+            <small>今日课表</small>
+            <h3>暑假期间<br />暂无课程安排</h3>
+            <span class="badge">开学后自动恢复</span>
+          </article>
+          <article class="state delivery">
+            <small>快递状态</small>
+            <h3>2 件</h3>
+            <p>菜鸟驿站<br />18:30 前领取</p>
+          </article>
+        </section>
+
+        <section class="section">
+          <div class="section-head"><h2>校园动态</h2><span>发布 ＋</span></div>
+          <div class="tabs"><span class="active">推荐</span><span>校园通知</span><span>二手</span><span>互助</span></div>
+          <article class="post">
+            <div class="post-avatar">校</div>
+            <div class="post-body">
+              <div class="post-meta"><strong>唐山学院服务站</strong><em>官方认证</em></div>
+              <p>暑期图书馆、浴室和校内餐厅开放时间汇总，收藏这条就够了。</p>
+              <div class="post-foot"><span>12分钟前</span><span>♡ 28</span><span>评论 6</span></div>
+            </div>
+          </article>
+          <article class="post">
+            <div class="post-avatar" style="background:#527e9f">同</div>
+            <div class="post-body">
+              <div class="post-meta"><strong>校园互助</strong></div>
+              <p>有人明天从唐山站返校吗？想一起拼车，时间可以商量。</p>
+              <div class="post-foot"><span>35分钟前</span><span>♡ 11</span><span>评论 9</span></div>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <button class="ai-fab"><i>✦</i>问校园 AI</button>
+      <nav class="tabbar">
+        <div class="tab active"><i>⌂</i><span>首页</span></div>
+        <div class="tab"><i>▦</i><span>服务</span></div>
+        <div class="tab"><i>◉</i><span>校园圈</span></div>
+        <div class="tab"><i>◇</i><span>消息</span></div>
+        <div class="tab"><i>○</i><span>我的</span></div>
+      </nav>
+    </main>
+  </body>
+</html>

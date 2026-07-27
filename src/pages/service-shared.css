@@ -1,0 +1,47 @@
+.business-page { min-height:100vh; padding-bottom:54px; background:#f4f7f5; }
+.business-toolbar { margin:8px 0 16px; display:flex; gap:10px; }
+.business-toolbar > * { flex:1; }
+.business-button { min-height:52px; margin:0; border-radius:16px; background:#0b7a43; color:#fff; font-size:24px; font-weight:800; line-height:52px; }
+.business-button.secondary { background:#fff; color:#0b7a43; border:1px solid #dce9e1; }
+.business-button.warn { background:#f3a23a; }
+.business-section { margin-top:18px; }
+.business-section-title { display:block; margin:0 4px 12px; font-size:30px; font-weight:900; }
+.business-list { display:grid; gap:12px; }
+.business-card { padding:20px; border-radius:20px; background:#fff; box-shadow:0 8px 26px rgba(28,65,51,.045); }
+.business-card-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.business-card-title { color:#1a2922; font-size:28px; font-weight:900; }
+.business-badge { padding:6px 10px; border-radius:999px; background:#edf8f0; color:#0b7a43; font-size:19px; font-weight:800; }
+.business-copy { display:block; margin-top:7px; color:#69766e; font-size:23px; line-height:1.55; }
+.business-meta { margin-top:12px; display:flex; flex-wrap:wrap; gap:7px 14px; color:#7d8982; font-size:21px; }
+.business-price { color:#f05b35; font-size:30px; font-weight:900; }
+.business-action { margin-top:14px; display:flex; justify-content:flex-end; }
+.business-action button { min-width:130px; margin:0; border-radius:999px; background:#0b7a43; color:#fff; font-size:22px; line-height:44px; }
+.business-empty { padding:60px 20px; color:#829087; text-align:center; }
+.business-form { padding:20px; display:grid; gap:12px; border-radius:22px; background:#fff; }
+.business-form input,.business-form textarea { width:100%; padding:14px 16px; border:1px solid #e2e8e4; border-radius:14px; background:#fbfcfb; font-size:23px; }
+.business-form textarea { min-height:130px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.form-note { color:#829087; font-size:19px; line-height:1.5; }
+.loading-card { padding:50px 20px; color:#7d8982; text-align:center; }
+.status-open,.status-waiting,.status-submitted { color:#0b7a43; }
+.status-claimed { color:#d27b18; }
+.status-completed,.status-picked { color:#7d8982; }
+.service-page{padding-top:12px;background:#f4f7f5}
+.service-notice{margin:14px 0;padding:14px 16px;border-radius:16px;background:#eef7f1;color:#456054;font-size:20px;line-height:1.6}
+.primary-action,.small-action{background:#0b7a43!important;color:#fff!important;border:0!important}
+.primary-action{margin:14px 0;border-radius:16px;font-size:23px}
+.small-action{margin:12px 0 0;border-radius:13px;font-size:20px;line-height:2.2}
+.form-card,.business-card{margin:14px 0;padding:16px;border:1px solid #e5ebe7;border-radius:20px;background:#fff}
+.form-card input,.form-card textarea,.business-card input{width:100%;margin:8px 0;padding:11px 12px;border:1px solid #dfe6e1;border-radius:12px;background:#f9fbfa;font-size:21px}
+.form-card textarea{min-height:110px}
+.list-stack{padding-bottom:20px}
+.row-between{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.business-title{font-size:25px;font-weight:800;color:#17221e}
+.business-desc,.route{display:block;margin-top:8px;color:#657168;font-size:20px;line-height:1.55}
+.price{font-size:25px;font-weight:800;color:#e45b24}
+.status,.verified{padding:4px 9px;border-radius:999px;background:#eef7f1;color:#0b7a43;font-size:17px}
+.status-completed,.status-picked{background:#edf0ee;color:#6d7671}
+.event-cover{width:100%;height:160px;margin-bottom:12px;border-radius:15px}
+.store-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.store-card{min-height:120px;padding:18px;border-radius:20px;background:#fff;border:1px solid #e5ebe7;display:flex;flex-direction:column;justify-content:space-between}
+.store-card text:first-child{font-size:24px;font-weight:800}.store-card text:last-child{font-size:18px;color:#0b7a43}

@@ -1,0 +1,187 @@
+.rankings-page {
+  padding-bottom: 100px;
+  background:
+    radial-gradient(circle at 92% 3%, rgba(222, 238, 228, .78), transparent 260px),
+    #f5f7f5;
+}
+
+.rankings-hero {
+  position: relative;
+  overflow: hidden;
+  margin-top: 6px;
+  padding: 25px 22px 23px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #102a4b 0%, #173e45 65%, #1f6a50 100%);
+  box-shadow: 0 16px 34px rgba(16, 42, 75, .16);
+  color: #fff;
+}
+
+.rankings-hero::after {
+  content: "";
+  position: absolute;
+  right: -25px;
+  bottom: -55px;
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(255,255,255,.04), 0 0 0 48px rgba(255,255,255,.025);
+}
+
+.rankings-kicker {
+  display: block;
+  color: #d9c27a;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.rankings-title {
+  display: block;
+  margin-top: 8px;
+  font-size: 36px;
+  font-weight: 900;
+}
+
+.rankings-intro {
+  display: block;
+  max-width: 300px;
+  margin-top: 9px;
+  color: rgba(255,255,255,.78);
+  font-size: 22px;
+  line-height: 1.58;
+}
+
+.hero-badges {
+  margin-top: 18px;
+  display: flex;
+  gap: 8px;
+}
+
+.hero-badges text {
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ranking-section {
+  margin-top: 16px;
+  padding: 20px;
+  border: 1px solid rgba(25,61,49,.065);
+  border-radius: 24px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 12px 30px rgba(29,61,50,.055);
+}
+
+.ranking-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.ranking-heading > view { display: grid; gap: 4px; }
+.ranking-heading > view text:first-child { color: #19241f; font-size: 31px; font-weight: 900; }
+.ranking-heading > view text:last-child { color: #8c9892; font-size: 20px; }
+.ranking-heading > text { color: #cfd9d3; font-size: 27px; font-weight: 900; }
+
+.ranking-winner {
+  position: relative;
+  height: 176px;
+  margin-top: 15px;
+  overflow: hidden;
+  border-radius: 19px;
+}
+
+.ranking-winner > image,
+.winner-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.winner-shade { background: linear-gradient(180deg, rgba(7,19,29,.02) 20%, rgba(7,19,29,.78) 100%); }
+
+.winner-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 9px;
+  border-radius: 9px;
+  background: #f6dc82;
+  color: #5d4918;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.winner-copy {
+  position: absolute;
+  right: 15px;
+  bottom: 14px;
+  left: 15px;
+  display: grid;
+  gap: 4px;
+  color: #fff;
+}
+
+.winner-copy text:first-child { font-size: 28px; font-weight: 900; }
+.winner-copy text:last-child { color: rgba(255,255,255,.72); font-size: 19px; }
+
+.ranking-list { margin-top: 7px; }
+
+.ranking-row {
+  padding: 14px 1px;
+  border-bottom: 1px solid #edf0ed;
+  display: grid;
+  grid-template-columns: 35px 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.ranking-row:last-child { border-bottom: 0; padding-bottom: 2px; }
+
+.ranking-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: #edf2ef;
+  display: grid;
+  place-items: center;
+  color: #496156;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.number-2 { background: #e9eef3; color: #52677b; }
+.number-3 { background: #f6eae0; color: #9b6036; }
+.ranking-row > view { display: grid; gap: 3px; }
+.ranking-row > view text:first-child { color: #28332d; font-size: 25px; font-weight: 800; }
+.ranking-row > view text:last-child { color: #8a9690; font-size: 19px; }
+.ranking-row > text:last-child { color: #517165; font-size: 20px; font-weight: 700; }
+
+.ranking-gallery {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ranking-gallery image {
+  width: 100%;
+  height: 105px;
+  border-radius: 18px;
+}
+
+.rankings-note {
+  display: block;
+  margin-top: 15px;
+  padding: 16px;
+  border-radius: 17px;
+  background: #eaf1ed;
+  color: #64776d;
+  font-size: 20px;
+  line-height: 1.65;
+}

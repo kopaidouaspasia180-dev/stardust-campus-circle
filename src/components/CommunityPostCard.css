@@ -1,0 +1,129 @@
+.community-post-card {
+  padding: 18px;
+  border: 1px solid rgba(25, 61, 49, .075);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(29, 61, 50, .045);
+}
+
+.post-user-row {
+  display: flex;
+  align-items: center;
+}
+
+.post-avatar {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.post-avatar.tone-blue { background: linear-gradient(145deg, #6f99e4, #426fc0); }
+.post-avatar.tone-orange { background: linear-gradient(145deg, #efaa62, #df7541); }
+.post-avatar.tone-pink { background: linear-gradient(145deg, #e991b1, #cc5e8b); }
+.post-avatar.tone-violet { background: linear-gradient(145deg, #aa91df, #7560bf); }
+.post-avatar.tone-gold { background: linear-gradient(145deg, #e7c36e, #ba8932); }
+.post-avatar.tone-green { background: linear-gradient(145deg, #62bd8a, #29885b); }
+
+.post-user-copy {
+  min-width: 0;
+  margin-left: 11px;
+  flex: 1;
+  display: grid;
+  gap: 3px;
+}
+
+.post-user-name {
+  overflow: hidden;
+  color: #1c2822;
+  font-size: 27px;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.post-user-meta {
+  color: #87928c;
+  font-size: 20px;
+}
+
+.post-tag {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #eef7f0;
+  color: #0b7a43;
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.post-content {
+  display: -webkit-box;
+  margin-top: 13px;
+  overflow: hidden;
+  color: #303a35;
+  font-size: 27px;
+  line-height: 1.62;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.post-image-wrap {
+  position: relative;
+  height: 190px;
+  margin-top: 13px;
+  overflow: hidden;
+  border-radius: 17px;
+}
+
+.post-image,
+.post-image-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.post-image-shade {
+  background: linear-gradient(180deg, transparent 56%, rgba(8, 20, 25, .7));
+}
+
+.post-image-location {
+  position: absolute;
+  bottom: 12px;
+  left: 13px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.post-location {
+  display: block;
+  margin-top: 12px;
+  color: #728078;
+  font-size: 20px;
+}
+
+.post-action-row {
+  margin-top: 13px;
+  padding-top: 12px;
+  border-top: 1px solid #edf0ed;
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+  color: #66756d;
+  font-size: 22px;
+}
+
+.post-action-row .liked {
+  color: #0b7a43;
+  font-weight: 800;
+}
+
+.community-post-card.is-compact .post-content {
+  -webkit-line-clamp: 3;
+}
