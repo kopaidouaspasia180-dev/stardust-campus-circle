@@ -1,0 +1,11 @@
+.campus-avatar-image {
+  width: 44PX;
+  height: 44PX;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 2PX solid #fff;
+  border-radius: 50%;
+  background: #e9f4ff;
+  box-shadow: 0 4PX 12PX rgba(40, 105, 168, .12);
+  box-sizing: border-box;
+}

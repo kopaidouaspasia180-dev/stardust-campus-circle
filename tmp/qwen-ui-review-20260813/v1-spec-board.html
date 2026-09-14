@@ -1,0 +1,1543 @@
+<!doctype html>
+<html lang="zh-CN" data-appearance="light">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>星尘校园圈 · UI 视觉规范稿 V1.0</title>
+<style>
+/* ══════════════════════════════════════════════════════════════
+   STARDUST CAMPUS CIRCLE — design tokens
+   seed tokens → 全部派生色经 var()/color-mix() 计算
+══════════════════════════════════════════════════════════════ */
+:root{
+  --seed-primary:#28aee5;   /* 星尘青蓝：仅点缀与强调 */
+  --seed-bg:#f5f7fa;        /* 页面底 */
+  --seed-surface:#ffffff;   /* 卡片面 */
+  --seed-ink:#0f1d2a;       /* 深墨 */
+  --seed-navy:#0f2a40;      /* 深海军蓝焦点卡 */
+  --seed-radius:24px;       /* 卡片基准圆角 */
+
+  /* derived */
+  --c-bg:var(--seed-bg);
+  --c-surface:var(--seed-surface);
+  --c-ink:var(--seed-ink);
+  --c-ink-2:color-mix(in srgb,var(--seed-ink) 64%,var(--seed-surface));
+  --c-ink-3:color-mix(in srgb,var(--seed-ink) 44%,var(--seed-surface));
+  --c-ink-4:color-mix(in srgb,var(--seed-ink) 30%,var(--seed-surface));
+  --c-line:color-mix(in srgb,var(--seed-ink) 10%,transparent);
+  --c-line-soft:color-mix(in srgb,var(--seed-ink) 6%,transparent);
+  --c-tint:color-mix(in srgb,var(--seed-primary) 11%,var(--seed-surface));
+  --c-tint-2:color-mix(in srgb,var(--seed-primary) 20%,var(--seed-surface));
+  --c-primary-text:color-mix(in srgb,var(--seed-primary) 70%,var(--seed-ink));
+  --c-navy:var(--seed-navy);
+  --c-navy-2:color-mix(in srgb,var(--seed-navy) 78%,var(--seed-primary));
+  --c-on-navy:#eef6fb;
+  --c-on-navy-2:color-mix(in srgb,#eef6fb 62%,transparent);
+  --c-success:#2fb271; --c-warn:#e8a33d; --c-danger:#e05d5d;
+
+  --shadow-card:0 1px 2px color-mix(in srgb,var(--seed-navy) 6%,transparent),
+                0 14px 34px -24px color-mix(in srgb,var(--seed-navy) 48%,transparent);
+  --shadow-float:0 18px 44px -16px color-mix(in srgb,var(--seed-navy) 55%,transparent);
+
+  --board-bg:color-mix(in srgb,var(--seed-ink) 6%,var(--seed-bg));
+  --board-line:color-mix(in srgb,var(--seed-ink) 12%,transparent);
+  --board-mut:color-mix(in srgb,var(--seed-ink) 58%,var(--board-bg));
+
+  /* type */
+  --font-ui:-apple-system,BlinkMacSystemFont,"PingFang SC","SF Pro Text","Helvetica Neue","Noto Sans SC",system-ui,sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,"PingFang SC",monospace;
+  --fs-hero:46px; --fs-h1:34px; --fs-h2:26px; --fs-body:20px; --fs-meta:16px; --fs-eyebrow:12px;
+
+  --r-card:var(--seed-radius);
+  --r-card-lg:calc(var(--seed-radius) + 4px);
+  --r-tile:calc(var(--seed-radius) - 8px);
+  --r-pill:999px;
+
+  /* fixed hardware & dark palette tokens（保持 :root 之外无裸 hex） */
+  --c-white:#ffffff;
+  --c-on-primary:#042230;
+  --c-on-navy-dark:#e9f3fa;
+  --bezel-hi:#2a2c30; --bezel-mid:#191b1e; --bezel-lo:#0d0e10;
+  --island:#000000;
+  --dark-bg:#0d141c; --dark-surface:#161f2a; --dark-ink:#e8f0f7; --dark-navy:#12354f;
+}
+html[data-appearance="dark"]{
+  --seed-bg:var(--dark-bg);
+  --seed-surface:var(--dark-surface);
+  --seed-ink:var(--dark-ink);
+  --seed-navy:var(--dark-navy);
+  --c-on-navy:var(--c-on-navy-dark);
+}
+
+/* ══════ reset & board chrome ══════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-ui);
+  background:var(--board-bg);
+  color:var(--c-ink);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.45;
+}
+.wrap{max-width:1440px;margin:0 auto;padding:0 40px}
+.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:0}
+.eyebrow{
+  font-family:var(--font-mono);font-size:var(--fs-eyebrow);font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--c-ink-3);
+}
+.ic{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;display:block}
+
+/* board masthead */
+.board-head{padding:72px 0 36px;border-bottom:1px solid var(--board-line)}
+.head-row{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.brand-line{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.brand-star{width:22px;height:22px;color:var(--c-primary-text)}
+.board-title{
+  font-size:64px;font-weight:900;letter-spacing:-.02em;line-height:1.02;
+}
+.board-title small{
+  display:block;font-family:var(--font-mono);font-size:13px;font-weight:600;
+  letter-spacing:.34em;color:var(--board-mut);margin-top:14px;text-transform:uppercase;
+}
+.board-sub{max-width:560px;color:var(--board-mut);font-size:17px;margin-top:20px;line-height:1.6}
+.head-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.hchip{
+  display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:var(--r-pill);
+  border:1px solid var(--board-line);background:color-mix(in srgb,var(--seed-surface) 66%,transparent);
+  font-size:14px;font-weight:600;color:var(--c-ink-2);
+}
+.hchip .ic{width:15px;height:15px}
+.appear-btn{
+  display:inline-flex;align-items:center;gap:9px;padding:12px 20px;min-height:46px;
+  border-radius:var(--r-pill);border:1px solid var(--board-line);cursor:pointer;
+  background:var(--c-surface);color:var(--c-ink);font:600 15px/1 var(--font-ui);
+  box-shadow:var(--shadow-card);
+}
+.appear-btn .ic{width:17px;height:17px}
+html[data-appearance="light"] .moon-only{display:none}
+html[data-appearance="dark"] .sun-only{display:none}
+
+.board-nav{
+  position:sticky;top:0;z-index:40;border-bottom:1px solid var(--board-line);
+  background:var(--board-bg);
+}
+.board-nav .wrap{display:flex;gap:4px;align-items:center;padding-top:10px;padding-bottom:10px}
+.nav-link{
+  padding:10px 16px;border-radius:var(--r-pill);font-size:14px;font-weight:600;
+  color:var(--board-mut);text-decoration:none;letter-spacing:.02em;
+}
+.nav-link:hover{color:var(--c-ink);background:color-mix(in srgb,var(--seed-ink) 6%,transparent)}
+.nav-note{margin-left:auto;font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;color:var(--board-mut);text-transform:uppercase}
+
+/* groups */
+.group{padding:72px 0 8px}
+.group-head{margin-bottom:36px;max-width:720px}
+.group-head .eyebrow{color:var(--c-primary-text)}
+.group-title{font-size:34px;font-weight:900;letter-spacing:-.015em;margin-top:10px}
+.group-desc{color:var(--board-mut);font-size:16px;margin-top:10px;line-height:1.6}
+.screens{display:flex;flex-wrap:wrap;gap:44px 36px}
+
+/* device frame */
+.shot{display:flex;flex-direction:column;gap:16px}
+.shot figcaption{display:flex;align-items:baseline;gap:10px;padding:0 6px}
+.shot .idx{font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--c-primary-text)}
+.shot .name{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.shot .note{font-size:13px;color:var(--board-mut)}
+.device{
+  position:relative;width:414px;height:868px;border-radius:56px;padding:12px;flex:none;
+  background:linear-gradient(160deg,var(--bezel-hi) 0%,var(--bezel-mid) 52%,var(--bezel-lo) 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 0 0 2px var(--island) inset,
+             0 34px 70px -24px rgba(6,14,22,.5),0 10px 24px -12px rgba(6,14,22,.36);
+}
+.device::before,.device::after{
+  content:"";position:absolute;width:3px;top:110px;bottom:110px;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,.07) 10%,transparent 20%,transparent 82%,rgba(255,255,255,.05) 92%,transparent);
+}
+.device::before{left:-1px}.device::after{right:-1px}
+.island{position:absolute;top:24px;left:50%;transform:translateX(-50%);width:122px;height:35px;background:var(--island);border-radius:var(--r-pill);z-index:6}
+.screen{
+  position:relative;width:390px;height:844px;border-radius:44px;overflow:hidden;
+  background:var(--c-bg);display:flex;flex-direction:column;isolation:isolate;
+}
+.statusbar{
+  flex:0 0 50px;padding:16px 28px 0;display:flex;justify-content:space-between;align-items:flex-start;
+  font-size:15px;font-weight:600;color:var(--c-ink);letter-spacing:-.01em;
+}
+.statusbar .s{display:inline-flex;align-items:center;gap:6px}
+.statusbar svg{width:17px;height:11px;fill:var(--c-ink)}
+.statusbar .bat{width:25px}
+.content{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;position:relative}
+.content::-webkit-scrollbar{display:none}
+.tabbar{
+  flex:none;display:grid;grid-template-columns:repeat(5,1fr);padding:6px 10px 2px;
+  border-top:1px solid var(--c-line-soft);
+  background:var(--c-surface);
+}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 6px;color:var(--c-ink-3)}
+.tab .ic{width:23px;height:23px}
+.tab span{font-size:12px;font-weight:600;letter-spacing:.04em}
+.tab.active{color:var(--c-primary-text)}
+.tab.active .ic{stroke-width:2}
+.home-ind{flex:0 0 24px;position:relative}
+.home-ind::after{
+  content:"";position:absolute;left:50%;bottom:8px;transform:translateX(-50%);
+  width:132px;height:5px;border-radius:var(--r-pill);background:var(--c-ink);opacity:.86;
+}
+
+/* ══════ in-screen primitives ══════ */
+.pad{padding-inline:20px}
+.stk{display:flex;flex-direction:column}
+.row{display:flex;align-items:center;gap:10px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.h1{font-size:var(--fs-h1);font-weight:900;letter-spacing:-.015em;line-height:1.12}
+.h2{font-size:var(--fs-h2);font-weight:900;letter-spacing:-.01em;line-height:1.2}
+.body{font-size:var(--fs-body);line-height:1.5;color:var(--c-ink)}
+.meta{font-size:var(--fs-meta);color:var(--c-ink-2)}
+.faint{color:var(--c-ink-3)}
+.mini{font-size:13px;color:var(--c-ink-3)}
+.card{
+  background:var(--c-surface);border:1px solid var(--c-line-soft);
+  border-radius:var(--r-card);box-shadow:var(--shadow-card);
+}
+.tile{
+  width:46px;height:46px;flex:none;border-radius:var(--r-tile);
+  background:var(--c-tint);color:var(--c-primary-text);
+  display:grid;place-items:center;
+}
+.tile.plain{background:color-mix(in srgb,var(--seed-ink) 5%,var(--seed-surface));color:var(--c-ink-2)}
+.tile .ic{width:23px;height:23px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--r-pill);
+  font-size:14px;font-weight:600;letter-spacing:.02em;
+  background:color-mix(in srgb,var(--seed-ink) 6%,var(--seed-surface));color:var(--c-ink-2);
+}
+.chip .ic{width:14px;height:14px}
+.chip.blue{background:var(--c-tint-2);color:var(--c-primary-text)}
+.chip.on-navy{background:color-mix(in srgb,var(--c-white) 14%,transparent);color:var(--c-on-navy)}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;padding:10px 16px;min-height:44px;
+  border-radius:var(--r-pill);border:1px solid var(--c-line);background:var(--c-surface);
+  font-size:16px;font-weight:600;color:var(--c-ink-2);
+}
+.pill.active{background:var(--c-ink);color:var(--c-bg);border-color:var(--c-ink)}
+.pill .ic{width:17px;height:17px}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;
+  padding:12px 22px;border:0;border-radius:18px;cursor:pointer;
+  font:700 18px/1.2 var(--font-ui);letter-spacing:.01em;
+  background:var(--c-ink);color:var(--c-bg);
+}
+.btn.ghost{background:transparent;border:1px solid var(--c-line);color:var(--c-ink)}
+.btn .ic{width:19px;height:19px}
+.btn-sm{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;
+  padding:8px 18px;border:0;border-radius:var(--r-pill);cursor:pointer;
+  font:700 16px/1.2 var(--font-ui);background:var(--c-ink);color:var(--c-bg);
+}
+.icon-btn{
+  width:44px;height:44px;flex:none;border-radius:var(--r-pill);cursor:pointer;
+  border:1px solid var(--c-line-soft);background:var(--c-surface);color:var(--c-ink);
+  display:grid;place-items:center;box-shadow:var(--shadow-card);
+}
+.icon-btn .ic{width:20px;height:20px}
+.link{font-size:16px;font-weight:600;color:var(--c-primary-text);display:inline-flex;align-items:center;gap:3px;border:0;background:none;padding:0;cursor:pointer;font-family:inherit}
+.link .ic{width:15px;height:15px}
+.chan a,.chan button{
+  position:relative;padding:12px 2px 14px;font-size:19px;font-weight:700;color:var(--c-ink-3);
+  text-decoration:none;letter-spacing:.01em;flex:none;border:0;background:none;cursor:pointer;font-family:inherit;
+}
+.chan a.active,.chan button.active{color:var(--c-ink);font-weight:900}
+.chan a.active::after,.chan button.active::after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:3.5px;border-radius:2px;
+  background:var(--seed-primary);
+}
+.sec-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.sec-row .eyebrow{display:block;margin-bottom:6px}
+.avatar{
+  width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;
+  font-size:19px;font-weight:800;color:var(--c-on-navy);letter-spacing:0;
+  background:linear-gradient(140deg,var(--c-navy-2),var(--c-navy));
+  border:1px solid var(--c-line-soft);
+}
+.avatar.alt{background:linear-gradient(140deg,color-mix(in srgb,var(--seed-primary) 70%,var(--c-white)),var(--c-primary-text))}
+.avatar.lg{width:64px;height:64px;font-size:26px}
+
+/* bento */
+.bento{display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:1fr 1fr;gap:12px}
+.bento .big{grid-row:1/3}
+.navycard{
+  position:relative;overflow:hidden;background:linear-gradient(152deg,var(--c-navy) 0%,var(--c-navy-2) 130%);
+  color:var(--c-on-navy);border:0;padding:20px;display:flex;flex-direction:column;justify-content:space-between;
+}
+.navycard .eyebrow{color:var(--c-on-navy-2)}
+.constellation{position:absolute;right:-8px;top:6px;width:120px;height:120px;opacity:.5;pointer-events:none}
+.navycard .big-time{font-family:var(--font-mono);font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.mini-card{padding:14px 16px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.mini-card .top{display:flex;align-items:center;justify-content:space-between}
+.mini-card .val{font-size:24px;font-weight:900;letter-spacing:-.01em}
+.mini-card .ic{width:20px;height:20px;color:var(--c-ink-3)}
+.strip{display:flex;align-items:center;gap:12px;padding:14px 18px;margin-top:12px}
+.strip .tile{width:40px;height:40px}
+
+/* service grid */
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.svc{display:flex;align-items:center;gap:12px;padding:14px}
+.svc .tile{width:44px;height:44px}
+.svc .name{font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.svc .desc{font-size:13.5px;color:var(--c-ink-3);line-height:1.35;margin-top:2px}
+
+/* posts */
+.post{padding:18px}
+.post .p-head{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.post .p-name{font-size:17px;font-weight:800;line-height:1.2}
+.post .p-meta{font-size:13.5px;color:var(--c-ink-3);margin-top:2px}
+.post .p-body{font-size:var(--fs-body);line-height:1.55}
+.post .p-img{margin-top:12px;border-radius:var(--r-tile);overflow:hidden;border:1px solid var(--c-line-soft)}
+.post .p-actions{display:flex;gap:22px;margin-top:13px;color:var(--c-ink-3)}
+.p-act{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:14px}
+.p-act .ic{width:17px;height:17px}
+.ch-scroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.ch-scroll::-webkit-scrollbar{display:none}
+
+/* channel tabs */
+.chan{display:flex;gap:24px;border-bottom:1px solid var(--c-line-soft);padding:0 20px}
+
+/* rank */
+.rank-row{display:flex;align-items:center;gap:14px;padding:15px 18px}
+.rank-no{font-family:var(--font-mono);font-size:22px;font-weight:700;width:34px;flex:none;color:var(--c-ink-4);letter-spacing:-.02em}
+.rank-row.top .rank-no{color:var(--c-ink);font-size:26px}
+.cover{width:62px;height:62px;flex:none;border-radius:var(--r-tile);border:1px solid var(--c-line-soft);overflow:hidden;display:grid;place-items:center}
+.like-btn{
+  display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:6px 14px;flex:none;
+  border-radius:var(--r-pill);border:1px solid var(--c-line);background:var(--c-surface);
+  font-family:var(--font-mono);font-size:14px;color:var(--c-ink-2);cursor:pointer;
+}
+.like-btn .ic{width:16px;height:16px}
+.like-btn.hot{border-color:color-mix(in srgb,var(--seed-primary) 45%,transparent);background:var(--c-tint);color:var(--c-primary-text)}
+
+/* list rows */
+.lrow{display:flex;align-items:center;gap:14px;padding:15px 18px}
+.lrow .tile{width:42px;height:42px}
+.lrow .chev{color:var(--c-ink-4)}
+.lrow .chev .ic{width:18px;height:18px}
+.lrow + .lrow{border-top:1px solid var(--c-line-soft)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--seed-primary);flex:none}
+
+/* search */
+.search{
+  display:flex;align-items:center;gap:11px;min-height:52px;padding:0 18px;
+  background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-pill);
+  box-shadow:var(--shadow-card);
+}
+.search .ic{width:19px;height:19px;color:var(--c-ink-3);flex:none}
+.search input{border:0;outline:0;background:transparent;flex:1;font:500 17px/1 var(--font-ui);color:var(--c-ink);min-width:0}
+.search input::placeholder{color:var(--c-ink-4)}
+
+/* date strip */
+.dates{display:flex;gap:9px;overflow-x:auto;scrollbar-width:none}
+.dates::-webkit-scrollbar{display:none}
+.date-ch{
+  flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:62px;
+  padding:10px 8px;border-radius:18px;border:1px solid var(--c-line);background:var(--c-surface);
+  font-size:13px;color:var(--c-ink-3);
+}
+.date-ch .d{font-family:var(--font-mono);font-size:19px;font-weight:700;color:var(--c-ink);letter-spacing:-.02em}
+.date-ch.active{background:var(--c-ink);border-color:var(--c-ink)}
+.date-ch.active .d,.date-ch.active span{color:var(--c-bg)}
+
+/* product grid */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.prod{padding:12px}
+.thumb{border-radius:calc(var(--r-tile) - 2px);aspect-ratio:1/.78;display:grid;place-items:center;background:var(--c-tint);color:var(--c-primary-text);margin-bottom:10px;border:1px solid var(--c-line-soft)}
+.thumb .ic{width:34px;height:34px}
+.thumb.alt{background:color-mix(in srgb,var(--seed-navy) 8%,var(--seed-surface));color:var(--c-navy-2)}
+html[data-appearance="dark"] .thumb.alt{color:var(--c-on-navy)}
+.prod .p-name{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.prod .p-sub{font-size:13.5px;color:var(--c-ink-3);margin-top:2px}
+.prod .p-foot{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+.price{font-family:var(--font-mono);font-size:18px;font-weight:700;letter-spacing:-.02em}
+.price small{font-size:12.5px;font-weight:600;color:var(--c-ink-3)}
+.add-btn{
+  width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;flex:none;
+  background:var(--c-ink);color:var(--c-bg);display:grid;place-items:center;
+}
+.add-btn .ic{width:18px;height:18px}
+
+/* cart bar */
+.cartbar{
+  position:absolute;left:16px;right:16px;bottom:16px;min-height:60px;z-index:8;
+  display:flex;align-items:center;gap:12px;padding:10px 12px 10px 18px;
+  background:var(--c-ink);color:var(--c-bg);border-radius:22px;box-shadow:var(--shadow-float);
+}
+.cartbar .ic{width:21px;height:21px}
+.cartbar .go{
+  margin-left:auto;min-height:44px;padding:8px 22px;border-radius:var(--r-pill);border:0;cursor:pointer;
+  background:var(--seed-primary);color:var(--c-on-primary);font:800 16px/1 var(--font-ui);letter-spacing:.02em;
+}
+
+/* FAB */
+.fab{
+  position:absolute;right:18px;bottom:100px;z-index:9;width:58px;height:58px;border-radius:50%;
+  display:grid;place-items:center;border:0;cursor:pointer;color:var(--c-on-navy);
+  background:linear-gradient(145deg,var(--seed-primary),var(--c-primary-text));
+  box-shadow:0 16px 34px -12px color-mix(in srgb,var(--seed-primary) 70%,transparent);
+}
+.fab .ic{width:24px;height:24px}
+.fab.navy{background:linear-gradient(145deg,var(--c-navy-2),var(--c-navy));
+  box-shadow:0 16px 34px -12px color-mix(in srgb,var(--seed-navy) 75%,transparent)}
+.constellation path{stroke:color-mix(in srgb,var(--seed-primary) 56%,var(--c-on-navy))}
+.constellation circle{fill:color-mix(in srgb,var(--seed-primary) 62%,var(--c-on-navy))}
+
+/* state pages */
+.state-hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:34px 28px 0}
+.state-illo{
+  width:132px;height:132px;border-radius:40px;display:grid;place-items:center;margin-bottom:22px;
+  background:var(--c-tint);color:var(--c-primary-text);border:1px solid var(--c-line-soft);
+}
+.state-illo .ic{width:56px;height:56px;stroke-width:1.4}
+.state-illo.plain{background:color-mix(in srgb,var(--seed-ink) 5%,var(--seed-surface));color:var(--c-ink-2)}
+.state-h{font-size:26px;font-weight:900;letter-spacing:-.01em}
+.state-sub{font-size:16.5px;color:var(--c-ink-2);line-height:1.6;margin-top:10px;max-width:290px}
+.stepper{display:flex;align-items:center;gap:8px;margin-top:8px}
+.step{display:flex;flex-direction:column;align-items:center;gap:7px;width:86px}
+.step .b{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1.6px solid var(--c-line);background:var(--c-surface);color:var(--c-ink-4)}
+.step .b .ic{width:16px;height:16px}
+.step.done .b{background:var(--c-ink);border-color:var(--c-ink);color:var(--c-bg)}
+.step.now .b{border-color:var(--seed-primary);color:var(--c-primary-text);box-shadow:0 0 0 4px var(--c-tint)}
+.step span{font-size:13px;color:var(--c-ink-3);font-weight:600}
+.step.now span{color:var(--c-ink)}
+.step-line{width:26px;height:1.6px;background:var(--c-line);flex:none;margin-bottom:24px}
+
+/* skeleton */
+.sk{
+  border-radius:14px;
+  background:linear-gradient(100deg,var(--c-line-soft) 38%,color-mix(in srgb,var(--seed-ink) 11%,transparent) 50%,var(--c-line-soft) 62%);
+  background-size:220% 100%;animation:shimmer 1.5s linear infinite;
+}
+@keyframes shimmer{from{background-position:130% 0}to{background-position:-90% 0}}
+
+/* dashed structural card */
+.dashed{
+  border:1.7px dashed color-mix(in srgb,var(--seed-ink) 22%,transparent);
+  border-radius:var(--r-card);background:color-mix(in srgb,var(--seed-surface) 62%,transparent);
+}
+
+/* subpage topbar */
+.topbar{display:flex;align-items:center;gap:12px;padding:6px 20px 14px}
+.topbar .h1{font-size:30px}
+
+/* ══════ spec panel ══════ */
+.spec{
+  background:var(--c-surface);border:1px solid var(--board-line);border-radius:32px;
+  box-shadow:var(--shadow-card);padding:48px;display:grid;gap:44px;
+}
+.spec-sec > .eyebrow{margin-bottom:6px;color:var(--c-primary-text)}
+.spec-sec > h3{font-size:24px;font-weight:900;letter-spacing:-.01em;margin-bottom:18px}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px}
+.swatch{border:1px solid var(--board-line);border-radius:18px;overflow:hidden;background:var(--c-surface)}
+.swatch .sw{height:74px}
+.swatch .sw-info{padding:12px 14px}
+.swatch .sw-name{font-size:15px;font-weight:800}
+.swatch .sw-hex{font-family:var(--font-mono);font-size:12.5px;color:var(--board-mut);margin-top:2px;letter-spacing:.04em}
+.swatch .sw-use{font-size:13px;color:var(--board-mut);margin-top:6px;line-height:1.45}
+.type-row{display:grid;grid-template-columns:190px 1fr auto;align-items:center;gap:18px;padding:14px 0;border-top:1px solid var(--board-line)}
+.type-row:first-of-type{border-top:0}
+.type-row .tk{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.1em;color:var(--board-mut);text-transform:uppercase}
+.type-row .spec-note{font-size:13.5px;color:var(--board-mut);text-align:right;max-width:220px}
+.space-row{display:flex;gap:10px;flex-wrap:wrap}
+.space-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.space-bar{height:44px;border-radius:8px;background:var(--c-tint-2);border:1px solid color-mix(in srgb,var(--seed-primary) 30%,transparent)}
+.space-item span{font-family:var(--font-mono);font-size:12px;color:var(--board-mut)}
+.radius-row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}
+.radius-demo{display:flex;flex-direction:column;align-items:center;gap:8px}
+.radius-box{width:84px;height:84px;background:var(--c-surface);border:1px solid var(--board-line);box-shadow:var(--shadow-card)}
+.radius-demo span{font-family:var(--font-mono);font-size:12px;color:var(--board-mut)}
+.touch-row{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.touch-demo{display:flex;flex-direction:column;align-items:center;gap:8px}
+.touch-demo .zone{border:1.7px dashed color-mix(in srgb,var(--seed-primary) 55%,transparent);border-radius:16px;display:grid;place-items:center;color:var(--c-ink-2)}
+.touch-demo span{font-family:var(--font-mono);font-size:12px;color:var(--board-mut)}
+.rule-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.rule{display:flex;gap:10px;align-items:flex-start;padding:13px 15px;border:1px solid var(--board-line);border-radius:14px;font-size:14.5px;line-height:1.5;color:var(--c-ink-2)}
+.rule .ic{width:17px;height:17px;flex:none;margin-top:2px;color:var(--c-primary-text)}
+
+.board-foot{padding:64px 0 72px;text-align:center;color:var(--board-mut);font-size:14px;line-height:1.8}
+.board-foot .eyebrow{display:block;margin-bottom:10px}
+
+.hero-title{font-size:var(--fs-hero);font-weight:900;letter-spacing:-.02em;line-height:1.05}
+.sec-gap{margin-top:24px}
+.ann{
+  background:var(--c-surface);border:1px solid var(--c-line-soft);border-radius:var(--r-pill);
+  padding:12px 16px;font-size:16px;font-weight:600;box-shadow:var(--shadow-card);min-height:46px;
+}
+.topic{
+  flex:none;display:inline-flex;align-items:center;min-height:42px;padding:8px 15px;
+  border-radius:var(--r-pill);border:1px solid var(--c-line);background:var(--c-surface);
+  font-size:15px;font-weight:600;color:var(--c-ink-2);
+}
+.cover{background:var(--c-tint);color:var(--c-primary-text)}
+.cover.alt{background:color-mix(in srgb,var(--seed-navy) 8%,var(--seed-surface));color:var(--c-navy-2)}
+html[data-appearance="dark"] .cover.alt{color:var(--c-on-navy)}
+.state-illo.danger{background:color-mix(in srgb,var(--c-danger) 12%,var(--seed-surface));color:var(--c-danger)}
+.entry{display:flex;flex-direction:column;align-items:center;gap:9px;padding:8px 0;background:transparent;border:0;cursor:pointer}
+.entry .tile{width:46px;height:46px}
+.entry span{font-size:15px;font-weight:700;color:var(--c-ink-2);letter-spacing:.01em}
+.klass{display:flex;gap:16px;padding:16px 18px}
+.klass .when{width:62px;flex:none;text-align:center}
+.klass .when .t{font-family:var(--font-mono);font-size:18px;font-weight:800;letter-spacing:-.02em}
+.klass .when .p{font-size:13px;color:var(--c-ink-3);margin-top:2px}
+.klass .rail{width:1.6px;background:var(--c-line);border-radius:1px;flex:none}
+.state-illo{position:relative}
+.state-illo .sat{position:absolute;top:-11px;right:-9px;width:34px;height:34px;border-radius:50%;background:var(--seed-primary);color:var(--c-on-primary);display:grid;place-items:center;box-shadow:0 8px 18px -6px color-mix(in srgb,var(--seed-primary) 70%,transparent)}
+.state-illo .sat .ic{width:17px;height:17px;stroke-width:2}
+
+@media (max-width:900px){
+  .wrap{padding:0 20px}
+  .board-title{font-size:44px}
+  .device{width:414px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ icon library：统一线性 / 圆角端点 / 1.7 stroke ══════════════ -->
+<svg hidden aria-label="图标库" data-component="Icon Library" data-od-id="icon-lib" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.4 12 4.2l8 7.2"/><path d="M6.4 9.9V20h11.2V9.9"/><path d="M10 20v-4.6h4V20"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7.2" height="7.2" rx="2.2"/><rect x="12.8" y="4" width="7.2" height="7.2" rx="2.2"/><rect x="4" y="12.8" width="7.2" height="7.2" rx="2.2"/><rect x="12.8" y="12.8" width="7.2" height="7.2" rx="2.2"/></symbol>
+  <symbol id="i-circle" viewBox="0 0 24 24"><path d="M12 3.6c4.7 0 8.4 3.2 8.4 7.2 0 4-3.7 7.2-8.4 7.2-.9 0-1.8-.1-2.6-.4L5 20.2l1.1-3.7c-1.6-1.3-2.5-3.1-2.5-5.7 0-4 3.7-7.2 8.4-7.2z"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5.2a4 4 0 0 1-8 0V4z"/><path d="M8 5.2H5a3 3 0 0 0 3.2 3.6"/><path d="M16 5.2h3a3 3 0 0 1-3.2 3.6"/><path d="M12 13.4v3"/><path d="M8.2 20h7.6"/><path d="M9.6 16.4h4.8l.6 3.6H9l.6-3.6z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.7 3.7-5.6 7-5.6s6.2 1.9 7 5.6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-3.7-3.7"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6.2 9.4a5.8 5.8 0 0 1 11.6 0c0 4.6 1.8 5.7 1.8 5.7H4.4s1.8-1.1 1.8-5.7z"/><path d="M10.4 18.8a1.9 1.9 0 0 0 3.2 0"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9.4 5.6 6.4 6.4-6.4 6.4"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M14.6 5.6 8.2 12l6.4 6.4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.2v13.6M5.2 12h13.6"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 19.8s-6.8-4.4-6.8-9.6a3.9 3.9 0 0 1 6.8-2.6 3.9 3.9 0 0 1 6.8 2.6c0 5.2-6.8 9.6-6.8 9.6z"/></symbol>
+  <symbol id="i-comment" viewBox="0 0 24 24"><path d="M19.8 7a2 2 0 0 0-2-2H6.2a2 2 0 0 0-2 2v7.4a2 2 0 0 0 2 2h3.1l3.2 3.1v-3.1h5.3a2 2 0 0 0 2-2V7z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="m12 3.2 7.8 4.4v8.8L12 20.8l-7.8-4.4V7.6L12 3.2z"/><path d="m12 12 7.8-4.4M12 12 4.2 7.6M12 12v8.8"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8.6 3v3.6M15.4 3v3.6"/></symbol>
+  <symbol id="i-weather" viewBox="0 0 24 24"><circle cx="16.8" cy="7" r="2.7"/><path d="M8 17.5h8.4a3.4 3.4 0 0 0 .5-6.8 5.2 5.2 0 0 0-10.2 1.3A3.1 3.1 0 0 0 8 17.5z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.4 13.9 9 19.6 11l-5.7 2-1.9 5.6L10.1 13l-5.7-2 5.7-2L12 3.4z"/><path d="M18.6 16.6l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.4 12.6 4.2 4.2L18.8 7.4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 7 2.8v5.3c0 4.6-3 7.7-7 9.9-4-2.2-7-5.3-7-9.9V5.8L12 3z"/><path d="m9 11.9 2.2 2.2 3.9-4.2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2.1"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.6-5.4-6.6-10.2a6.6 6.6 0 0 1 13.2 0C18.6 15.6 12 21 12 21z"/><circle cx="12" cy="10.6" r="2.4"/></symbol>
+  <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M4.4 11.6h15.2a7.6 7.6 0 0 1-15.2 0z"/><path d="M9.2 19.6h5.6"/><path d="M9.9 4.6c-.8.8.8 1.7 0 2.5M14.1 4.6c-.8.8.8 1.7 0 2.5"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M4 5.6A1.6 1.6 0 0 1 5.6 4h5c.4 0 .8.2 1.1.4l7.4 7.4a1.6 1.6 0 0 1 0 2.3l-5 5a1.6 1.6 0 0 1-2.3 0L4.4 11.7a1.6 1.6 0 0 1-.4-1.1V5.6z"/><circle cx="8.9" cy="8.9" r="1.4"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13.2 3 5.4 13.4h5L10.8 21l7.8-10.4h-5L13.2 3z"/></symbol>
+  <symbol id="i-case" viewBox="0 0 24 24"><rect x="4" y="7.6" width="16" height="12" rx="2.6"/><path d="M9 7.6V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.6M4 12.6h16"/></symbol>
+  <symbol id="i-calcheck" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8.6 3v3.6M15.4 3v3.6"/><path d="m9.2 14.8 2 2 3.8-4"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.6" r="3.2"/><path d="M3.6 19c.5-3 2.7-4.8 5.4-4.8s4.9 1.8 5.4 4.8"/><circle cx="16.8" cy="9.6" r="2.6"/><path d="M17.6 14.5c1.9.5 3.1 2 3.4 4"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><path d="M10 9.4 19 5.4v13.2l-9-4H5.8a1.8 1.8 0 0 1-1.8-1.8v-1.6a1.8 1.8 0 0 1 1.8-1.8H10z"/><path d="m7.6 14.9.9 4.1h2.4l-.8-3.9"/><path d="M19 9.6a3.1 3.1 0 0 1 0 4.8"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path d="M12 7.4c-2.8-1.9-6.7-.3-6.7 4 0 4.1 2.8 8.2 6.7 8.2s6.7-4.1 6.7-8.2c0-4.3-3.9-5.9-6.7-4z"/><path d="M12 7.4c-.2-1.9.8-3.3 2.6-3.8"/></symbol>
+  <symbol id="i-flower" viewBox="0 0 24 24"><path d="M12 20.6v-6.4"/><path d="M12 14.2c-4 0-6.1-2.6-6.1-6.2 1.9 0 3.1.6 4.1 1.7.4-1.7 1-2.8 2-3.9 1 1.1 1.6 2.2 2 3.9 1-1.1 2.2-1.7 4.1-1.7 0 3.6-2.1 6.2-6.1 6.2z"/><path d="M12 17.6c-1.9 0-3.3-.9-3.9-2.3M12 17.6c1.9 0 3.3-.9 3.9-2.3"/></symbol>
+  <symbol id="i-cookie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><circle cx="9.7" cy="9.7" r="1.2"/><circle cx="14.7" cy="10.4" r="1"/><circle cx="11.3" cy="14.7" r="1.1"/></symbol>
+  <symbol id="i-bike" viewBox="0 0 24 24"><circle cx="6.3" cy="16.6" r="3"/><circle cx="17.7" cy="16.6" r="3"/><path d="M6.3 16.6 9.8 9.4h4.4l3.5 7.2"/><path d="M9.8 9.4 8.4 6.7H6.6"/><path d="M13.4 6.7h2.1l.8 2.7"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9.2" cy="19" r="1.6"/><circle cx="16.6" cy="19" r="1.6"/><path d="M4 5h2.1l2.2 10.4h9.5L20 8.2H7"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4.4 11.4 20 4.4l-4.4 15.2-3.9-6.3-7.3-1.9z"/><path d="M11.7 13.3 20 4.4"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M4.6 12a7.4 7.4 0 0 1 12.8-5.1L19.6 9"/><path d="M19.6 4.6V9h-4.4"/><path d="M19.4 12a7.4 7.4 0 0 1-12.8 5.1L4.4 15"/><path d="M4.4 19.4V15h4.4"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4.6 13 7 6h10l2.4 7v4.4a2 2 0 0 1-2 2H6.6a2 2 0 0 1-2-2V13z"/><path d="M4.6 13h4.3l1.4 2.4h3.4L15.1 13h4.3"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5.4" y="10.4" width="13.2" height="9.6" rx="2.6"/><path d="M8.4 10.4V8a3.6 3.6 0 0 1 7.2 0v2.4"/><circle cx="12" cy="15" r="1.4"/></symbol>
+  <symbol id="i-wifioff" viewBox="0 0 24 24"><path d="M5 10.2a11.2 11.2 0 0 1 14 0"/><path d="M8 13.6a7 7 0 0 1 8 0"/><circle cx="12" cy="17.4" r="1.3"/><path d="m4 4 16 16"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15.6V4.8M7.6 9 12 4.6 16.4 9M4.8 19.2h14.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.8 13.6A8 8 0 1 1 10.4 4.2a6.4 6.4 0 0 0 9.4 9.4z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3.2v1.8M12 19v1.8M3.2 12H5M19 12h1.8M5.8 5.8l1.3 1.3M16.9 16.9l1.3 1.3M18.2 5.8l-1.3 1.3M7.1 16.9l-1.3 1.3"/></symbol>
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M6.4 8.4h8.8V14a4.4 4.4 0 0 1-8.8 0V8.4z"/><path d="M15.2 9.6h1.8a2.4 2.4 0 0 1 0 4.8h-1.8"/><path d="M8.9 3.9c-.6.7.6 1.3 0 2M12.3 3.9c-.6.7.6 1.3 0 2"/></symbol>
+  <symbol id="i-wechat" viewBox="0 0 24 24"><path d="M9.4 4.6c-3.3 0-6 2.2-6 4.9 0 1.6.9 3 2.2 3.9l-.6 1.9 2.2-1.1c.7.2 1.4.3 2.2.3"/><path d="M14.8 8.7c3 0 5.4 1.9 5.4 4.3 0 1.4-.8 2.6-2 3.4l.5 1.8-1.9-1c-.6.2-1.3.3-2 .3-3 0-5.4-2-5.4-4.5s2.4-4.3 5.4-4.3z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.6C10.8 5.5 9 5.1 7 5.1H4.6v13H7c2 0 3.8.4 5 1.5 1.2-1.1 3-1.5 5-1.5h2.4v-13H12z" opacity=".0"/><path d="M12 6.6C10.8 5.5 9 5.1 7 5.1H4.6v13.2H7c2 0 3.8.4 5 1.5 1.2-1.1 3-1.5 5-1.5h2.4V5.1H15c-2 0-3.8.4-5 1.5z"/><path d="M12 6.6v13.2"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 16.4l-4.8 2.5.9-5.4L4.2 9.7l5.4-.8L12 4z"/></symbol>
+</svg>
+
+<!-- status bar template -->
+<template id="sb-tpl" data-component="Statusbar Template" data-od-id="statusbar-tpl">
+  <div class="statusbar">
+    <span class="num">9:41</span>
+    <span class="s">
+      <svg viewBox="0 0 17 11" aria-hidden="true"><rect x="0" y="7" width="3" height="4" rx="0.7"/><rect x="4" y="5" width="3" height="6" rx="0.7"/><rect x="8" y="2.6" width="3" height="8.4" rx="0.7"/><rect x="12" y="0" width="3" height="11" rx="0.7"/></svg>
+      <svg viewBox="0 0 16 12" aria-hidden="true"><path d="M8 2.2C5.2 2.2 2.6 3.2.6 5l1.4 1.5C3.7 5 5.8 4.2 8 4.2s4.3.8 6 2.3l1.4-1.5c-2-1.8-4.6-2.8-7.4-2.8zM3.4 7.9 4.8 9.4c.9-.8 2-1.3 3.2-1.3s2.3.5 3.2 1.3l1.4-1.5c-1.3-1.2-2.9-1.9-4.6-1.9s-3.3.7-4.6 1.9zM6.3 11l1.7 1.7L9.7 11c-.5-.5-1.1-.7-1.7-.7s-1.2.2-1.7.7z"/></svg>
+      <svg class="bat" viewBox="0 0 25 12" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="3" fill="none" stroke="currentColor" stroke-opacity="0.4"/><rect x="22.4" y="3.8" width="1.8" height="4.4" rx="0.6" fill="currentColor" fill-opacity="0.4"/><rect x="2" y="2" width="18" height="8" rx="1.8"/></svg>
+    </span>
+  </div>
+</template>
+
+<!-- ══════════════ board masthead ══════════════ -->
+<header class="board-head" data-component="Board Masthead" data-od-id="board-head">
+  <div class="wrap">
+    <div class="head-row">
+      <div>
+        <div class="brand-line">
+          <svg class="brand-star ic" aria-hidden="true"><use href="#i-spark"/></svg>
+          <span class="eyebrow">Stardust Campus Circle · UI Spec</span>
+        </div>
+        <h1 class="board-title">星尘校园圈<small>High-fidelity visual · Tangshan College</small></h1>
+        <p class="board-sub">面向唐山学院学生的一站式校园生活小程序 / H5。品牌蓝白体系 · 编辑感排版 · 非对称 Bento 信息面板，同一套设计 token 覆盖微信小程序与 H5 双端。</p>
+        <div class="head-chips">
+          <span class="hchip"><svg class="ic"><use href="#i-cal"/></svg>390 × 844 · iPhone 14</span>
+          <span class="hchip"><svg class="ic"><use href="#i-grid"/></svg>14 屏 + 设计规范</span>
+          <span class="hchip"><svg class="ic"><use href="#i-shield"/></svg>高校 + 校区双重隔离</span>
+          <span class="hchip num">V1.0 · 2026.08</span>
+        </div>
+      </div>
+      <button class="appear-btn" id="appearBtn" aria-label="切换浅色 / 深色外观">
+        <svg class="ic sun-only"><use href="#i-moon"/></svg>
+        <svg class="ic moon-only"><use href="#i-sun"/></svg>
+        <span class="sun-only">试试深色外观</span>
+        <span class="moon-only">回到浅色外观</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="board-nav" data-component="Group Nav" data-od-id="board-nav" aria-label="设计板分组">
+  <div class="wrap">
+    <a class="nav-link" href="#group-a">A · 五张主屏</a>
+    <a class="nav-link" href="#group-b">B · 服务页示例</a>
+    <a class="nav-link" href="#group-c">C · 通用状态</a>
+    <a class="nav-link" href="#group-d">D · 设计规范</a>
+    <span class="nav-note">390×844 / 星尘青蓝 #28AEE5</span>
+  </div>
+</nav>
+
+<main data-component="Design Board Main" data-od-id="main">
+<!-- ══════════════ A 组 · 五张主屏 ══════════════ -->
+<section id="group-a" class="group" data-component="Group A Core Screens" data-od-id="group-a">
+  <div class="wrap">
+    <div class="group-head">
+      <p class="eyebrow">Group A · Core Screens</p>
+      <h2 class="group-title">五张主屏</h2>
+      <p class="group-desc">编辑感刊头 + 非对称 Bento 今日面板 + 每页唯一的深海军蓝焦点卡。品牌蓝只出现在选中态与点睛处。</p>
+    </div>
+    <div class="screens">
+
+      <!-- 01 首页 -->
+      <figure class="shot" data-component="屏幕 01 · 首页">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:12px">
+              <div class="pad" style="padding-top:6px" data-component="刊头">
+                <div class="between">
+                  <div>
+                    <p class="eyebrow">Stardust · Thu Aug 13</p>
+                    <h1 class="hero-title">唐山学院</h1>
+                  </div>
+                  <button class="icon-btn" aria-label="通知" style="margin-top:22px"><svg class="ic"><use href="#i-bell"/></svg></button>
+                </div>
+                <div class="row" style="margin-top:12px">
+                  <span class="chip"><svg class="ic"><use href="#i-pin"/></svg>主校区</span>
+                  <span class="chip"><svg class="ic"><use href="#i-shield"/></svg>微信登录 · 已认证</span>
+                </div>
+              </div>
+              <div class="pad" style="margin-top:14px">
+                <div class="row ann">
+                  <svg class="ic" style="width:17px;height:17px;flex:none;color:var(--c-primary-text)"><use href="#i-mega"/></svg>
+                  <span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">图书馆本周起开放北侧阅览室</span>
+                  <svg class="ic" style="width:15px;height:15px;flex:none;color:var(--c-ink-4)"><use href="#i-chev"/></svg>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="今日 Bento 面板">
+                <div class="sec-row">
+                  <div><p class="eyebrow">Today</p><h2 class="h2">今日面板</h2></div>
+                  <button class="link" type="button">全部<svg class="ic"><use href="#i-chev"/></svg></button>
+                </div>
+                <div class="bento" style="margin-top:14px">
+                  <div class="card navycard big">
+                    <svg class="constellation" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke-opacity=".55" stroke-width="1"><path d="M18 30 52 16 84 34 102 12"/><path d="M52 16 60 52 96 66"/><path d="M28 78 60 52"/></g><g stroke="none"><circle cx="18" cy="30" r="2.2"/><circle cx="52" cy="16" r="2.8"/><circle cx="84" cy="34" r="2"/><circle cx="102" cy="12" r="1.8"/><circle cx="60" cy="52" r="2.4"/><circle cx="96" cy="66" r="1.8"/><circle cx="28" cy="78" r="2"/></g></svg>
+                    <p class="eyebrow">Next Class</p>
+                    <div style="margin-top:8px">
+                      <div class="big-time">14:00</div>
+                      <div style="font-size:21px;font-weight:800;margin-top:9px;letter-spacing:-.01em">数据库系统原理</div>
+                    </div>
+                    <div class="row" style="flex-wrap:wrap;gap:8px">
+                      <span class="chip on-navy"><svg class="ic"><use href="#i-pin"/></svg>A 楼 · 302</span>
+                      <span class="chip" style="background:var(--seed-primary);color:var(--c-on-primary)">42 分钟后</span>
+                    </div>
+                  </div>
+                  <div class="card mini-card">
+                    <div class="top"><span class="meta">唐山 · 天气</span><svg class="ic"><use href="#i-weather"/></svg></div>
+                    <div class="row" style="gap:8px"><span class="val num">26°</span><span class="mini">多云转晴</span></div>
+                  </div>
+                  <div class="card mini-card">
+                    <div class="top"><span class="meta">待取快递</span><svg class="ic"><use href="#i-box"/></svg></div>
+                    <div class="row" style="gap:8px"><span class="val num">0</span><span class="mini">绑定后归集</span></div>
+                  </div>
+                </div>
+                <div class="card strip" data-component="今日课程条">
+                  <span class="tile plain"><svg class="ic"><use href="#i-cal"/></svg></span>
+                  <div><div style="font-size:18px;font-weight:800">今天 3 节课</div><div class="mini">最近一节 14:00 · 数据库系统原理</div></div>
+                  <button class="link" style="margin-left:auto" type="button">课表<svg class="ic"><use href="#i-chev"/></svg></button>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="常用服务">
+                <div class="sec-row">
+                  <div><p class="eyebrow">Services</p><h2 class="h2">常用服务</h2></div>
+                  <button class="link" type="button">管理<svg class="ic"><use href="#i-chev"/></svg></button>
+                </div>
+                <div class="svc-grid" style="margin-top:14px">
+                  <div class="card svc"><span class="tile"><svg class="ic"><use href="#i-bowl"/></svg></span><div><div class="name">校园外卖</div><div class="desc">食堂窗口送到楼下</div></div></div>
+                  <div class="card svc"><span class="tile plain"><svg class="ic"><use href="#i-zap"/></svg></span><div><div class="name">跑腿代办</div><div class="desc">代取代购当日完成</div></div></div>
+                  <div class="card svc"><span class="tile plain"><svg class="ic"><use href="#i-tag"/></svg></span><div><div class="name">二手市场</div><div class="desc">学长学姐的闲置</div></div></div>
+                  <div class="card svc"><span class="tile"><svg class="ic"><use href="#i-box"/></svg></span><div><div class="name">快递查询</div><div class="desc">多站点自动归集</div></div></div>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="校园圈预览">
+                <div class="sec-row">
+                  <div><p class="eyebrow">Circle</p><h2 class="h2">校园圈动态</h2></div>
+                  <button class="link" type="button">进圈子<svg class="ic"><use href="#i-chev"/></svg></button>
+                </div>
+                <div class="card post" style="margin-top:14px;padding:16px">
+                  <div class="p-head" style="margin-bottom:9px">
+                    <span class="avatar">林</span>
+                    <div><div class="p-name">林小满</div><div class="p-meta">日常 · 2 小时前</div></div>
+                  </div>
+                  <div style="font-size:17px;line-height:1.5;color:var(--c-ink-2)">四楼自习室新添了靠窗座位，看出去就是银杏道……</div>
+                  <div class="p-actions" style="margin-top:10px">
+                    <span class="p-act"><svg class="ic"><use href="#i-heart"/></svg>48</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-comment"/></svg>12</span>
+                  </div>
+                </div>
+              </div>
+              <button class="fab navy" aria-label="问星尘 AI"><svg class="ic"><use href="#i-spark"/></svg></button>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx num">01</span><span class="name">首页</span><span class="note">编辑感刊头 · Bento 今日面板</span></figcaption>
+      </figure>
+
+      <!-- 02 校园服务 -->
+      <figure class="shot" data-component="屏幕 02 · 校园服务">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:12px">
+              <div class="pad" style="padding-top:6px" data-component="服务刊头">
+                <div class="between" style="align-items:flex-end">
+                  <div>
+                    <p class="eyebrow">Service · Campus</p>
+                    <h1 class="h1">校园服务</h1>
+                  </div>
+                  <button class="icon-btn" aria-label="扫一扫"><svg class="ic"><use href="#i-grid"/></svg></button>
+                </div>
+                <div class="card" style="margin-top:16px;padding:22px" data-component="服务 Hero">
+                  <div class="between">
+                    <div>
+                      <div class="h2" style="font-size:27px">校园的事，<br/>一站办完。</div>
+                      <div class="meta" style="margin-top:9px">主校区 12 项服务 · 实时更新</div>
+                    </div>
+                    <span class="tile" style="width:54px;height:54px;flex:none"><svg class="ic" style="width:26px;height:26px"><use href="#i-spark"/></svg></span>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:12px;gap:8px;flex-wrap:wrap" data-component="信任条">
+                  <span class="chip"><svg class="ic"><use href="#i-shield"/></svg>校内认证</span>
+                  <span class="chip"><svg class="ic"><use href="#i-clock"/></svg>实时可查</span>
+                  <span class="chip"><svg class="ic"><use href="#i-check"/></svg>安心交易</span>
+                </div>
+                <div class="search" style="margin-top:14px" data-component="搜索框">
+                  <svg class="ic"><use href="#i-search"/></svg>
+                  <input aria-label="搜索校园服务" placeholder="搜索服务、商品、地点"/>
+                </div>
+                <div class="ch-scroll" style="margin-top:14px">
+                  <button class="pill active">全部</button><button class="pill">餐饮</button><button class="pill">生活</button><button class="pill">学习</button><button class="pill">二手</button>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="常用大卡">
+                <div class="sec-row"><div><p class="eyebrow">Favorites</p><h2 class="h2">常用</h2></div></div>
+                <div class="stk" style="gap:12px;margin-top:14px">
+                  <div class="card lrow"><span class="tile"><svg class="ic"><use href="#i-bowl"/></svg></span><div><div style="font-size:19px;font-weight:800">校园外卖</div><div class="mini">食堂窗口直送 · 送到宿舍楼下</div></div><span class="chev" style="margin-left:auto"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="card lrow"><span class="tile plain"><svg class="ic"><use href="#i-tag"/></svg></span><div><div style="font-size:19px;font-weight:800">二手市场</div><div class="mini">学生闲置 · 校内当面交易</div></div><span class="chev" style="margin-left:auto"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                </div>
+              </div>
+              <div class="pad sec-gap" style="padding-bottom:26px" data-component="全部服务">
+                <div class="sec-row">
+                  <div><p class="eyebrow">All Services</p><h2 class="h2">全部服务</h2></div>
+                  <span class="chip num">12 项</span>
+                </div>
+                <div class="svc-grid" style="margin-top:14px">
+                  <div class="card svc"><span class="tile"><svg class="ic"><use href="#i-bowl"/></svg></span><div><div class="name">校园外卖</div><div class="desc">食堂窗口送到楼下</div></div></div>
+                  <div class="card svc"><span class="tile plain"><svg class="ic"><use href="#i-tag"/></svg></span><div><div class="name">二手市场</div><div class="desc">学生闲置流转</div></div></div>
+                  <div class="card svc"><span class="tile plain"><svg class="ic"><use href="#i-zap"/></svg></span><div><div class="name">跑腿代办</div><div class="desc">校内代取代购</div></div></div>
+                  <div class="card svc"><span class="tile"><svg class="ic"><use href="#i-box"/></svg></span><div><div class="name">快递查询</div><div class="desc">多站点自动归集</div></div></div>
+                  <div class="card svc"><span class="tile plain"><svg class="ic"><use href="#i-case"/></svg></span><div><div class="name">校园兼职</div><div class="desc">认证校内外岗位</div></div></div>
+                  <div class="card svc"><span class="tile"><svg class="ic"><use href="#i-calcheck"/></svg></span><div><div class="name">活动报名</div><div class="desc">讲座社团志愿</div></div></div>
+                  <div class="card svc"><span class="tile"><svg class="ic"><use href="#i-users"/></svg></span><div><div class="name">匿名匹配</div><div class="desc">认识同频校友</div></div></div>
+                  <div class="card svc"><span class="tile plain"><svg class="ic"><use href="#i-mega"/></svg></span><div><div class="name">失物招领</div><div class="desc">快速发布查找</div></div></div>
+                  <div class="card svc"><span class="tile plain"><svg class="ic"><use href="#i-apple"/></svg></span><div><div class="name">水果铺</div><div class="desc">每日鲜切到店</div></div></div>
+                  <div class="card svc"><span class="tile"><svg class="ic"><use href="#i-flower"/></svg></span><div><div class="name">花店</div><div class="desc">日常小花束</div></div></div>
+                  <div class="card svc"><span class="tile"><svg class="ic"><use href="#i-cookie"/></svg></span><div><div class="name">零食铺</div><div class="desc">宿舍夜补给</div></div></div>
+                  <div class="card svc"><span class="tile plain"><svg class="ic"><use href="#i-bike"/></svg></span><div><div class="name">电动车</div><div class="desc">充电与维修点</div></div></div>
+                </div>
+              </div>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx num">02</span><span class="name">校园服务</span><span class="note">信任条 · 搜索 · 12 服务双列</span></figcaption>
+      </figure>
+
+      <!-- 03 校园圈 -->
+      <figure class="shot" data-component="屏幕 03 · 校园圈">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:12px">
+              <div class="pad" style="padding-top:6px" data-component="圈子品牌区">
+                <p class="eyebrow">Circle · Tangshan</p>
+                <h1 class="h1">校园圈</h1>
+                <div class="meta" style="margin-top:7px">唐山学院人的圈子 · 先审后发 · 按校区隔离</div>
+              </div>
+              <div class="chan" style="margin-top:16px" data-component="频道 Tab">
+                <button class="active" type="button" aria-current="page">推荐</button><button type="button">日常</button><button type="button">吐槽</button><button type="button">二手</button><button type="button">互助</button>
+              </div>
+              <div class="pad" style="margin-top:13px">
+                <div class="ch-scroll" data-component="话题胶囊">
+                  <button class="topic"># 新生报到</button><button class="topic"># 唐山美食地图</button><button class="topic"># 自习室拼座</button><button class="topic"># 二手教材</button><button class="topic"># 晨读打卡</button>
+                </div>
+              </div>
+              <div class="pad stk" style="gap:12px;margin-top:13px" data-component="帖子信息流">
+                <article class="card post" data-component="Post Card">
+                  <div class="p-head">
+                    <span class="avatar">林</span>
+                    <div><div class="p-name">林小满</div><div class="p-meta">日常 · 2 小时前</div></div>
+                    <button class="icon-btn" aria-label="更多" style="margin-left:auto;width:40px;height:40px;box-shadow:none"><svg class="ic" style="width:18px;height:18px"><use href="#i-chev"/></svg></button>
+                  </div>
+                  <p class="p-body">四楼自习室新添了靠窗座位，看出去就是银杏道，下午背书的位置有着落了。</p>
+                  <div class="p-img">
+                    <svg viewBox="0 0 338 150" style="display:block;width:100%" role="img" aria-label="靠窗自习座位插画">
+                      <rect width="338" height="150" fill="var(--c-tint)"/>
+                      <rect x="212" y="20" width="100" height="96" rx="10" fill="color-mix(in srgb,var(--seed-primary) 15%,var(--seed-surface))" stroke="var(--c-navy)" stroke-opacity=".55" stroke-width="2"/>
+                      <path d="M262 20v96M212 68h100" stroke="var(--c-navy)" stroke-opacity=".55" stroke-width="2"/>
+                      <circle cx="288" cy="44" r="12" fill="var(--seed-primary)" opacity=".85"/>
+                      <rect x="26" y="106" width="150" height="10" rx="5" fill="var(--c-navy)" opacity=".8"/>
+                      <rect x="42" y="88" width="40" height="18" rx="4" fill="color-mix(in srgb,var(--seed-primary) 40%,var(--seed-surface))"/>
+                      <rect x="88" y="92" width="30" height="14" rx="4" fill="var(--c-navy)" opacity=".55"/>
+                      <path d="M152 106v-34" stroke="var(--c-navy)" stroke-width="2.4" stroke-linecap="round"/>
+                      <circle cx="145" cy="62" r="7" fill="var(--c-navy)" opacity=".7"/><circle cx="159" cy="58" r="7" fill="var(--c-navy)" opacity=".7"/><circle cx="152" cy="48" r="7" fill="var(--c-navy)" opacity=".7"/>
+                    </svg>
+                  </div>
+                  <div class="p-actions">
+                    <span class="p-act"><svg class="ic"><use href="#i-heart"/></svg>48</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-comment"/></svg>12</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-send"/></svg>6</span>
+                  </div>
+                </article>
+                <article class="card post" data-component="Post Card">
+                  <div class="p-head">
+                    <span class="avatar alt">阿</span>
+                    <div><div class="p-name">阿哲</div><div class="p-meta">吐槽 · 5 小时前</div></div>
+                    <button class="icon-btn" aria-label="更多" style="margin-left:auto;width:40px;height:40px;box-shadow:none"><svg class="ic" style="width:18px;height:18px"><use href="#i-chev"/></svg></button>
+                  </div>
+                  <p class="p-body">二食堂麻辣香锅中午排队也太长了，能不能出个错峰预定，真的会谢。</p>
+                  <div class="p-actions">
+                    <span class="p-act"><svg class="ic"><use href="#i-heart"/></svg>132</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-comment"/></svg>36</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-send"/></svg>11</span>
+                  </div>
+                </article>
+              </div>
+              <button class="fab" aria-label="发布内容" style="bottom:24px"><svg class="ic"><use href="#i-plus"/></svg></button>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx num">03</span><span class="name">校园圈</span><span class="note">频道 · 话题 · 帖子流 · 悬浮发布</span></figcaption>
+      </figure>
+
+      <!-- 04 榜单 -->
+      <figure class="shot" data-component="屏幕 04 · 榜单">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:16px">
+              <div class="pad" style="padding-top:6px" data-component="榜单刊头">
+                <p class="eyebrow">Ranking · Spots</p>
+                <h1 class="h1">校园榜单</h1>
+                <div class="meta" style="margin-top:7px">由本校学生点赞产生 · 每周一更新</div>
+                <div class="row" style="margin-top:14px;justify-content:space-between">
+                  <div class="row" style="gap:8px">
+                    <button class="pill active">美食</button><button class="pill">玩乐</button><button class="pill">生活</button>
+                  </div>
+                  <span class="chip"><svg class="ic"><use href="#i-pin"/></svg>主校区</span>
+                </div>
+              </div>
+              <div class="pad" style="margin-top:16px">
+                <div class="card stk" style="gap:0;padding:4px 0" data-component="排名列表">
+                  <div class="rank-row top">
+                    <span class="rank-no">01</span>
+                    <span class="cover"><svg class="ic" style="width:28px;height:28px"><use href="#i-bowl"/></svg></span>
+                    <div style="flex:1;min-width:0"><div style="font-size:19px;font-weight:800;letter-spacing:-.01em">兰州拉面（北门）</div><div class="mini" style="margin-top:2px">现拉现煮，牛肉给得实在</div></div>
+                    <button class="like-btn hot" aria-label="点赞 兰州拉面"><svg class="ic"><use href="#i-heart"/></svg>326</button>
+                  </div>
+                  <div class="rank-row top">
+                    <span class="rank-no">02</span>
+                    <span class="cover alt"><svg class="ic" style="width:28px;height:28px"><use href="#i-cookie"/></svg></span>
+                    <div style="flex:1;min-width:0"><div style="font-size:19px;font-weight:800;letter-spacing:-.01em">姐妹饭卷</div><div class="mini" style="margin-top:2px">酸甜酱是灵魂，五点就排队</div></div>
+                    <button class="like-btn" aria-label="点赞 姐妹饭卷"><svg class="ic"><use href="#i-heart"/></svg>289</button>
+                  </div>
+                  <div class="rank-row top">
+                    <span class="rank-no">03</span>
+                    <span class="cover"><svg class="ic" style="width:28px;height:28px"><use href="#i-cup"/></svg></span>
+                    <div style="flex:1;min-width:0"><div style="font-size:19px;font-weight:800;letter-spacing:-.01em">柿家砂锅鸡</div><div class="mini" style="margin-top:2px">四人一锅刚好，建议提前订座</div></div>
+                    <button class="like-btn" aria-label="点赞 柿家砂锅鸡"><svg class="ic"><use href="#i-heart"/></svg>241</button>
+                  </div>
+                  <div class="rank-row">
+                    <span class="rank-no">04</span>
+                    <span class="cover alt"><svg class="ic" style="width:28px;height:28px"><use href="#i-flower"/></svg></span>
+                    <div style="flex:1;min-width:0"><div style="font-size:19px;font-weight:800;letter-spacing:-.01em">青枫咖啡</div><div class="mini" style="margin-top:2px">安静有插座，适合写论文</div></div>
+                    <button class="like-btn" aria-label="点赞 青枫咖啡"><svg class="ic"><use href="#i-heart"/></svg>198</button>
+                  </div>
+                </div>
+                <div class="dashed" style="margin-top:14px;padding:15px 16px;display:flex;gap:12px;align-items:center" data-component="诚实空榜提示">
+                  <svg class="ic" style="width:22px;height:22px;flex:none;color:var(--c-ink-3)"><use href="#i-star"/></svg>
+                  <div><div style="font-size:16px;font-weight:700">玩乐 / 生活榜还没有内容</div><div class="mini">第一个上榜的，可能就是你常去的那家</div></div>
+                </div>
+                <div class="card" style="margin-top:14px;padding:20px" data-component="上传地点入口">
+                  <p class="eyebrow">Contribute</p>
+                  <div style="font-size:22px;font-weight:900;margin-top:6px;letter-spacing:-.01em">上传校园地点</div>
+                  <div class="meta" style="margin-top:5px">好去处不该被埋没 · 审核通过后上榜</div>
+                  <button class="btn" style="margin-top:14px"><svg class="ic"><use href="#i-upload"/></svg>上传地点</button>
+                </div>
+              </div>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx num">04</span><span class="name">榜单</span><span class="note">三类榜单 · 点赞排名 · 上传入口</span></figcaption>
+      </figure>
+
+      <!-- 05 我的 -->
+      <figure class="shot" data-component="屏幕 05 · 我的">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:14px">
+              <div class="pad" style="padding-top:6px" data-component="我的刊头">
+                <p class="eyebrow">Profile</p>
+                <h1 class="h1">我的</h1>
+              </div>
+              <div class="pad" style="margin-top:14px">
+                <div class="card" style="padding:20px" data-component="身份卡">
+                  <div class="row" style="gap:14px">
+                    <span class="avatar lg">陈</span>
+                    <div>
+                      <div style="font-size:24px;font-weight:900;letter-spacing:-.01em">陈屿</div>
+                      <div class="meta" style="margin-top:3px">唐山学院 · 主校区 · 2023 级</div>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top:14px;gap:8px;flex-wrap:wrap">
+                    <span class="chip"><svg class="ic"><use href="#i-wechat"/></svg>微信会话身份</span>
+                    <span class="chip blue"><svg class="ic"><use href="#i-shield"/></svg>校内已认证</span>
+                  </div>
+                </div>
+                <div class="card" style="margin-top:12px;padding:14px 10px;display:grid;grid-template-columns:repeat(4,1fr)" data-component="快捷入口">
+                  <button class="entry"><span class="tile plain"><svg class="ic"><use href="#i-box"/></svg></span><span>我的订单</span></button>
+                  <button class="entry"><span class="tile"><svg class="ic"><use href="#i-send"/></svg></span><span>我的发布</span></button>
+                  <button class="entry"><span class="tile plain"><svg class="ic"><use href="#i-heart"/></svg></span><span>收藏</span></button>
+                  <button class="entry"><span class="tile"><svg class="ic"><use href="#i-tag"/></svg></span><span>优惠券</span></button>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="最近动态">
+                <div class="sec-row"><div><p class="eyebrow">Activity</p><h2 class="h2">最近动态</h2></div></div>
+                <div class="card stk" style="gap:0;margin-top:14px;padding:4px 0">
+                  <div class="lrow"><span class="tile plain"><svg class="ic"><use href="#i-circle"/></svg></span><div style="flex:1;min-width:0"><div style="font-size:16.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">发布了「四楼自习室新添靠窗座位…」</div><div class="mini">2 小时前 · 校园圈</div></div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile"><svg class="ic"><use href="#i-trophy"/></svg></span><div style="flex:1;min-width:0"><div style="font-size:16.5px;font-weight:700">点赞了「兰州拉面（北门）」</div><div class="mini">昨天 · 美食榜</div></div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile plain"><svg class="ic"><use href="#i-calcheck"/></svg></span><div style="flex:1;min-width:0"><div style="font-size:16.5px;font-weight:700">报名「校园开放日志愿者」</div><div class="mini">周二 · 活动</div></div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                </div>
+              </div>
+              <div class="pad" style="margin-top:14px" data-component="信任条">
+                <div class="row" style="gap:8px;flex-wrap:wrap">
+                  <span class="chip"><svg class="ic"><use href="#i-shield"/></svg>身份已核验</span>
+                  <span class="chip"><svg class="ic"><use href="#i-check"/></svg>信用良好</span>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="账号与设置">
+                <div class="sec-row"><div><p class="eyebrow">Account</p><h2 class="h2">账号与设置</h2></div></div>
+                <div class="card stk" style="gap:0;margin-top:14px;padding:4px 0">
+                  <div class="lrow"><span class="tile plain"><svg class="ic"><use href="#i-lock"/></svg></span><div style="flex:1;font-size:17px;font-weight:700">账号与安全</div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile plain"><svg class="ic"><use href="#i-bell"/></svg></span><div style="flex:1;font-size:17px;font-weight:700">通知设置</div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile plain"><svg class="ic"><use href="#i-pin"/></svg></span><div style="flex:1;font-size:17px;font-weight:700">校区与高校信息</div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile plain"><svg class="ic"><use href="#i-spark"/></svg></span><div style="flex:1;font-size:17px;font-weight:700">关于星尘校园圈</div><span class="chip num" style="padding:4px 10px;font-size:13px">v1.0.0</span><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                </div>
+              </div>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx num">05</span><span class="name">我的</span><span class="note">身份卡 · 快捷入口 · 设置</span></figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ B 组 · 服务页示例 ══════════════ -->
+<section id="group-b" class="group" data-component="Group B Service Screens" data-od-id="group-b">
+  <div class="wrap">
+    <div class="group-head">
+      <p class="eyebrow">Group B · Service Screens</p>
+      <h2 class="group-title">服务页示例</h2>
+      <p class="group-desc">外卖、快递、课表三个高频服务的完整界面。快递取件码采用诚实的「待绑定」结构态，不伪造真实数据。</p>
+    </div>
+    <div class="screens">
+
+      <!-- 06 外卖 -->
+      <figure class="shot" data-component="屏幕 06 · 外卖">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:96px">
+              <div class="topbar" style="padding-top:6px" data-component="外卖刊头">
+                <button class="icon-btn" aria-label="返回"><svg class="ic"><use href="#i-back"/></svg></button>
+                <div><p class="eyebrow">Delivery · 主校区</p><h1 class="h1" style="font-size:30px">校园外卖</h1></div>
+              </div>
+              <div class="pad">
+                <div class="dates" data-component="日期横滑条">
+                  <div class="date-ch active"><span>今天</span><span class="d">13</span></div>
+                  <div class="date-ch"><span>周五</span><span class="d">14</span></div>
+                  <div class="date-ch"><span>周六</span><span class="d">15</span></div>
+                  <div class="date-ch"><span>周日</span><span class="d">16</span></div>
+                  <div class="date-ch"><span>周一</span><span class="d">17</span></div>
+                  <div class="date-ch"><span>周二</span><span class="d">18</span></div>
+                </div>
+                <div class="card" style="margin-top:14px;padding:18px" data-component="今日套餐大卡">
+                  <p class="eyebrow">Today's Set</p>
+                  <div class="row" style="margin-top:12px;gap:14px;align-items:flex-start">
+                    <span class="thumb" style="width:86px;height:86px;margin:0;flex:none;border-radius:18px"><svg class="ic" style="width:38px;height:38px"><use href="#i-bowl"/></svg></span>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:19px;font-weight:800;line-height:1.3">今日套餐 A</div>
+                      <div style="font-size:16px;font-weight:600;color:var(--c-ink-2);margin-top:2px">梅菜扣肉 · 时蔬 · 例汤</div>
+                      <div class="mini" style="margin-top:4px">第二食堂 · 3 号窗口</div>
+                      <div class="row" style="margin-top:10px;justify-content:space-between">
+                        <span class="price">¥16.5</span>
+                        <button class="btn-sm">加入购物车</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ch-scroll" style="margin-top:14px">
+                  <button class="pill active">全部</button><button class="pill">盖饭</button><button class="pill">面食</button><button class="pill">饮品</button><button class="pill">水果杯</button>
+                </div>
+                <div class="prod-grid" style="margin-top:14px" data-component="商品双列">
+                  <div class="card prod">
+                    <div class="thumb"><svg class="ic"><use href="#i-bowl"/></svg></div>
+                    <div class="p-name">黄焖鸡米饭</div><div class="p-sub">微辣 · 送例汤</div>
+                    <div class="p-foot"><span class="price">¥15</span><button class="add-btn" aria-label="加入购物车 黄焖鸡米饭"><svg class="ic"><use href="#i-plus"/></svg></button></div>
+                  </div>
+                  <div class="card prod">
+                    <div class="thumb alt"><svg class="ic"><use href="#i-bowl"/></svg></div>
+                    <div class="p-name">麻辣烫（自选）</div><div class="p-sub">称重计价</div>
+                    <div class="p-foot"><span class="price">¥3.2<small> /50g</small></span><button class="add-btn" aria-label="加入购物车 麻辣烫"><svg class="ic"><use href="#i-plus"/></svg></button></div>
+                  </div>
+                  <div class="card prod">
+                    <div class="thumb alt"><svg class="ic"><use href="#i-cup"/></svg></div>
+                    <div class="p-name">番茄鸡蛋面</div><div class="p-sub">手擀面 · 第二食堂</div>
+                    <div class="p-foot"><span class="price">¥12</span><button class="add-btn" aria-label="加入购物车 番茄鸡蛋面"><svg class="ic"><use href="#i-plus"/></svg></button></div>
+                  </div>
+                  <div class="card prod">
+                    <div class="thumb"><svg class="ic"><use href="#i-cup"/></svg></div>
+                    <div class="p-name">冰镇绿豆汤</div><div class="p-sub">每日现熬</div>
+                    <div class="p-foot"><span class="price">¥6</span><button class="add-btn" aria-label="加入购物车 绿豆汤"><svg class="ic"><use href="#i-plus"/></svg></button></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cartbar" data-component="购物车浮条">
+                <svg class="ic"><use href="#i-cart"/></svg>
+                <div><div style="font-size:13.5px;opacity:.72">已选 1 件</div><div class="num" style="font-size:19px;font-weight:800">¥ 15.0</div></div>
+                <button class="go">去结算</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><span class="idx num">06</span><span class="name">服务页 · 外卖</span><span class="note">日期横滑 · 套餐大卡 · 购物车</span></figcaption>
+      </figure>
+
+      <!-- 07 快递 -->
+      <figure class="shot" data-component="屏幕 07 · 快递">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:24px">
+              <div class="topbar" style="padding-top:6px" data-component="快递刊头">
+                <button class="icon-btn" aria-label="返回"><svg class="ic"><use href="#i-back"/></svg></button>
+                <div><p class="eyebrow">Parcel · 主校区</p><h1 class="h1" style="font-size:30px">快递服务</h1></div>
+              </div>
+              <div class="pad">
+                <div class="dashed" style="padding:26px 20px;text-align:center" data-component="取件码结构态">
+                  <p class="eyebrow">Pickup Code</p>
+                  <div style="display:grid;place-items:center;margin:18px 0 14px"><span class="tile plain" style="width:64px;height:64px;border-radius:22px"><svg class="ic" style="width:30px;height:30px"><use href="#i-box"/></svg></span></div>
+                  <div style="font-size:19px;font-weight:800;line-height:1.4">绑定手机号后<br/>取件码会出现在这里</div>
+                  <div class="mini" style="margin-top:6px">到站短信自动同步 · 只聚合校内站点</div>
+                  <button class="btn" style="margin-top:18px"><svg class="ic"><use href="#i-shield"/></svg>绑定手机号并同步</button>
+                </div>
+                <div class="sec-row" style="margin-top:22px">
+                  <div><p class="eyebrow">In Transit</p><h2 class="h2">在途包裹</h2></div>
+                  <span class="chip num">0</span>
+                </div>
+                <div class="card lrow" style="margin-top:12px" data-component="在途空态">
+                  <span class="tile plain"><svg class="ic"><use href="#i-inbox"/></svg></span>
+                  <div><div style="font-size:17px;font-weight:700">暂无在途包裹</div><div class="mini">有取件信息后，几分钟内同步到这里</div></div>
+                </div>
+                <div class="card lrow" style="margin-top:12px" data-component="站点信息">
+                  <span class="tile"><svg class="ic"><use href="#i-pin"/></svg></span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:17px;font-weight:800">主校区快递站（东门驿站）</div>
+                    <div class="mini">营业时间 09:00 – 19:30 · 校内</div>
+                  </div>
+                  <span class="chip blue">校内</span>
+                </div>
+                <div class="row" style="margin-top:16px;justify-content:center;gap:7px">
+                  <svg class="ic" style="width:14px;height:14px;color:var(--c-ink-4)"><use href="#i-lock"/></svg>
+                  <span class="mini">取件码仅用于校内取件核验，不存储快递单号</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><span class="idx num">07</span><span class="name">服务页 · 快递</span><span class="note">诚实结构态 · 不伪造取件码</span></figcaption>
+      </figure>
+
+      <!-- 08 课表 -->
+      <figure class="shot" data-component="屏幕 08 · 课表">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:24px">
+              <div class="topbar" style="padding-top:6px" data-component="课表刊头">
+                <button class="icon-btn" aria-label="返回"><svg class="ic"><use href="#i-back"/></svg></button>
+                <div><p class="eyebrow">Timetable · 实习周</p><h1 class="h1" style="font-size:30px">本周课表</h1></div>
+                <span class="chip blue" style="margin-left:auto"><svg class="ic"><use href="#i-check"/></svg>已同步教务</span>
+              </div>
+              <div class="pad">
+                <div class="dates" data-component="周几 Tab">
+                  <div class="date-ch"><span>周一</span><span class="d">10</span></div>
+                  <div class="date-ch"><span>周二</span><span class="d">11</span></div>
+                  <div class="date-ch"><span>周三</span><span class="d">12</span></div>
+                  <div class="date-ch active"><span>周四</span><span class="d">13</span></div>
+                  <div class="date-ch"><span>周五</span><span class="d">14</span></div>
+                  <div class="date-ch"><span>周六</span><span class="d">15</span></div>
+                  <div class="date-ch"><span>周日</span><span class="d">16</span></div>
+                </div>
+                <div class="stk" style="gap:12px;margin-top:16px" data-component="课程卡片">
+                  <div class="card klass">
+                    <div class="when"><div class="t">08:00</div><div class="p">1-2 节</div></div>
+                    <div class="rail"></div>
+                    <div style="flex:1;min-width:0"><div style="font-size:19px;font-weight:800">大学英语（B）</div><div class="mini" style="margin-top:3px">B 楼 · 204</div></div>
+                  </div>
+                  <div class="dashed" style="padding:13px 18px;display:flex;align-items:center;gap:10px;color:var(--c-ink-3)">
+                    <svg class="ic" style="width:17px;height:17px;flex:none"><use href="#i-clock"/></svg><span style="font-size:15px;font-weight:600">空档 10:00 – 14:00</span>
+                  </div>
+                  <div class="card klass" style="border-color:color-mix(in srgb,var(--seed-primary) 34%,transparent)">
+                    <div class="when"><div class="t">14:00</div><div class="p">7-8 节</div></div>
+                    <div class="rail" style="background:var(--seed-primary)"></div>
+                    <div style="flex:1;min-width:0">
+                      <div class="row" style="gap:8px;flex-wrap:wrap"><span style="font-size:19px;font-weight:800">数据库系统原理</span><span class="dot"></span></div>
+                      <div class="mini" style="margin-top:3px">A 楼 · 302 · 即将开始</div>
+                    </div>
+                    <span class="chip blue" style="align-self:center">42 分后</span>
+                  </div>
+                  <div class="card klass">
+                    <div class="when"><div class="t">16:10</div><div class="p">9-10 节</div></div>
+                    <div class="rail"></div>
+                    <div style="flex:1;min-width:0"><div style="font-size:19px;font-weight:800">羽毛球（体育）</div><div class="mini" style="margin-top:3px">风雨操场</div></div>
+                  </div>
+                </div>
+                <div class="mini" style="text-align:center;margin-top:18px">课表仅供参考，以教务系统为准</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><span class="idx num">08</span><span class="name">服务页 · 课表</span><span class="note">周几 Tab · 课程卡 · 空档留白</span></figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ C 组 · 通用状态 ══════════════ -->
+<section id="group-c" class="group" data-component="Group C States" data-od-id="group-c">
+  <div class="wrap">
+    <div class="group-head">
+      <p class="eyebrow">Group C · States</p>
+      <h2 class="group-title">通用状态 · 六种</h2>
+      <p class="group-desc">每种状态都是完整界面，不留白、不敷衍。文案诚实优雅，符合「真实产品」原则。</p>
+    </div>
+    <div class="screens">
+
+      <!-- 09 加载骨架 -->
+      <figure class="shot" data-component="屏幕 09 · 加载骨架">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:16px" data-component="首页骨架屏">
+              <div class="chip" style="position:absolute;top:10px;right:20px;z-index:5"><svg class="ic" style="width:13px;height:13px"><use href="#i-clock"/></svg>加载中</div>
+              <div class="pad" style="padding-top:8px">
+                <div class="sk" style="width:150px;height:13px"></div>
+                <div class="sk" style="width:238px;height:46px;margin-top:12px;border-radius:12px"></div>
+                <div class="row" style="margin-top:14px;gap:8px">
+                  <div class="sk" style="width:86px;height:34px;border-radius:17px"></div>
+                  <div class="sk" style="width:130px;height:34px;border-radius:17px"></div>
+                </div>
+              </div>
+              <div class="pad" style="margin-top:16px">
+                <div class="sk" style="width:100%;height:46px;border-radius:23px"></div>
+              </div>
+              <div class="pad sec-gap">
+                <div class="sk" style="width:120px;height:26px"></div>
+                <div class="bento" style="margin-top:14px">
+                  <div class="sk big" style="border-radius:var(--r-card);min-height:196px"></div>
+                  <div class="sk" style="border-radius:var(--r-card);min-height:92px"></div>
+                  <div class="sk" style="border-radius:var(--r-card);min-height:92px"></div>
+                </div>
+                <div class="sk" style="width:100%;height:64px;margin-top:12px;border-radius:var(--r-card)"></div>
+              </div>
+              <div class="pad sec-gap">
+                <div class="sk" style="width:120px;height:26px"></div>
+                <div class="svc-grid" style="margin-top:14px">
+                  <div class="sk" style="height:76px;border-radius:var(--r-card)"></div>
+                  <div class="sk" style="height:76px;border-radius:var(--r-card)"></div>
+                  <div class="sk" style="height:76px;border-radius:var(--r-card)"></div>
+                  <div class="sk" style="height:76px;border-radius:var(--r-card)"></div>
+                </div>
+              </div>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" style="opacity:.6" data-component="Tab Bar">
+              <a class="tab active"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx num">09</span><span class="name">状态 · 加载骨架</span><span class="note">首页骨架屏 · 结构一致</span></figcaption>
+      </figure>
+
+      <!-- 10 空状态 -->
+      <figure class="shot" data-component="屏幕 10 · 空状态">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content">
+              <div class="pad" style="padding-top:6px">
+                <p class="eyebrow">Circle · Tangshan</p>
+                <h1 class="h1">校园圈</h1>
+              </div>
+              <div class="chan" style="margin-top:16px">
+                <button type="button">推荐</button><button type="button">日常</button><button type="button">吐槽</button><button type="button">二手</button><button class="active" type="button" aria-current="page">互助</button>
+              </div>
+              <div class="state-hero" style="padding-top:64px" data-component="频道空状态">
+                <div class="state-illo plain">
+                  <svg class="ic"><use href="#i-inbox"/></svg>
+                  <span class="sat"><svg class="ic"><use href="#i-spark"/></svg></span>
+                </div>
+                <div class="state-h">这个频道还空着</div>
+                <div class="state-sub">真实、具体的校园内容最受欢迎。发第一条，让它被看见。</div>
+                <button class="btn" style="max-width:260px;margin-top:24px"><svg class="ic"><use href="#i-plus"/></svg>发布第一条内容</button>
+              </div>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx num">10</span><span class="name">状态 · 空状态</span><span class="note">校园圈频道无内容</span></figcaption>
+      </figure>
+
+      <!-- 11 错误重试 -->
+      <figure class="shot" data-component="屏幕 11 · 错误重试">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content">
+              <div class="topbar" style="padding-top:6px">
+                <button class="icon-btn" aria-label="返回"><svg class="ic"><use href="#i-back"/></svg></button>
+                <div><p class="eyebrow">Network Error</p><h1 class="h1" style="font-size:30px">加载失败</h1></div>
+              </div>
+              <div class="state-hero" style="padding-top:70px" data-component="网络错误态">
+                <div class="state-illo danger">
+                  <svg class="ic"><use href="#i-wifioff"/></svg>
+                </div>
+                <div class="state-h">网络好像断开了</div>
+                <div class="state-sub">内容没有加载出来。切换到校园网，或检查一下信号再试试。</div>
+                <div class="stk" style="gap:10px;width:100%;max-width:280px;margin-top:24px">
+                  <button class="btn"><svg class="ic"><use href="#i-refresh"/></svg>重试</button>
+                  <button class="btn ghost">反馈问题</button>
+                </div>
+                <div class="mini num" style="margin-top:22px">ERR_NETWORK · 09:41</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><span class="idx num">11</span><span class="name">状态 · 错误重试</span><span class="note">网络异常 · 可重试</span></figcaption>
+      </figure>
+
+      <!-- 12 待审核 -->
+      <figure class="shot" data-component="屏幕 12 · 待审核">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:24px">
+              <div class="topbar" style="padding-top:6px">
+                <button class="icon-btn" aria-label="返回"><svg class="ic"><use href="#i-back"/></svg></button>
+                <div><p class="eyebrow">In Review</p><h1 class="h1" style="font-size:30px">发布审核</h1></div>
+              </div>
+              <div class="state-hero" style="padding-top:44px" data-component="审核流程">
+                <div class="state-illo">
+                  <svg class="ic"><use href="#i-clock"/></svg>
+                </div>
+                <div class="stepper" aria-label="审核进度">
+                  <div class="step done"><span class="b"><svg class="ic"><use href="#i-check"/></svg></span><span>已提交</span></div>
+                  <span class="step-line"></span>
+                  <div class="step now"><span class="b"><svg class="ic"><use href="#i-clock"/></svg></span><span>审核中</span></div>
+                  <span class="step-line"></span>
+                  <div class="step"><span class="b"><svg class="ic"><use href="#i-calcheck"/></svg></span><span>已发布</span></div>
+                </div>
+                <div class="state-h" style="margin-top:24px">内容正在审核</div>
+                <div class="state-sub">通常 24 小时内完成，通过后会出现在校园圈。</div>
+              </div>
+              <div class="card lrow" style="margin:24px 20px 0" data-component="待审内容摘要">
+                <span class="tile plain"><svg class="ic"><use href="#i-send"/></svg></span>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">二手 · 高等数学教材 9 成新</div>
+                  <div class="mini">提交于今天 09:24</div>
+                </div>
+                <span class="chip blue" style="flex:none">审核中</span>
+              </div>
+              <div class="mini" style="text-align:center;margin-top:18px">审核通过后会收到微信服务通知</div>
+            </div>
+          </div>
+        </div>
+        <figcaption><span class="idx num">12</span><span class="name">状态 · 待审核</span><span class="note">三步流程 · 内容摘要</span></figcaption>
+      </figure>
+
+      <!-- 13 已下架 -->
+      <figure class="shot" data-component="屏幕 13 · 已下架">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:24px">
+              <div class="topbar" style="padding-top:6px">
+                <button class="icon-btn" aria-label="返回"><svg class="ic"><use href="#i-back"/></svg></button>
+                <div><p class="eyebrow">Off Shelf</p><h1 class="h1" style="font-size:30px">商品详情</h1></div>
+              </div>
+              <div class="state-hero" style="padding-top:56px" data-component="已下架态">
+                <div class="state-illo plain">
+                  <svg class="ic"><use href="#i-tag"/></svg>
+                </div>
+                <div class="state-h">该商品已下架</div>
+                <div class="state-sub">卖家已把它下架了。看看二手市场里同类的其他闲置吧。</div>
+                <div class="stk" style="gap:10px;width:100%;max-width:280px;margin-top:24px">
+                  <button class="btn"><svg class="ic"><use href="#i-search"/></svg>看看同类商品</button>
+                  <button class="btn ghost">返回二手市场</button>
+                </div>
+              </div>
+              <div class="pad" style="margin-top:26px">
+                <div class="row" style="gap:8px;justify-content:center">
+                  <svg class="ic" style="width:14px;height:14px;color:var(--c-ink-4)"><use href="#i-shield"/></svg>
+                  <span class="mini">交易记录不会保留卖家联系方式</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><span class="idx num">13</span><span class="name">状态 · 已下架</span><span class="note">商品下架 · 引导同类</span></figcaption>
+      </figure>
+
+      <!-- 14 未开通 -->
+      <figure class="shot" data-component="屏幕 14 · 未开通">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:24px">
+              <div class="topbar" style="padding-top:6px">
+                <button class="icon-btn" aria-label="返回"><svg class="ic"><use href="#i-back"/></svg></button>
+                <div><p class="eyebrow">Not Available</p><h1 class="h1" style="font-size:30px">校园服务</h1></div>
+              </div>
+              <div class="state-hero" style="padding-top:52px" data-component="未开通态">
+                <div class="state-illo">
+                  <svg class="ic"><use href="#i-lock"/></svg>
+                </div>
+                <div class="state-h">主校区暂未开通「匿名匹配」</div>
+                <div class="state-sub">校区开通需要校学生会完成认证，认证通过后自动上线，你也可以提交开通申请。</div>
+                <button class="btn" style="max-width:280px;margin-top:24px"><svg class="ic"><use href="#i-send"/></svg>申请开通</button>
+                <div class="mini num" style="margin-top:14px">已有 327 位同学提交申请</div>
+              </div>
+              <div class="pad" style="margin-top:24px">
+                <div class="row" style="gap:8px;flex-wrap:wrap;justify-content:center" data-component="隔离说明">
+                  <span class="chip"><svg class="ic"><use href="#i-shield"/></svg>高校 + 校区双重隔离</span>
+                  <span class="chip"><svg class="ic"><use href="#i-check"/></svg>认证后自动开通</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><span class="idx num">14</span><span class="name">状态 · 未开通</span><span class="note">校区未开通 · 可申请</span></figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ D 组 · 设计规范 ══════════════ -->
+<section id="group-d" class="group" data-component="Group D Design Tokens" data-od-id="group-d">
+  <div class="wrap">
+    <div class="group-head">
+      <p class="eyebrow">Group D · Design Tokens</p>
+      <h2 class="group-title">设计规范（开发落地）</h2>
+      <p class="group-desc">配色 token · 字号层级 · 间距规则 · 圆角与阴影 · 触控与导航。同一套 CSS 变量同时编译到微信小程序（rpx）与 H5。</p>
+    </div>
+    <div class="spec">
+
+      <div class="spec-sec" data-component="配色 token">
+        <p class="eyebrow">Color Tokens</p>
+        <h3>配色：蓝白体系，蓝仅点缀</h3>
+        <div class="swatches">
+          <div class="swatch"><div class="sw" style="background:var(--seed-primary)"></div><div class="sw-info"><div class="sw-name">星尘青蓝 · Primary</div><div class="sw-hex">#28AEE5</div><div class="sw-use">仅点缀与强调：选中态、链接、小面积高亮。禁止大面积填色。</div></div></div>
+          <div class="swatch"><div class="sw" style="background:var(--seed-navy)"></div><div class="sw-info"><div class="sw-name">深海军蓝 · Navy</div><div class="sw-hex">#0F2A40</div><div class="sw-use">每页至多一张焦点卡（首页「下节课」），做全页唯一强焦点。</div></div></div>
+          <div class="swatch"><div class="sw" style="background:var(--seed-ink)"></div><div class="sw-info"><div class="sw-name">深墨 · Ink</div><div class="sw-hex">#0F1D2A</div><div class="sw-use">标题与正文；主按钮底色；64/44/30% 派生二级文字。</div></div></div>
+          <div class="swatch"><div class="sw" style="background:var(--seed-bg);border-bottom:1px solid var(--board-line)"></div><div class="sw-info"><div class="sw-name">页面底 · BG</div><div class="sw-hex">#F5F7FA / 深色 #0D141C</div><div class="sw-use">近白不刺眼；深色模式同位替换。</div></div></div>
+          <div class="swatch"><div class="sw" style="background:var(--seed-surface);border-bottom:1px solid var(--board-line)"></div><div class="sw-info"><div class="sw-name">卡片面 · Surface</div><div class="sw-hex">#FFFFFF / 深色 #161F2A</div><div class="sw-use">纯白卡片 + 1px ink 6–10% 细描边 + 轻阴影。</div></div></div>
+          <div class="swatch"><div class="sw" style="background:linear-gradient(90deg,var(--c-success) 0 33%,var(--c-warn) 33% 66%,var(--c-danger) 66% 100%)"></div><div class="sw-info"><div class="sw-name">语义色 · Semantic</div><div class="sw-hex">#2FB271 / #E8A33D / #E05D5D</div><div class="sw-use">成功 / 提醒 / 错误，仅状态场景使用。</div></div></div>
+        </div>
+      </div>
+
+      <div class="spec-sec" data-component="字号层级">
+        <p class="eyebrow">Type Scale</p>
+        <h3>字号层级：900 对常规的字重对比</h3>
+        <div class="type-row"><span class="tk">Hero · 46 / 900</span><span style="font-size:40px;font-weight:900;letter-spacing:-.02em;line-height:1.05">唐山学院</span><span class="spec-note">首页校名刊头，紧字距，宁大勿小</span></div>
+        <div class="type-row"><span class="tk">H1 · 34 / 900</span><span style="font-size:32px;font-weight:900;letter-spacing:-.015em">校园服务</span><span class="spec-note">页面主标题 34–40</span></div>
+        <div class="type-row"><span class="tk">H2 · 26 / 900</span><span style="font-size:26px;font-weight:900;letter-spacing:-.01em">今日面板</span><span class="spec-note">区块标题 26–30</span></div>
+        <div class="type-row"><span class="tk">Body · 20 / 450</span><span style="font-size:20px;line-height:1.5">四楼自习室新添了靠窗座位，看出去就是银杏道。</span><span class="spec-note">正文 20–24，行高 1.5</span></div>
+        <div class="type-row"><span class="tk">Meta · 16</span><span style="font-size:16px;color:var(--c-ink-2)">唐山学院 · 主校区 · 2023 级</span><span class="spec-note">辅助信息 16–19</span></div>
+        <div class="type-row"><span class="tk">Eyebrow · 12</span><span class="eyebrow" style="color:var(--c-ink)">Stardust Campus Circle</span><span class="spec-note">眉标：全大写 + 字距 ≥ 0.2em</span></div>
+      </div>
+
+      <div class="spec-sec" data-component="间距规则">
+        <p class="eyebrow">Spacing</p>
+        <h3>间距：4 的倍数，节奏舒展</h3>
+        <div class="space-row">
+          <div class="space-item"><span class="space-bar" style="width:4px"></span><span>4</span></div>
+          <div class="space-item"><span class="space-bar" style="width:8px"></span><span>8</span></div>
+          <div class="space-item"><span class="space-bar" style="width:12px"></span><span>12</span></div>
+          <div class="space-item"><span class="space-bar" style="width:16px"></span><span>16</span></div>
+          <div class="space-item"><span class="space-bar" style="width:24px"></span><span>24</span></div>
+          <div class="space-item"><span class="space-bar" style="width:32px"></span><span>32</span></div>
+        </div>
+        <div class="rule-list" style="margin-top:18px">
+          <div class="rule"><svg class="ic"><use href="#i-pin"/></svg>页面左右留白 20px（20–28 区间）</div>
+          <div class="rule"><svg class="ic"><use href="#i-grid"/></svg>Bento 栅格间隙 12px，一大两小非对称</div>
+          <div class="rule"><svg class="ic"><use href="#i-box"/></svg>卡片内边距 16–20px</div>
+          <div class="rule"><svg class="ic"><use href="#i-cal"/></svg>区块之间 24–28px，一屏不堆叠</div>
+        </div>
+      </div>
+
+      <div class="spec-sec" data-component="圆角与阴影">
+        <p class="eyebrow">Radius &amp; Shadow</p>
+        <h3>圆角与阴影：大圆角，轻阴影</h3>
+        <div class="radius-row">
+          <div class="radius-demo"><div class="radius-box" style="border-radius:16px"></div><span>16 · 图标托</span></div>
+          <div class="radius-demo"><div class="radius-box" style="border-radius:20px"></div><span>20 · 小卡</span></div>
+          <div class="radius-demo"><div class="radius-box" style="border-radius:24px"></div><span>24 · 标准卡</span></div>
+          <div class="radius-demo"><div class="radius-box" style="border-radius:28px"></div><span>28 · 大卡</span></div>
+          <div class="radius-demo"><div class="radius-box" style="border-radius:999px;width:132px"></div><span>999 · 胶囊 / 按钮</span></div>
+        </div>
+        <div class="rule-list" style="margin-top:18px">
+          <div class="rule"><svg class="ic"><use href="#i-box"/></svg>阴影：0 1px 2px navy 6% + 0 14px 34px −24px navy 48%，克制不浮夸</div>
+          <div class="rule"><svg class="ic"><use href="#i-shield"/></svg>描边：1px · ink 6–10% 透明度，替代重阴影</div>
+          <div class="rule"><svg class="ic"><use href="#i-spark"/></svg>深色焦点卡：navy 渐变 152°，圆角同标准卡，星座纹理点缀</div>
+        </div>
+      </div>
+
+      <div class="spec-sec" data-component="触控与导航">
+        <p class="eyebrow">Touch &amp; Nav</p>
+        <h3>触控与导航：44 / 52 底线</h3>
+        <div class="touch-row">
+          <div class="touch-demo">
+            <div class="zone" style="width:44px;height:44px"><svg class="ic" style="width:20px;height:20px"><use href="#i-heart"/></svg></div>
+            <span>热区 ≥ 44×44</span>
+          </div>
+          <div class="touch-demo">
+            <div class="zone" style="width:150px;height:52px;border-radius:18px"><span style="font-weight:800;font-size:15px">主按钮 52px</span></div>
+            <span>按钮高 ≥ 52</span>
+          </div>
+          <div class="touch-demo">
+            <div class="zone" style="width:200px;height:56px;border-radius:18px;gap:14px;display:flex;align-items:center;justify-content:space-around;padding:0 12px">
+              <svg class="ic" style="width:20px;height:20px;color:var(--c-primary-text)"><use href="#i-home"/></svg>
+              <svg class="ic" style="width:20px;height:20px"><use href="#i-grid"/></svg>
+              <svg class="ic" style="width:20px;height:20px"><use href="#i-circle"/></svg>
+              <svg class="ic" style="width:20px;height:20px"><use href="#i-trophy"/></svg>
+              <svg class="ic" style="width:20px;height:20px"><use href="#i-user"/></svg>
+            </div>
+            <span>5 tab · 选中态品牌蓝</span>
+          </div>
+        </div>
+        <div class="rule-list" style="margin-top:18px">
+          <div class="rule"><svg class="ic"><use href="#i-grid"/></svg>图标统一线性：1.7 stroke · 圆角端点 · 24px 栅格，不混用来源</div>
+          <div class="rule"><svg class="ic"><use href="#i-wechat"/></svg>小程序换算：390 设计稿 → 750rpx，即 1px = 2rpx</div>
+          <div class="rule"><svg class="ic"><use href="#i-check"/></svg>验收：无横向溢出 · 字重 900 用系统字体（PingFang SC）</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="board-foot" data-component="Board Footer" data-od-id="board-foot">
+  <span class="eyebrow">Stardust Campus Circle</span>
+  星尘校园圈 · UI 视觉规范稿 V1.0 — 390×844 · 微信小程序与 H5 共用一套 token<br/>
+  设计板内屏幕可上下滚动查看完整内容 · 2026 年 8 月
+</footer>
+
+<script>
+(function(){
+  var tpl=document.getElementById('sb-tpl');
+  document.querySelectorAll('.screen').forEach(function(scr){
+    var slot=scr.querySelector('.sb-slot');
+    if(slot){slot.replaceWith(tpl.content.cloneNode(true));}
+    var hi=document.createElement('div');
+    hi.className='home-ind';hi.setAttribute('aria-hidden','true');
+    scr.appendChild(hi);
+  });
+  var btn=document.getElementById('appearBtn');
+  btn.addEventListener('click',function(){
+    var el=document.documentElement;
+    el.dataset.appearance = el.dataset.appearance==='dark' ? 'light':'dark';
+  });
+})();
+</script>
+</body>
+</html>

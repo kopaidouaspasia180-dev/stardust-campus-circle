@@ -1,0 +1,20 @@
+{
+  "size": {
+    "width": 1080,
+    "height": 1440
+  },
+  "sourceAssets": {
+    "miniCode": "/Users/a/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_u3dr27l82k7l22_310e/temp/RWTemp/2026-08/9e20f478899dc29eb19741386f9343c8/4f6e7fde295b58288ce792108585a83b.jpg",
+    "qrCode": "/Users/a/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_u3dr27l82k7l22_310e/temp/RWTemp/2026-08/9e20f478899dc29eb19741386f9343c8/4ee0a9838b98bb5438fbc584f92dd10e.jpg",
+    "pinkSky": "/Users/a/.codex/worktrees/7417/校园ai助手/src/assets/campus/real/tangshan-pink-sky-fengchui.jpg",
+    "sunset": "/Users/a/.codex/worktrees/7417/校园ai助手/src/assets/campus/real/tangshan-sunset-path-momo.jpg"
+  },
+  "exports": [
+    "/Users/a/.codex/worktrees/7417/校园ai助手/.codex-artifacts/posters/campus-circle-20260828/01-blue-campus.png",
+    "/Users/a/.codex/worktrees/7417/校园ai助手/.codex-artifacts/posters/campus-circle-20260828/02-sunset-youth.png",
+    "/Users/a/.codex/worktrees/7417/校园ai助手/.codex-artifacts/posters/campus-circle-20260828/03-geometric-premium.png",
+    "/Users/a/.codex/worktrees/7417/校园ai助手/.codex-artifacts/posters/campus-circle-20260828/04-clean-print.png"
+  ],
+  "comparison": "/Users/a/.codex/worktrees/7417/校园ai助手/.codex-artifacts/posters/campus-circle-20260828/00-comparison.png",
+  "note": "二维码和小程序码均由用户提供，按原始比例以最近邻缩放叠加；校园照片来自项目现有真实素材。"
+}

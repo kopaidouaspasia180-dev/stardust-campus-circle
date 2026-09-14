@@ -1,117 +1,133 @@
 .post-detail-page {
-  padding-bottom: calc(92px + env(safe-area-inset-bottom));
-  background: #f5f7f5;
+  min-height: 100vh;
+  padding: 0 18PX calc(92PX + env(safe-area-inset-bottom));
+  background: #f5f8fb;
+  color: #172d42;
 }
-
-.post-detail-page .post-content {
-  display: block;
-  overflow: visible;
-  -webkit-line-clamp: unset;
-}
-
-.comment-section {
-  margin-top: 14px;
-  padding: 19px;
-  border-radius: 22px;
+.detail-context {
+  min-height: 45PX;
+  margin: 0 -18PX;
+  padding: 0 18PX;
+  border-bottom: 1PX solid #e5edf3;
   background: #fff;
-}
-
-.comment-title-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
-.comment-title-row text:first-child {
-  color: #1d2923;
-  font-size: 29px;
-  font-weight: 900;
+.detail-context text:first-child { color: #2a7fc6; font-size: 14PX; font-weight: 850; }
+.detail-context text:last-child { color: #8999a5; font-size: 11PX; }
+.post-detail-page > .community-post-card { margin: 14PX 0 0; }
+.post-detail-page .post-content { display: block; overflow: visible; -webkit-line-clamp: unset; }
+.detail-social-actions {
+  min-height: 66PX;
+  margin-top: 10PX;
+  padding: 10PX 12PX 10PX 16PX;
+  border: 1PX solid #dce8ef;
+  border-radius: 17PX;
+  background: #fff;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 82PX 82PX;
+  align-items: center;
+  gap: 8PX;
 }
-
-.comment-title-row text:last-child {
-  color: #89948e;
-  font-size: 20px;
+.detail-social-actions > view { min-width: 0; display: grid; gap: 2PX; }
+.detail-social-actions > view text:first-child { color: #1d3347; font-size: 16PX; font-weight: 900; }
+.detail-social-actions > view text:last-child { color: #8998a4; font-size: 11PX; }
+.detail-social-actions button { width: 82PX; height: 38PX; margin: 0; padding: 0; border: 1PX solid #2689da; border-radius: 12PX; background: #2689da; color: #fff; font-size: 13PX; font-weight: 850; line-height: 36PX; }
+.detail-social-actions button.is-following { background: #f3f7fa; color: #6d7e89; border-color: #dce6ec; }
+.detail-owner-state {
+  margin-top: 12PX;
+  padding: 14PX 16PX;
+  border: 1PX solid #dce8ef;
+  border-radius: 16PX;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12PX;
 }
-
-.comment-list {
-  margin-top: 6px;
+.detail-owner-state > view { min-width: 0; display: grid; gap: 4PX; }
+.detail-owner-state > view text:first-child { color: #197fb9; font-size: 14PX; font-weight: 900; }
+.detail-owner-state > view text:last-child { color: #81909e; font-size: 12PX; line-height: 1.5; }
+.detail-owner-state > text { flex: none; padding: 7PX 10PX; border-radius: 999PX; background: #f2f5f7; color: #7b8792; font-size: 12PX; font-weight: 800; }
+.detail-owner-state.state-pending > view text:first-child { color: #c78312; }
+.detail-owner-state.state-rejected > view text:first-child { color: #d94b61; }
+.comment-section {
+  margin-top: 14PX;
+  padding: 18PX;
+  border: 1PX solid #e1eaf1;
+  border-radius: 18PX;
+  background: #fff;
+  box-shadow: 0 9PX 24PX rgba(44,84,116,.045);
 }
-
+.comment-title-row { display: flex; align-items: center; justify-content: space-between; }
+.comment-title-row > text { color: #1d3347; font-size: 20PX; font-weight: 900; }
+.comment-title-row > view { display: flex; align-items: center; gap: 15PX; }
+.comment-title-row > view > text:first-child { color: #8998a4; font-size: 12PX; }
+.comment-title-row .report-entry { color: #b06070; font-size: 12PX; font-weight: 800; }
+.comment-list { margin-top: 7PX; }
 .comment-item {
-  padding: 15px 0;
-  border-bottom: 1px solid #edf0ed;
+  padding: 16PX 0;
+  border-bottom: 1PX solid #edf1f4;
   display: grid;
-  grid-template-columns: 38px 1fr;
-  gap: 10px;
+  grid-template-columns: 38PX minmax(0, 1fr);
+  gap: 10PX;
 }
-
 .comment-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: #e8f3eb;
-  color: #0b7a43;
-  display: grid;
-  place-items: center;
-  font-size: 15px;
-  font-weight: 900;
+  width: 38PX;
+  height: 38PX;
+  border-radius: 50%;
+  border-width: 1PX;
 }
-
-.comment-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.comment-meta text:first-child { color: #415048; font-size: 22px; font-weight: 800; }
-.comment-meta text:last-child { color: #9aa39e; font-size: 18px; }
-
-.comment-content {
-  display: block;
-  margin-top: 6px;
-  color: #39443e;
-  font-size: 24px;
-  line-height: 1.55;
-}
-
-.no-comment {
-  display: block;
-  padding: 38px 0 24px;
-  color: #929d97;
-  font-size: 22px;
-  text-align: center;
-}
-
+.comment-meta { display: flex; align-items: center; justify-content: space-between; gap: 10PX; }
+.comment-meta > view { display: flex; align-items: center; gap: 9PX; }
+.comment-author-line { min-width: 0; flex: 1; display: flex; align-items: center; gap: 5PX; }
+.comment-author-line text:first-child { overflow: hidden; color: #405669; font-size: 14PX; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+.comment-author-line text:nth-child(2) { flex: none; color: #91a0aa; font-size: 11PX; }
+.comment-author-line text:last-child:not(:first-child) { min-width: 0; overflow: hidden; color: #2784ca; font-size: 12PX; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+.comment-meta > view > text:first-child { color: #98a5ae; font-size: 11PX; }
+.comment-manage { color: #a66873 !important; font-size: 11PX !important; font-weight: 800; }
+.comment-reply { color: #2784ca !important; font-size: 11PX !important; font-weight: 800; }
+.comment-reply-context { margin-top: 7PX; padding: 8PX 10PX; border-left: 3PX solid #69afe1; border-radius: 0 8PX 8PX 0; background: #f2f7fb; display: grid; gap: 3PX; }
+.comment-reply-context text:first-child { color: #287fbe; font-size: 12PX; font-weight: 850; }
+.comment-reply-context text:last-child { overflow: hidden; color: #8293a0; font-size: 12PX; line-height: 1.45; text-overflow: ellipsis; white-space: nowrap; }
+.comment-content { display: block; margin-top: 6PX; color: #394d5e; font-size: 15PX; line-height: 1.6; }
+.no-comment { display: block; padding: 42PX 0 26PX; color: #929fa9; font-size: 14PX; text-align: center; }
 .comment-composer {
   position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 50;
-  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-  border-top: 1px solid rgba(25, 61, 49, .08);
-  background: rgba(255, 255, 255, .97);
+  padding: 10PX 16PX calc(10PX + env(safe-area-inset-bottom));
+  border-top: 1PX solid #e0e8ee;
+  background: rgba(255,255,255,.97);
   display: grid;
-  grid-template-columns: 1fr 78px;
-  gap: 9px;
+  grid-template-columns: minmax(0, 1fr) 76PX;
+  gap: 9PX;
 }
-
-.comment-composer input {
-  height: 44px;
-  padding: 0 15px;
-  border-radius: 15px;
-  background: #f1f4f2;
-  font-size: 23px;
+.comment-composer .reply-target { grid-column: 1 / -1; min-height: 36PX; padding: 0 4PX; display: flex; align-items: center; justify-content: space-between; gap: 12PX; color: #627988; font-size: 12PX; }
+.comment-composer .reply-target > view { min-width: 0; display: grid; gap: 2PX; }
+.comment-composer .reply-target > view text:first-child { color: #287fbe; font-weight: 850; }
+.comment-composer .reply-target > view text:last-child { overflow: hidden; color: #8796a0; text-overflow: ellipsis; white-space: nowrap; }
+.comment-composer .reply-target text:last-child { color: #2b83c8; font-weight: 800; }
+.comment-composer input { height: 44PX; padding: 0 14PX; border: 1PX solid #e1e9ef; border-radius: 12PX; background: #f7f9fb; font-size: 14PX; }
+.comment-composer button { width: 76PX; height: 44PX; margin: 0; border-radius: 12PX; background: #2589dd; color: #fff; font-size: 14PX; font-weight: 900; line-height: 44PX; }
+.comment-disabled {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  min-height: 60PX;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1PX solid #e0e8ee;
+  background: rgba(255,255,255,.97);
+  color: #82919c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13PX;
 }
-
-.comment-composer button {
-  width: 78px;
-  height: 44px;
-  margin: 0;
-  border-radius: 15px;
-  background: #0b7a43;
-  color: #fff;
-  font-size: 23px;
-  font-weight: 800;
-  line-height: 44px;
-}
+.detail-empty-page { min-height: 100vh; padding: 110PX 24PX; background: #f5f8fb; text-align: center; }
+.detail-retry { width: 150PX; height: 46PX; margin-top: 18PX; border-radius: 13PX; background: #2589dd; color: #fff; font-size: 14PX; font-weight: 850; line-height: 46PX; }

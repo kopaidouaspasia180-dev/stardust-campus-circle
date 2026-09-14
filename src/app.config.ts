@@ -1,38 +1,54 @@
 export default defineAppConfig({
   pages: [
     "pages/home/index",
-    "pages/services/index",
+    "pages/login/index",
     "pages/community/index",
-    "pages/rankings/index",
     "pages/profile/index",
+    "pages/profile-edit/index",
+    "pages/user-profile/index",
+    "pages/legal/index",
+    "pages/user-agreement/index",
+    "pages/privacy-policy/index",
     "pages/publish/index",
     "pages/post-detail/index",
     "pages/messages/index",
-    "pages/ai/index",
+    "pages/chat/index",
     "pages/school-select/index",
-    "pages/new-student/index",
+    "pages/express/index",
+    "pages/schedule/index",
+    "pages/services/index",
     "pages/takeout/index",
+    "pages/takeout-orders/index",
+    "pages/takeout-merchant/index",
+    "pages/takeout-rider/index",
+    "pages/takeout-admin/index",
+    "pages/campus-store/index",
     "pages/market/index",
     "pages/errand/index",
-    "pages/express/index",
+    "pages/pdd-express/index",
     "pages/jobs/index",
+    "pages/job-publish/index",
     "pages/events/index",
-    "pages/schedule/index",
-    "pages/campus-store/index",
-    "pages/match/index"
+    "pages/lost/index",
+    "pages/match/index",
+    "pages/ai/index",
+    "pages/new-student/index",
+    "pages/rankings/index",
+    "pages/ranking-create/index",
+    "pages/ranking-submit/index"
   ],
   window: {
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#ffffff",
     navigationBarTitleText: "星尘校园圈",
     navigationBarTextStyle: "black",
-    backgroundColor: "#f4f7f5"
+    backgroundColor: "#f4fbff"
   },
   lazyCodeLoading: "requiredComponents",
   sitemapLocation: "sitemap.json",
   tabBar: {
-    color: "#7d837f",
-    selectedColor: "#0b7a43",
+    color: "#6f7c85",
+    selectedColor: "#28aee5",
     backgroundColor: "#ffffff",
     borderStyle: "black",
     list: [
@@ -43,16 +59,16 @@ export default defineAppConfig({
         selectedIconPath: "assets/icons/tab/active/home.png"
       },
       {
-        pagePath: "pages/services/index",
-        text: "校园服务",
-        iconPath: "assets/icons/tab/normal/apps.png",
-        selectedIconPath: "assets/icons/tab/active/apps.png"
-      },
-      {
         pagePath: "pages/community/index",
         text: "校园圈",
         iconPath: "assets/icons/tab/normal/message-circle.png",
         selectedIconPath: "assets/icons/tab/active/message-circle.png"
+      },
+      {
+        pagePath: "pages/services/index",
+        text: "校园服务",
+        iconPath: "assets/icons/tab/normal/apps.png",
+        selectedIconPath: "assets/icons/tab/active/apps.png"
       },
       {
         pagePath: "pages/rankings/index",

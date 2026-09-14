@@ -1,0 +1,27 @@
+.service-mini-header {
+  min-height: 66PX;
+  padding: 10PX 2PX 9PX;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12PX;
+}
+.service-mini-title {
+  color: #172b39;
+  font-size: 29PX;
+  font-weight: 900;
+  letter-spacing: -0.5PX;
+}
+.service-mini-badge {
+  max-width: 52%;
+  overflow: hidden;
+  padding: 7PX 11PX;
+  border: 1PX solid #dbe8ee;
+  border-radius: 999PX;
+  background: rgba(255, 255, 255, 0.86);
+  color: #2385c4;
+  font-size: 14PX;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

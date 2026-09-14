@@ -8,11 +8,26 @@ export const tenants: Tenant[] = [
     province: "河北",
     city: "唐山",
     status: "active",
-    theme: {primary: "#0b7a43", secondary: "#14345a", surface: "#f6f7f5"},
+    theme: {primary: "#28aee5", secondary: "#426cd9", surface: "#f4fbff"},
     campuses: [
-      {id: "daxuexidao", name: "大学西道校区"},
-      {id: "huayanbeilu", name: "华岩北路校区"},
-      {id: "longze", name: "龙泽路校区"}
+      {id: "daxuexidao", name: "南院"},
+      {id: "beiyuan", name: "北院"},
+      {id: "huayanbeilu", name: "华岩路"},
+      {id: "longze", name: "东院"}
+    ],
+    capabilities: ["community", "services", "ai", "campus-guide"]
+  },
+  {
+    id: "tstc",
+    name: "唐山师范学院",
+    shortName: "唐师",
+    province: "河北",
+    city: "唐山",
+    status: "active",
+    theme: {primary: "#28aee5", secondary: "#426cd9", surface: "#f4fbff"},
+    campuses: [
+      {id: "daxuedao", name: "大学道校区"},
+      {id: "xueyuanlu", name: "学院路校区"}
     ],
     capabilities: ["community", "services", "ai", "campus-guide"]
   },

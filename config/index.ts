@@ -1,6 +1,8 @@
 import {defineConfig, type UserConfigExport} from "@tarojs/cli"
 
 export default defineConfig(async (merge, {command, mode}) => {
+  const apiRoot = String(process.env.TARO_APP_API_ROOT || "https://stardust.sale/campus-circle/api/v1").replace(/\/$/, "")
+  const uploadOrigin = String(process.env.TARO_UPLOAD_ORIGIN || "https://stardust.sale").replace(/\/$/, "")
   const base: UserConfigExport = {
     projectName: "stardust-campus-ecosystem",
     date: "2026-07-26",
@@ -18,7 +20,8 @@ export default defineConfig(async (merge, {command, mode}) => {
         {
           from: "src/sitemap.json",
           to: process.env.TARO_ENV === "h5" ? "dist-h5/sitemap.json" : "dist/sitemap.json"
-        }
+        },
+        ...(process.env.TARO_ENV === "h5" ? [{from: "admin", to: "dist-h5/admin"}] : [])
       ],
       options: {}
     },
@@ -45,7 +48,7 @@ export default defineConfig(async (merge, {command, mode}) => {
   }
 
   if (process.env.NODE_ENV === "development") {
-    return merge({}, base, {env: {NODE_ENV: '"development"'}})
+    return merge({}, base, {env: {NODE_ENV: '"development"', TARO_APP_API_ROOT: JSON.stringify(apiRoot), TARO_UPLOAD_ORIGIN: JSON.stringify(uploadOrigin)}})
   }
-  return merge({}, base, {env: {NODE_ENV: '"production"'}})
+  return merge({}, base, {env: {NODE_ENV: '"production"', TARO_APP_API_ROOT: JSON.stringify(apiRoot), TARO_UPLOAD_ORIGIN: JSON.stringify(uploadOrigin)}})
 })

@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>星尘校园圈 · 运营后台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="admin-v4">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div><strong>唐山学院</strong><small>校园生态运营台</small></div>
+        </div>
+        <nav>
+          <span class="nav-group">工作台</span>
+          <button class="active" data-view="overview">运营总览</button>
+          <span class="nav-group">运营</span>
+          <button data-view="home">首页运营</button>
+          <button data-view="services">服务运营</button>
+          <button data-view="jobs">兼职发布</button>
+          <span class="nav-group">安全</span>
+          <button data-view="content">内容管理</button>
+          <button data-view="reports">沟通举报</button>
+          <span class="nav-group">系统</span>
+          <button data-view="users">用户与权限</button>
+          <button data-view="settings">校区设置</button>
+          <button data-view="audit">审计日志</button>
+        </nav>
+        <div class="scope-card">
+          <small>当前数据边界</small><strong id="scope-school">未连接</strong
+          ><span id="scope-campus">请选择校区</span>
+        </div>
+      </aside>
+      <main>
+        <header>
+          <div class="header-scope">
+            <strong id="header-school">唐山学院</strong><span></span
+            ><strong id="header-campus">南院</strong>
+          </div>
+          <div class="header-actions">
+            <select id="campus-select" aria-label="切换校区"></select
+            ><button id="refresh">刷新数据</button>
+          </div>
+        </header>
+
+        <section class="page-heading">
+          <div>
+            <h1 id="page-title">运营总览</h1>
+            <p>所有查询与操作均按高校和校区双重隔离，确保数据安全合规</p>
+          </div>
+        </section>
+
+        <section id="login-panel" class="login-layout">
+          <article class="login-panel">
+            <div class="login-copy">
+              <h2>连接运营后台</h2>
+              <p>
+                日常员工请在小程序“我的”页面生成一次性登录码。登录码 5 分钟有效，只能使用一次。
+              </p>
+            </div>
+            <label
+              >API 地址<input id="api-root" value="/campus-circle/api/v1"
+            /></label>
+            <div class="form-grid">
+              <label>高校标识<input id="tenant-input" value="tangshan" /></label
+              ><label
+                >校区标识<input id="campus-input" value="daxuexidao"
+              /></label>
+            </div>
+            <label
+              >员工登录码<input
+                id="employee-code"
+                inputmode="numeric"
+                maxlength="8"
+                autocomplete="one-time-code"
+                placeholder="请输入小程序生成的 8 位登录码"
+            /></label>
+            <details class="bootstrap-login">
+              <summary>首次开通或紧急恢复</summary>
+            <label
+              >后台引导令牌<input
+                id="admin-token"
+                type="password"
+                autocomplete="current-password"
+                placeholder="请输入服务器配置的令牌"
+            /></label>
+            </details>
+            <button id="connect">安全连接</button>
+            <div id="login-error" class="error" role="alert"></div>
+            <a class="connection-help" href="#connection-guide">查看连接说明</a>
+          </article>
+          <article class="capability-panel">
+            <div>
+              <h2>核心能力预览</h2>
+              <p>连接成功后，可解锁当前高校与校区的真实运营数据。</p>
+            </div>
+            <div class="capability-grid">
+              <section>
+                <strong>待审内容</strong
+                ><span>集中处理校园圈、二手与榜单投稿</span
+                ><small>连接后查看</small>
+              </section>
+              <section>
+                <strong>服务订单</strong
+                ><span>查看商品、活动、订单与履约进度</span
+                ><small>连接后查看</small>
+              </section>
+              <section>
+                <strong>举报处置</strong><span>跟进公开内容与会话举报</span
+                ><small>连接后查看</small>
+              </section>
+              <section>
+                <strong>校区开通检查</strong
+                ><span>核对上线阻断项与安全边界</span><small>连接后查看</small>
+              </section>
+            </div>
+            <div id="connection-guide" class="connection-guide">
+              <strong>连接前确认</strong
+              ><span
+                >后端服务已启动，API 地址可访问，高校与校区标识填写正确。</span
+              >
+            </div>
+          </article>
+        </section>
+
+        <section
+          id="preview-loading"
+          class="login-panel preview-loading"
+          hidden
+        >
+          <div>
+            <h2>正在载入运营后台</h2>
+            <p>正在验证高校、校区和运营权限，请稍候。</p>
+          </div>
+        </section>
+
+        <div id="workspace" hidden>
+          <section class="view active" data-view-panel="overview">
+            <div class="stat-grid" id="stats"></div>
+            <article class="panel readiness-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>校区开通检查</h2>
+                  <p>仅汇总当前校区的真实配置；不会自动开启收费或公开功能</p>
+                </div>
+                <span id="readiness-state" class="warn">正在检查</span>
+              </div>
+              <div id="readiness-list" class="readiness-list"></div>
+              <p id="readiness-queue" class="readiness-queue"></p>
+            </article>
+            <div class="dashboard-grid">
+              <article class="panel">
+                <div class="panel-head">
+                  <h2>待办队列</h2>
+                  <span>当前校区</span>
+                </div>
+                <div id="todo-list" class="todo-list"></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <h2>安全边界</h2>
+                  <span class="ok">已启用</span>
+                </div>
+                <ul class="guard-list">
+                  <li>高校 + 校区双重筛选</li>
+                  <li>服务端角色校验</li>
+                  <li>后台操作审计留痕</li>
+                  <li>支付回调后才改变订单状态</li>
+                  <li>举报会话可冻结</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="view" data-view-panel="home">
+            <div class="dashboard-grid home-operations">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>校园公告</h2>
+                    <p>启用后会以紧凑公告条展示在当前校区首页</p>
+                  </div>
+                </div>
+                <div class="stack-form">
+                  <label
+                    >公告标题<input
+                      id="announcement-title"
+                      maxlength="60"
+                      placeholder="例如：图书馆开放时间调整"
+                  /></label>
+                  <label
+                    >公告内容<textarea
+                      id="announcement-content"
+                      maxlength="240"
+                      placeholder="填写同学需要看到的简短信息"
+                    ></textarea>
+                  </label>
+                  <div class="form-grid">
+                    <label
+                      >跳转页面<input
+                        id="announcement-route"
+                        value="/pages/messages/index"
+                    /></label>
+                    <label
+                      >发布状态<select id="announcement-status">
+                        <option value="active">立即启用</option>
+                        <option value="draft">保存草稿</option>
+                      </select></label
+                    >
+                  </div>
+                  <label
+                    >优先级（0–100）<input
+                      id="announcement-priority"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value="0"
+                  /></label>
+                  <button id="save-announcement">保存公告</button>
+                </div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>天气状态</h2>
+                    <p>
+                      未接入合规天气数据源前由运营维护；留空时首页不会伪造天气
+                    </p>
+                  </div>
+                </div>
+                <div class="stack-form">
+                  <label
+                    >温度<input
+                      id="home-weather-temperature"
+                      maxlength="20"
+                      placeholder="例如：26°"
+                  /></label>
+                  <label
+                    >天气描述<input
+                      id="home-weather-condition"
+                      maxlength="40"
+                      placeholder="例如：晴转多云"
+                  /></label>
+                  <label
+                    >出行提示<input
+                      id="home-weather-note"
+                      maxlength="80"
+                      placeholder="例如：午后有风，适合出行"
+                  /></label>
+                  <button id="save-home-status">保存天气状态</button>
+                </div>
+              </article>
+            </div>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>公告记录</h2>
+                  <p>公告按当前高校和校区隔离，可随时启用或归档</p>
+                </div>
+              </div>
+              <div id="announcement-list" class="queue"></div>
+            </article>
+          </section>
+
+          <section class="view" data-view-panel="services">
+            <div class="dashboard-grid home-operations">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>发布商店商品</h2>
+                    <p>水果、花店和零食页面只展示这里发布的真实商品</p>
+                  </div>
+                </div>
+                <div class="stack-form">
+                  <label
+                    >所属商店<select id="service-product-type">
+                      <option value="fruit">校园水果店</option>
+                      <option value="flowers">校园花店</option>
+                      <option value="snacks">南院零食店</option>
+                    </select></label
+                  >
+                  <label
+                    >商品名称<input id="service-product-name" maxlength="80"
+                  /></label>
+                  <label
+                    >商品分类<input
+                      id="service-product-category"
+                      maxlength="30"
+                      placeholder="零食 / 饮料 / 泡面 / 日用"
+                  /></label>
+                  <label
+                    >商品说明<textarea
+                      id="service-product-description"
+                      maxlength="300"
+                    ></textarea>
+                  </label>
+                  <div class="form-grid">
+                    <label
+                      >售价（元）<input
+                        id="service-product-price"
+                        type="number"
+                        min="0"
+                        step="0.01" /></label
+                    ><label
+                      >库存<input
+                        id="service-product-stock"
+                        type="number"
+                        min="0"
+                        step="1"
+                    /></label>
+                  </div>
+                  <div class="form-grid">
+                    <label
+                      >数据模式<select id="service-product-mode">
+                        <option value="test">测试数据</option>
+                        <option value="live">正式商品</option>
+                      </select></label
+                    ><label
+                      >排序<input
+                        id="service-product-sort"
+                        type="number"
+                        value="0"
+                        step="1"
+                    /></label>
+                  </div>
+                  <label
+                    >已上传图片地址（可选）<input
+                      id="service-product-image"
+                      placeholder="/campus-circle/api/uploads/..."
+                  /></label>
+                  <label
+                    >上传商品图片<input
+                      id="service-product-file"
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp"
+                  /></label>
+                  <div class="form-actions">
+                    <button id="save-service-product">保存商品</button
+                    ><button
+                      id="cancel-service-product-edit"
+                      class="ghost"
+                      type="button"
+                      hidden
+                    >
+                      取消编辑
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>创建校园活动</h2>
+                    <p>创建后会直接进入当前校区活动页，可随时停用</p>
+                  </div>
+                </div>
+                <div class="stack-form">
+                  <label
+                    >活动名称<input id="event-title" maxlength="100"
+                  /></label>
+                  <div class="form-grid">
+                    <label
+                      >主办方<input
+                        id="event-organizer"
+                        maxlength="100" /></label
+                    ><label
+                      >活动时间<input id="event-time" maxlength="100"
+                    /></label>
+                  </div>
+                  <div class="form-grid">
+                    <label
+                      >地点<input id="event-location" maxlength="100" /></label
+                    ><label
+                      >名额<input
+                        id="event-capacity"
+                        type="number"
+                        min="0"
+                        step="1"
+                    /></label>
+                  </div>
+                  <label
+                    >活动说明<textarea
+                      id="event-description"
+                      maxlength="800"
+                    ></textarea>
+                  </label>
+                  <button id="save-event">发布活动</button>
+                </div>
+              </article>
+            </div>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>商店商品</h2>
+                  <p>库存会在同学提交订单时扣减，取消订单时自动恢复</p>
+                </div>
+              </div>
+              <div id="service-product-list" class="queue"></div>
+            </article>
+            <div class="dashboard-grid home-operations takeout-operations">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>外卖商户</h2>
+                    <p>商户严格归属当前校区；测试档口不会被当作正式合作商户</p>
+                  </div>
+                </div>
+                <div class="stack-form">
+                  <label
+                    >商户名称<input
+                      id="takeout-merchant-name"
+                      maxlength="80"
+                      placeholder="例如：南院食堂一楼"
+                  /></label>
+                  <div class="form-grid">
+                    <label
+                      >分类<input
+                        id="takeout-merchant-category"
+                        maxlength="40"
+                        value="校园餐饮" /></label
+                    ><label
+                      >预计送达（分钟）<input
+                        id="takeout-merchant-minutes"
+                        type="number"
+                        min="0"
+                        max="180"
+                        value="30"
+                    /></label>
+                  </div>
+                  <label
+                    >商户说明<textarea
+                      id="takeout-merchant-description"
+                      maxlength="300"
+                    ></textarea>
+                  </label>
+                  <label
+                    >数据模式<select id="takeout-merchant-mode">
+                      <option value="test">测试档口</option>
+                      <option value="live">正式商户</option>
+                    </select></label
+                  >
+                  <button id="save-takeout-merchant">新增商户</button>
+                </div>
+                <div
+                  id="takeout-merchant-list"
+                  class="queue compact-queue"
+                ></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>外卖商品与每日菜单</h2>
+                    <p>先维护商品模板，再选择日期发布当天菜单</p>
+                  </div>
+                </div>
+                <div class="stack-form">
+                  <label
+                    >所属商户<select id="takeout-merchant-select"></select
+                  ></label>
+                  <label
+                    >商品名称<input id="takeout-product-name" maxlength="80"
+                  /></label>
+                  <div class="form-grid">
+                    <label
+                      >分类<input
+                        id="takeout-product-category"
+                        maxlength="40"
+                        value="午餐套餐" /></label
+                    ><label
+                      >售价（元）<input
+                        id="takeout-product-price"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                    /></label>
+                  </div>
+                  <div class="form-grid">
+                    <label
+                      >库存<input
+                        id="takeout-product-stock"
+                        type="number"
+                        min="0"
+                        step="1" /></label
+                    ><label
+                      >数据模式<select id="takeout-product-mode">
+                        <option value="test">测试商品</option>
+                        <option value="live">正式商品</option>
+                      </select></label
+                    >
+                  </div>
+                  <label
+                    >商品说明<textarea
+                      id="takeout-product-description"
+                      maxlength="300"
+                    ></textarea>
+                  </label>
+                  <label
+                    >上传商品图片<input
+                      id="takeout-product-file"
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp"
+                  /></label>
+                  <button id="save-takeout-product">新增商品模板</button>
+                  <hr />
+                  <div class="form-grid">
+                    <label
+                      >菜单日期<input
+                        id="takeout-menu-date"
+                        type="date" /></label
+                    ><label
+                      >商品模板<select id="takeout-menu-product"></select
+                    ></label>
+                  </div>
+                  <div class="form-grid">
+                    <label
+                      >当天售价（元）<input
+                        id="takeout-menu-price"
+                        type="number"
+                        min="0"
+                        step="0.01" /></label
+                    ><label
+                      >当天份数<input
+                        id="takeout-menu-capacity"
+                        type="number"
+                        min="0"
+                        step="1"
+                    /></label>
+                  </div>
+                  <button id="publish-takeout-menu">发布/更新当天菜单</button>
+                </div>
+                <div
+                  id="takeout-product-list"
+                  class="queue compact-queue"
+                ></div>
+                <div id="takeout-menu-list" class="queue compact-queue"></div>
+              </article>
+            </div>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>服务订单</h2>
+                  <p>
+                    确认 → 备货 → 待取/待送 → 完成；当前流程不会伪造微信支付
+                  </p>
+                </div>
+              </div>
+              <div id="service-order-list" class="queue"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>校园活动</h2>
+                  <p>活动与报名人数均按当前校区隔离</p>
+                </div>
+              </div>
+              <div id="event-list" class="queue"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>快递信息</h2>
+                  <p>按当前校区为指定用户录入待取件；记录会同步到该用户首页</p>
+                </div>
+              </div>
+              <div class="stack-form express-form">
+                <div class="form-grid">
+                  <label
+                    >用户 ID<input
+                      id="express-user-id"
+                      type="number"
+                      min="1"
+                      step="1"
+                      placeholder="可在用户与权限中查看" /></label
+                  ><label
+                    >快递公司<input
+                      id="express-carrier"
+                      maxlength="30"
+                      placeholder="例如：中通"
+                  /></label>
+                </div>
+                <div class="form-grid">
+                  <label
+                    >快递单号<input
+                      id="express-tracking-no"
+                      maxlength="80" /></label
+                  ><label
+                    >取件码<input id="express-pickup-code" maxlength="40"
+                  /></label>
+                </div>
+                <label
+                  >取件站点<input
+                    id="express-station"
+                    maxlength="80"
+                    value="校内快递点"
+                /></label>
+                <button id="save-express-package">录入待取快递</button>
+              </div>
+              <div id="express-package-list" class="queue express-list"></div>
+            </article>
+          </section>
+
+          <section class="view" data-view-panel="content">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>校园圈内容管理</h2>
+                  <p>
+                    新内容通过屏蔽词与服务端安全检测后立即公开；管理员可随时删除违规帖子
+                  </p>
+                </div>
+                <button data-reload="content">重新加载</button>
+              </div>
+              <div id="post-queue" class="queue"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>二手内容</h2>
+                  <p>
+                    新发布内容先进入待审；核对实物图片、价格和校外导流后再公开
+                  </p>
+                </div>
+              </div>
+              <div id="market-queue" class="queue"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>学生创建榜单</h2>
+                  <p>审核榜单主题、说明和封面；通过后才允许全校同学投稿</p>
+                </div>
+              </div>
+              <div id="ranking-list-queue" class="queue"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>榜单地点管理</h2>
+                  <p>同学上传内容先审核，已公开地点可随时下架</p>
+                </div>
+              </div>
+              <div id="ranking-queue" class="queue"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>公开内容举报</h2>
+                  <p>
+                    统一处理校园圈帖子、评论与榜单地点举报，处置过程保留审计记录
+                  </p>
+                </div>
+              </div>
+              <div id="public-report-queue" class="queue"></div>
+            </article>
+          </section>
+
+          <section class="view" data-view-panel="jobs">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>历史兼职发布单</h2>
+                  <p>本期付费发布入口关闭，仅保留历史记录供运营核对</p>
+                </div>
+                <span class="fee">暂停收费</span>
+              </div>
+              <div id="job-queue" class="queue"></div>
+            </article>
+          </section>
+
+          <section class="view" data-view-panel="reports">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>会话举报</h2>
+                  <p>只能查看举报摘要，不默认暴露全部私聊内容</p>
+                </div>
+              </div>
+              <div id="report-queue" class="queue"></div>
+            </article>
+          </section>
+
+          <section class="view" data-view-panel="users">
+            <div class="dashboard-grid">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>当前校区用户</h2>
+                    <p>仅展示最小必要身份信息</p>
+                  </div>
+                </div>
+                <div id="user-list" class="table-wrap"></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head"><h2>分配运营角色</h2></div>
+                <div class="stack-form">
+                  <label
+                    >用户 ID<input
+                      id="role-user-id"
+                      inputmode="numeric" /></label
+                  ><label
+                    >角色<select id="role-name">
+                      <option value="campus_admin">校区管理员</option>
+                      <option value="content_admin">内容管理员</option>
+                      <option value="finance_admin">财务管理员</option>
+                      <option value="auditor">审计员</option>
+                      <option value="school_admin">高校管理员</option>
+                    </select></label
+                  ><button id="save-role">保存角色</button>
+                  <p class="hint">
+                    高校管理员可切换本校全部校区；其他角色只作用于当前校区。
+                  </p>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="view" data-view-panel="settings">
+            <article class="panel settings-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>当前校区联系方式</h2>
+                  <p>二手电动车咨询与兼职付费后的运营联系共用此配置</p>
+                </div>
+              </div>
+              <div class="settings-grid">
+                <label
+                  >运营微信号<input
+                    id="setting-wechat"
+                    placeholder="尚未配置" /></label
+                ><label
+                  >二维码图片地址<input
+                    id="setting-qr"
+                    placeholder="https://..." /></label
+                ><label class="wide"
+                  >联系说明<textarea
+                    id="setting-note"
+                    placeholder="例如：添加时请备注校区与发布单号"
+                  ></textarea></label
+                ><label class="toggle wide"
+                  ><input id="setting-ebike" type="checkbox" /><span
+                    >开放当前校区二手电动车微信咨询</span
+                  ></label
+                >
+              </div>
+              <button id="save-settings">保存校区设置</button>
+            </article>
+          </section>
+
+          <section class="view" data-view-panel="audit">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>操作审计</h2>
+                  <p>角色、审核、设置和交易操作均保留记录</p>
+                </div>
+              </div>
+              <div id="audit-list" class="table-wrap"></div>
+            </article>
+          </section>
+        </div>
+        <footer>
+          <span>支付功能保持关闭</span
+          ><span>唐山学院校园生态运营台 · 严格遵循高校数据安全与隐私规范</span>
+        </footer>
+      </main>
+    </div>
+    <div id="toast" class="toast"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

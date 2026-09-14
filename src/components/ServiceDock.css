@@ -1,0 +1,19 @@
+.service-dock-spacer{height:72PX}
+.service-dock{
+  position:fixed;
+  z-index:40;
+  right:0;
+  bottom:0;
+  left:0;
+  min-height:61PX;
+  padding:7PX 18PX calc(7PX + env(safe-area-inset-bottom));
+  border-top:1PX solid #e7eef2;
+  background:rgba(255,255,255,.98);
+  box-shadow:0 -5PX 18PX rgba(35,71,89,.07);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+.service-dock>view{display:grid;justify-items:center;gap:2PX;color:#8a999f;font-size:11PX;font-weight:750}
+.service-dock image{width:23PX;height:23PX;opacity:.64}
+.service-dock>view.active{color:var(--service-accent-strong)}
+.service-dock>view.active image{opacity:1}

@@ -1,0 +1,79 @@
+.admin-page{min-height:100vh;padding:28px 24px 52px;background:#f7f8f5;color:#252925}.admin-heading{display:grid;gap:8px}.admin-heading text:first-child{font-size:34px;font-weight:900}.admin-heading text:last-child{color:#778078;font-size:20px}.admin-summary,.admin-section{margin-top:20px;padding:20px;border:1px solid #e0e6df;border-radius:14px;background:#fff}.admin-summary{display:grid;gap:9px;color:#667066;font-size:19px}.admin-summary>view{display:flex;justify-content:space-between;gap:14px}.admin-summary text:first-child{font-weight:800;color:#30583f}.admin-title{display:block;margin-bottom:14px;font-size:25px;font-weight:850}.admin-help{display:block;margin:-4px 0 14px;color:#778078;font-size:18px;line-height:1.5}.admin-form{display:grid;gap:11px}.admin-form input,.admin-form textarea{min-height:68px;padding:0 16px;border:1px solid #dde4dc;border-radius:9px;background:#fafcf9;font-size:21px}.admin-form textarea{min-height:132px;padding-top:14px;box-sizing:border-box}.admin-form button{height:56px;margin:0;border:1px solid #0b7a43;border-radius:9px;background:#0b7a43;color:#fff;font-size:21px;line-height:54px}.admin-form button::after,.tiny::after{border:0}.admin-inline{display:grid;grid-template-columns:1fr 1fr;gap:10px}.admin-chips{display:flex;gap:10px;margin-bottom:14px;overflow-x:auto;white-space:nowrap}.admin-chip{padding:11px 16px;border:1px solid #dfe5de;border-radius:999px;background:#fafcf9;color:#647066;font-size:19px}.admin-chip.active{border-color:#0b7a43;background:#e8f5ec;color:#0b7040;font-weight:800}.merchant-caption{display:flex;justify-content:space-between;margin:4px 0 13px;color:#627066;font-size:19px}.merchant-caption text:first-child{font-weight:800;color:#2b3c2f}.admin-products,.admin-faqs{display:grid;gap:9px;margin-top:14px}.admin-products>view,.admin-faqs>view{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;border-radius:10px;background:#f7f9f6}.admin-products>view>view,.admin-faqs>view>view{display:grid;gap:4px;min-width:0}.admin-products text:first-child,.admin-faqs text:first-child{font-size:21px;font-weight:800}.admin-products text:last-child,.admin-faqs text:nth-child(2),.admin-faqs text:last-child{color:#7f887f;font-size:18px}.admin-actions{display:flex;gap:8px;flex-shrink:0}.tiny{height:44px;margin:0;padding:0 17px;border:1px solid #b7c8b9;border-radius:8px;background:#fff;color:#44624c;font-size:18px;line-height:42px}.tiny.danger{border-color:#e1c1b8;color:#a85f4b}.admin-empty{display:block;padding:10px 0;color:#7b857d;font-size:19px}.compact{margin-top:15px}.admin-state{min-height:100vh;padding:80px 30px;display:grid;place-content:center;justify-items:center;gap:16px;background:#f7f8f5;color:#778078;font-size:22px;text-align:center}.admin-state button{margin:0;padding:0 26px;border-radius:9px;background:#0b7a43;color:#fff;font-size:21px}.admin-state button::after{border:0}
+.product-image-field {
+  display: grid;
+  grid-template-columns: 112PX 1fr;
+  align-items: center;
+  gap: 12PX;
+  padding: 10PX;
+  border: 1PX solid #dde4dc;
+  border-radius: 12PX;
+  background: #fafcf9;
+}
+
+.product-image-preview {
+  width: 112PX;
+  height: 82PX;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 10PX;
+  background: #edf2ee;
+  color: #7f887f;
+  font-size: 12PX;
+  text-align: center;
+}
+
+.product-image-preview image {
+  width: 100%;
+  height: 100%;
+}
+
+.admin-form .image-button {
+  border-color: #b7c8b9;
+  background: #fff;
+  color: #30583f;
+}
+
+.admin-form .form-cancel {
+  border-color: #d8dfd8;
+  background: #fff;
+  color: #667066;
+}
+
+.admin-product-main {
+  min-width: 0;
+  display: flex !important;
+  align-items: center;
+  gap: 10PX;
+}
+
+.admin-product-main > image {
+  width: 64PX;
+  height: 52PX;
+  flex: 0 0 auto;
+  border-radius: 8PX;
+  background: #edf2ee;
+}
+
+.admin-product-main > view {
+  min-width: 0;
+  display: grid;
+  gap: 4PX;
+}
+
+.admin-date-picker {
+  min-height: 54PX;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16PX;
+  border: 1PX solid #dde4dc;
+  border-radius: 9PX;
+  background: #fafcf9;
+  color: #2b3c2f;
+  font-size: 16PX;
+}
+
+.admin-date-picker text:first-child {
+  color: #778078;
+}

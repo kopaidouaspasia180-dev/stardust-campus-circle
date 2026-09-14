@@ -1,5 +1,67 @@
-.service-page-header { padding:18px 0 16px; display:flex; align-items:center; gap:16px; }
-.service-back { width:58px; height:58px; border-radius:50%; background:#fff; color:#0b7a43; display:grid; place-items:center; font-size:48px; line-height:1; box-shadow:0 8px 24px rgba(28,69,53,.08); }
-.service-page-header > view { display:grid; gap:3px; }
-.service-page-header > view text:first-child { color:#17221e; font-size:38px; font-weight:900; }
-.service-page-header > view text:last-child { color:#7d8982; font-size:22px; }
+.service-page-header {
+  position: relative;
+  overflow: hidden;
+  min-height: 124PX;
+  margin: 8PX 0 14PX;
+  padding: 18PX;
+  border: 1PX solid rgba(73, 159, 204, 0.18);
+  border-radius: 22PX;
+  background: var(--service-hero, #e8f8ff);
+  box-shadow: var(--shadow-card);
+  display: grid;
+  grid-template-columns: 68PX minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14PX;
+}
+.service-header-icon {
+  position: relative;
+  z-index: 1;
+  width: 68PX;
+  height: 68PX;
+  border: 5PX solid rgba(255, 255, 255, 0.82);
+  border-radius: 22PX;
+  background: #fff;
+  box-shadow: 0 8PX 18PX rgba(35, 105, 143, 0.12);
+}
+.service-header-copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: grid;
+  gap: 3PX;
+}
+.service-header-eyebrow {
+  color: var(--service-accent-strong, #168fc9);
+  font-size: 10PX;
+  font-weight: 850;
+  letter-spacing: 1.4PX;
+}
+.service-header-title {
+  overflow: hidden;
+  color: #1c2534;
+  font-size: 28PX;
+  font-weight: 900;
+  letter-spacing: -0.3PX;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.service-header-subtitle {
+  overflow: hidden;
+  color: #66808e;
+  font-size: 15PX;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.service-header-badge {
+  position: relative;
+  z-index: 1;
+  align-self: start;
+  padding: 7PX 10PX;
+  border-radius: 999PX;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--service-accent-strong, #168fc9);
+  font-size: 12PX;
+  font-weight: 800;
+  white-space: nowrap;
+}

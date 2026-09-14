@@ -1,0 +1,44 @@
+name: Verify
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: stardust_ci
+          POSTGRES_PASSWORD: stardust_ci_password
+          POSTGRES_DB: stardust_ci
+        options: >-
+          --health-cmd "pg_isready -U stardust_ci -d stardust_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    env:
+      DATABASE_URL: postgresql://stardust_ci:stardust_ci_password@127.0.0.1:5432/stardust_ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm --prefix server ci
+      - run: npm run typecheck
+      - run: npm --prefix server test
+      - run: npm --prefix server run check
+      - run: npm --prefix server run migrate
+      - run: npm --prefix server run test:integration
+      - run: npm --prefix server run preflight:production -- --env test/fixtures/production.env
+      - run: bash -n ops/backup-postgres.sh && bash -n ops/restore-postgres.sh
+      - run: docker compose -f ops/docker-compose.production.yml config --no-interpolate
+      - run: docker build -t stardust-campus-circle-api:ci server
+      - run: npm run build:weapp
+      - run: npm run build:h5

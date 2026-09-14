@@ -10,7 +10,11 @@
     "build:h5": "taro build --type h5",
     "typecheck": "tsc --noEmit",
     "check:server": "npm --prefix server run check",
-    "check": "npm run typecheck && npm run check:server && npm run build:weapp && npm run build:h5"
+    "check:weapp-package": "node docs/check-weapp-package.mjs",
+    "qa:mobile": "node docs/qa-mobile.mjs",
+    "qa:services": "node docs/qa-services.mjs",
+    "qa:all-pages": "node docs/qa-all-pages.mjs",
+    "check": "npm run typecheck && npm run check:server && npm run build:weapp && npm run check:weapp-package && npm run build:h5"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
@@ -30,10 +34,12 @@
   "devDependencies": {
     "@babel/core": "^7.28.0",
     "@babel/preset-react": "^7.27.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.17",
     "@tarojs/cli": "4.2.1",
     "@types/react": "^18.3.0",
     "@types/webpack-env": "^1.18.8",
     "babel-preset-taro": "4.2.1",
+    "playwright-core": "^1.62.0",
     "react-refresh": "0.14.2",
     "typescript": "^5.8.0",
     "webpack": "5.91.0"

@@ -1,0 +1,426 @@
+  <div class="wrap">
+    <p class="head-eyebrow"><span class="dots"><i style="background:var(--orange)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i><i style="background:var(--primary)"></i><i style="background:var(--pink)"></i></span>Stardust Campus Circle · UI Spec V3</p>
+    <h1 class="board-title">星尘校园圈 · 青春多彩版</h1>
+    <p class="board-sub">微信小程序形态：胶囊按钮、底部导航、大圆角糖果卡片。每个服务都有自己的颜色，青蓝渐变刊头承载品牌，整页明亮、轻快、有校园气。同一套 token 覆盖小程序与 H5。</p>
+    <div class="head-chips">
+      <span class="hchip">390 × 844 · iPhone 14</span>
+      <span class="hchip">14 屏 + 设计规范</span>
+      <span class="hchip">7 色糖果服务系统</span>
+      <span class="hchip">微信小程序 + H5</span>
+    </div>
+  </div>
+</header>
+
+<nav class="board-nav" data-component="Group Nav" data-od-id="board-nav" aria-label="设计板分组">
+  <div class="wrap">
+    <a class="nav-link" href="#group-a">A · 五张主屏</a>
+    <a class="nav-link" href="#group-b">B · 服务页示例</a>
+    <a class="nav-link" href="#group-c">C · 通用状态</a>
+    <a class="nav-link" href="#group-d">D · 设计规范</a>
+    <span class="nav-note">Youth Candy System</span>
+  </div>
+</nav>
+
+<main data-component="Design Board Main" data-od-id="main">
+<section id="group-a" class="group" data-component="Group A Main Screens" data-od-id="group-a">
+  <div class="wrap">
+    <div class="group-head">
+      <p class="head-eyebrow">Group A · Core Screens</p>
+      <h2 class="group-title">五张主屏</h2>
+      <p class="group-desc">首页自上而下三段式：今日面板（蓝色渐变下节课 + 暖黄天气 + 草绿快递）→ 常用服务（糖果色 2×2）→ 校园论坛预览。窄栏高校切换，色彩轻盈年轻。</p>
+    </div>
+    <div class="screens">
+
+      <!-- 01 首页 -->
+      <figure class="shot" data-component="Screen 01 Home" data-od-id="screen-01">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:14px">
+              <div class="pad" style="padding-top:8px" data-component="School Bar">
+                <div class="between" style="align-items:center">
+                  <button class="school-switch" type="button" aria-label="切换高校" data-component="School Switcher">
+                    <svg class="ic" style="width:17px;height:17px"><use href="#i-cap"/></svg>
+                    <span>唐山学院</span>
+                    <svg class="ic" style="width:13px;height:13px;opacity:.75"><use href="#i-chevd"/></svg>
+                  </button>
+                  <span class="wx-capsule light" aria-label="微信小程序胶囊按钮"><span class="dots-3"><i></i><i></i><i></i></span><span class="sep"></span><span class="circ"><svg viewBox="0 0 24 24"><use href="#i-wxcircle"/></svg></span></span>
+                </div>
+              </div>
+              <div class="pad" style="margin-top:14px" data-component="Today Panel">
+                <div class="sec-row">
+                  <div><span class="eyebrow">Today</span><div class="h2">今日面板</div></div>
+                  <button class="link" type="button">全部<svg class="ic"><use href="#i-chev"/></svg></button>
+                </div>
+                <div class="bento" style="margin-top:14px">
+                  <div class="card g-blue big" style="border:0;padding:20px;display:flex;flex-direction:column;justify-content:space-between;color:var(--c-white);box-shadow:0 16px 34px -18px color-mix(in srgb,var(--primary) 70%,transparent)">
+                    <div class="between"><span class="eyebrow" style="color:color-mix(in srgb,var(--c-white) 80%,transparent)">Next Class</span><svg class="ic" style="width:18px;height:18px"><use href="#i-clock"/></svg></div>
+                    <div>
+                      <div class="mono" style="font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1">14:00</div>
+                      <div style="font-size:21px;font-weight:800;margin-top:8px">数据库系统原理</div>
+                    </div>
+                    <div class="row" style="flex-wrap:wrap;gap:8px">
+                      <span class="chip w"><svg class="ic"><use href="#i-pin"/></svg>A 楼 · 302</span>
+                      <span class="chip w-solid">42 分钟后</span>
+                    </div>
+                  </div>
+                  <div class="card mini-card h-amber card-h">
+                    <div class="top"><span class="mini" style="color:var(--ink-2)">唐山 · 天气</span><svg class="ic"><use href="#i-weather"/></svg></div>
+                    <div class="row" style="gap:8px"><span class="val mono">26°</span><span class="mini">多云转晴</span></div>
+                  </div>
+                  <div class="card mini-card h-green card-h">
+                    <div class="top"><span class="mini" style="color:var(--ink-2)">待取快递</span><svg class="ic"><use href="#i-box"/></svg></div>
+                    <div class="row" style="gap:8px"><span class="val mono">0</span><span class="mini">绑定后归集</span></div>
+                  </div>
+                </div>
+                <div class="card strip" data-component="Classes Strip">
+                  <span class="tile-c sm h-blue"><svg class="ic"><use href="#i-cal"/></svg></span>
+                  <div><div style="font-size:18px;font-weight:800">今天 3 节课</div><div class="mini">最近一节 14:00 · 数据库系统原理</div></div>
+                  <button class="link" style="margin-left:auto" type="button">课表<svg class="ic"><use href="#i-chev"/></svg></button>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="Services Grid">
+                <div class="sec-row">
+                  <div><span class="eyebrow">Services</span><div class="h2">常用服务</div></div>
+                  <button class="link" type="button">管理<svg class="ic"><use href="#i-chev"/></svg></button>
+                </div>
+                <div class="svc-grid" style="margin-top:14px">
+                  <div class="card svc h-orange card-h"><span class="tile-c"><svg class="ic"><use href="#i-bowl"/></svg></span><div><div class="name">校园外卖</div><div class="desc">送到宿舍楼下</div></div></div>
+                  <div class="card svc h-amber card-h"><span class="tile-c"><svg class="ic"><use href="#i-zap"/></svg></span><div><div class="name">跑腿代办</div><div class="desc">当日完成</div></div></div>
+                  <div class="card svc h-green card-h"><span class="tile-c"><svg class="ic"><use href="#i-tag"/></svg></span><div><div class="name">二手市场</div><div class="desc">学长姐的闲置</div></div></div>
+                  <div class="card svc h-blue card-h"><span class="tile-c"><svg class="ic"><use href="#i-box"/></svg></span><div><div class="name">快递查询</div><div class="desc">站点自动归集</div></div></div>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="Circle Preview">
+                <div class="sec-row">
+                  <div><span class="eyebrow">Circle</span><div class="h2">校园圈动态</div></div>
+                  <button class="link" type="button">进圈子<svg class="ic"><use href="#i-chev"/></svg></button>
+                </div>
+                <div class="card post" style="margin-top:14px;padding:16px">
+                  <div class="p-head" style="margin-bottom:9px">
+                    <span class="avatar a-pink">林</span>
+                    <div><div class="p-name">林小满</div><div class="p-meta">日常 · 2 小时前</div></div>
+                  </div>
+                  <div style="font-size:17px;line-height:1.5;color:var(--ink-2)">四楼自习室新添了靠窗座位，看出去就是银杏道……</div>
+                  <div class="p-actions" style="margin-top:10px">
+                    <span class="p-act hot"><svg class="ic"><use href="#i-heart"/></svg>48</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-comment"/></svg>12</span>
+                  </div>
+                </div>
+              </div>
+              <button class="fab fab-ai" aria-label="问星尘 AI" data-component="AI Assistant Button">
+                <span style="font:900 18px/1 var(--font-ui);letter-spacing:.03em">AI</span>
+                <svg class="ic" style="position:absolute;top:-5px;right:-5px;width:16px;height:16px;color:var(--amber)"><use href="#i-spark"/></svg>
+              </button>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx mono">01</span><span class="name">首页</span><span class="note">窄栏切换高校 · 今日面板置顶 · 常用服务 · 校园论坛</span></figcaption>
+      </figure>
+
+      <!-- 02 校园服务 -->
+      <figure class="shot" data-component="Screen 02 Services" data-od-id="screen-02">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:14px">
+              <div class="pad" style="padding-top:6px" data-component="Masthead">
+                <div class="between" style="align-items:flex-end">
+                  <div><p class="eyebrow">Service · Campus</p><h1 class="h1">校园服务</h1></div>
+                  <span class="wx-capsule" style="background:color-mix(in srgb,var(--ink) 8%,transparent);border-color:var(--line)" aria-label="微信小程序胶囊按钮"><span class="dots-3" style="opacity:0"><i></i></span><span class="circ"><svg viewBox="0 0 24 24" style="stroke:var(--ink)"><use href="#i-wxcircle"/></svg></span></span>
+                </div>
+                <div class="card g-blue" style="margin-top:16px;padding:22px;border:0;color:var(--c-white);box-shadow:0 16px 34px -18px color-mix(in srgb,var(--primary) 70%,transparent)" data-component="Service Hero">
+                  <div class="between">
+                    <div>
+                      <div class="h2" style="font-size:27px">校园的事，<br/>一站办完。</div>
+                      <div style="font-size:15px;opacity:.85;margin-top:9px">主校区 12 项服务 · 实时更新</div>
+                    </div>
+                    <span style="width:54px;height:54px;flex:none;border-radius:18px;background:color-mix(in srgb,var(--c-white) 20%,transparent);display:grid;place-items:center"><svg class="ic" style="width:26px;height:26px"><use href="#i-spark"/></svg></span>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:12px;gap:8px;flex-wrap:wrap" data-component="Trust Bar">
+                  <span class="chip h h-green"><svg class="ic"><use href="#i-shield"/></svg>校内认证</span>
+                  <span class="chip h h-blue"><svg class="ic"><use href="#i-clock"/></svg>实时可查</span>
+                  <span class="chip h h-pink"><svg class="ic"><use href="#i-check"/></svg>安心交易</span>
+                </div>
+                <div class="search" style="margin-top:14px" data-component="Search">
+                  <svg class="ic"><use href="#i-search"/></svg>
+                  <input aria-label="搜索校园服务" placeholder="搜索服务、商品、地点"/>
+                </div>
+                <div class="ch-scroll" style="margin-top:13px">
+                  <button class="pill on h-blue">全部</button><button class="pill">餐饮</button><button class="pill">生活</button><button class="pill">学习</button><button class="pill">二手</button>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="Favorites">
+                <div class="sec-row"><div><span class="eyebrow">Favorites</span><div class="h2">常用</div></div></div>
+                <div class="stk" style="gap:12px;margin-top:14px">
+                  <div class="card g-orange" style="border:0;padding:18px;display:flex;align-items:center;gap:14px;color:var(--c-white);box-shadow:0 14px 30px -16px color-mix(in srgb,var(--orange) 70%,transparent)">
+                    <span style="width:48px;height:48px;flex:none;border-radius:16px;background:color-mix(in srgb,var(--c-white) 24%,transparent);display:grid;place-items:center"><svg class="ic" style="width:23px;height:23px"><use href="#i-bowl"/></svg></span>
+                    <div style="flex:1"><div style="font-size:19px;font-weight:800">校园外卖</div><div style="font-size:13.5px;opacity:.88;margin-top:2px">食堂窗口直送 · 送到宿舍楼下</div></div>
+                    <svg class="ic" style="width:18px;height:18px;flex:none"><use href="#i-chev"/></svg>
+                  </div>
+                  <div class="card g-green" style="border:0;padding:18px;display:flex;align-items:center;gap:14px;color:var(--c-white);box-shadow:0 14px 30px -16px color-mix(in srgb,var(--green) 65%,transparent)">
+                    <span style="width:48px;height:48px;flex:none;border-radius:16px;background:color-mix(in srgb,var(--c-white) 24%,transparent);display:grid;place-items:center"><svg class="ic" style="width:23px;height:23px"><use href="#i-tag"/></svg></span>
+                    <div style="flex:1"><div style="font-size:19px;font-weight:800">二手市场</div><div style="font-size:13.5px;opacity:.88;margin-top:2px">学生闲置 · 校内当面交易</div></div>
+                    <svg class="ic" style="width:18px;height:18px;flex:none"><use href="#i-chev"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="pad sec-gap" style="padding-bottom:26px" data-component="All Services">
+                <div class="sec-row">
+                  <div><span class="eyebrow">All Services</span><div class="h2">全部服务</div></div>
+                  <span class="chip mono">12 项</span>
+                </div>
+                <div class="svc-grid" style="margin-top:14px">
+                  <div class="card svc h-orange card-h"><span class="tile-c"><svg class="ic"><use href="#i-bowl"/></svg></span><div><div class="name">校园外卖</div><div class="desc">送到宿舍楼下</div></div></div>
+                  <div class="card svc h-green card-h"><span class="tile-c"><svg class="ic"><use href="#i-tag"/></svg></span><div><div class="name">二手市场</div><div class="desc">学生闲置流转</div></div></div>
+                  <div class="card svc h-amber card-h"><span class="tile-c"><svg class="ic"><use href="#i-zap"/></svg></span><div><div class="name">跑腿代办</div><div class="desc">校内代取代购</div></div></div>
+                  <div class="card svc h-blue card-h"><span class="tile-c"><svg class="ic"><use href="#i-box"/></svg></span><div><div class="name">快递查询</div><div class="desc">多站点归集</div></div></div>
+                  <div class="card svc h-cyan card-h"><span class="tile-c"><svg class="ic"><use href="#i-case"/></svg></span><div><div class="name">校园兼职</div><div class="desc">认证岗位</div></div></div>
+                  <div class="card svc h-purple card-h"><span class="tile-c"><svg class="ic"><use href="#i-calcheck"/></svg></span><div><div class="name">活动报名</div><div class="desc">讲座社团志愿</div></div></div>
+                  <div class="card svc h-pink card-h"><span class="tile-c"><svg class="ic"><use href="#i-users"/></svg></span><div><div class="name">匿名匹配</div><div class="desc">认识同频校友</div></div></div>
+                  <div class="card svc h-amber card-h"><span class="tile-c"><svg class="ic"><use href="#i-mega"/></svg></span><div><div class="name">失物招领</div><div class="desc">快速发布查找</div></div></div>
+                  <div class="card svc h-green card-h"><span class="tile-c"><svg class="ic"><use href="#i-apple"/></svg></span><div><div class="name">水果铺</div><div class="desc">每日鲜切</div></div></div>
+                  <div class="card svc h-pink card-h"><span class="tile-c"><svg class="ic"><use href="#i-flower"/></svg></span><div><div class="name">花店</div><div class="desc">日常小花束</div></div></div>
+                  <div class="card svc h-orange card-h"><span class="tile-c"><svg class="ic"><use href="#i-cookie"/></svg></span><div><div class="name">零食铺</div><div class="desc">宿舍夜补给</div></div></div>
+                  <div class="card svc h-cyan card-h"><span class="tile-c"><svg class="ic"><use href="#i-bike"/></svg></span><div><div class="name">电动车</div><div class="desc">充电与维修</div></div></div>
+                </div>
+              </div>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx mono">02</span><span class="name">校园服务</span><span class="note">渐变 Hero · 信任徽章 · 12 色服务</span></figcaption>
+      </figure>
+
+      <!-- 03 校园圈 -->
+      <figure class="shot" data-component="Screen 03 Circle" data-od-id="screen-03">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:14px">
+              <div class="pad" style="padding-top:6px" data-component="Masthead">
+                <p class="eyebrow">Circle · Tangshan</p>
+                <h1 class="h1">校园圈</h1>
+                <div class="meta" style="margin-top:7px">唐山学院人的圈子 · 先审后发 · 按校区隔离</div>
+              </div>
+              <div class="pad" style="margin-top:14px">
+                <div class="ch-scroll" data-component="Channel Tabs">
+                  <button class="pill on h-blue">推荐</button><button class="pill">日常</button><button class="pill">吐槽</button><button class="pill">二手</button><button class="pill">互助</button>
+                </div>
+                <div class="ch-scroll" style="margin-top:11px" data-component="Topic Pills">
+                  <button class="pill" style="color:var(--pink-deep);background:color-mix(in srgb,var(--pink) 12%,var(--surface));border-color:transparent"># 新生报到</button>
+                  <button class="pill" style="color:var(--orange-deep);background:color-mix(in srgb,var(--orange) 13%,var(--surface));border-color:transparent"># 唐山美食地图</button>
+                  <button class="pill" style="color:var(--green-deep);background:color-mix(in srgb,var(--green) 13%,var(--surface));border-color:transparent"># 自习室拼座</button>
+                  <button class="pill" style="color:var(--purple-deep);background:color-mix(in srgb,var(--purple) 12%,var(--surface));border-color:transparent"># 二手教材</button>
+                </div>
+              </div>
+              <div class="pad stk" style="gap:12px;margin-top:14px" data-component="Post Feed">
+                <article class="card post">
+                  <div class="p-head">
+                    <span class="avatar a-pink">林</span>
+                    <div><div class="p-name">林小满</div><div class="p-meta">日常 · 2 小时前</div></div>
+                    <button class="icon-btn" aria-label="更多" style="margin-left:auto;width:40px;height:40px;box-shadow:none"><svg class="ic" style="width:17px;height:17px"><use href="#i-chev"/></svg></button>
+                  </div>
+                  <p class="p-body">四楼自习室新添了靠窗座位，看出去就是银杏道，下午背书的位置有着落了。</p>
+                  <div class="p-img">
+                    <svg viewBox="0 0 338 150" style="display:block;width:100%" role="img" aria-label="靠窗自习座位插画">
+                      <rect width="338" height="150" fill="color-mix(in srgb,var(--primary) 12%,var(--surface))"/>
+                      <rect x="212" y="20" width="100" height="96" rx="10" fill="color-mix(in srgb,var(--primary) 18%,var(--surface))" stroke="var(--primary-deep)" stroke-opacity=".5" stroke-width="2"/>
+                      <path d="M262 20v96M212 68h100" stroke="var(--primary-deep)" stroke-opacity=".5" stroke-width="2"/>
+                      <circle cx="288" cy="44" r="12" fill="var(--amber)"/>
+                      <rect x="26" y="106" width="150" height="10" rx="5" fill="var(--primary-deep)" opacity=".75"/>
+                      <rect x="42" y="88" width="40" height="18" rx="4" fill="var(--pink)" opacity=".8"/>
+                      <rect x="88" y="92" width="30" height="14" rx="4" fill="var(--green)" opacity=".8"/>
+                      <path d="M152 106v-34" stroke="var(--green-deep)" stroke-width="2.4" stroke-linecap="round"/>
+                      <circle cx="145" cy="62" r="7" fill="var(--green)"/><circle cx="159" cy="58" r="7" fill="var(--green)" opacity=".8"/><circle cx="152" cy="48" r="7" fill="var(--green)" opacity=".65"/>
+                    </svg>
+                  </div>
+                  <div class="p-actions">
+                    <span class="p-act hot"><svg class="ic"><use href="#i-heart"/></svg>48</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-comment"/></svg>12</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-send"/></svg>6</span>
+                  </div>
+                </article>
+                <article class="card post">
+                  <div class="p-head">
+                    <span class="avatar a-orange">阿</span>
+                    <div><div class="p-name">阿哲</div><div class="p-meta">吐槽 · 5 小时前</div></div>
+                    <button class="icon-btn" aria-label="更多" style="margin-left:auto;width:40px;height:40px;box-shadow:none"><svg class="ic" style="width:17px;height:17px"><use href="#i-chev"/></svg></button>
+                  </div>
+                  <p class="p-body">二食堂麻辣香锅中午排队也太长了，能不能出个错峰预定，真的会谢。</p>
+                  <div class="p-actions">
+                    <span class="p-act hot"><svg class="ic"><use href="#i-heart"/></svg>132</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-comment"/></svg>36</span>
+                    <span class="p-act"><svg class="ic"><use href="#i-send"/></svg>11</span>
+                  </div>
+                </article>
+              </div>
+              <button class="fab fab-pink" aria-label="发布内容" style="bottom:24px"><svg class="ic"><use href="#i-plus"/></svg></button>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx mono">03</span><span class="name">校园圈</span><span class="note">彩色频道 · 话题糖 · 粉紫发布键</span></figcaption>
+      </figure>
+
+      <!-- 04 榜单 -->
+      <figure class="shot" data-component="Screen 04 Ranking" data-od-id="screen-04">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:16px">
+              <div class="pad" style="padding-top:6px" data-component="Masthead">
+                <p class="eyebrow">Ranking · Spots</p>
+                <h1 class="h1">校园榜单</h1>
+                <div class="meta" style="margin-top:7px">由本校学生点赞产生 · 每周一更新</div>
+                <div class="between" style="margin-top:14px">
+                  <div class="ch-scroll">
+                    <button class="pill on h-orange">美食</button><button class="pill">玩乐</button><button class="pill">生活</button>
+                  </div>
+                  <span class="chip"><svg class="ic"><use href="#i-pin"/></svg>主校区</span>
+                </div>
+              </div>
+              <div class="pad" style="margin-top:15px">
+                <div class="card stk" style="gap:0;padding:6px 0" data-component="Rank List">
+                  <div class="lrow">
+                    <span style="width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;font-family:var(--font-mono);font-weight:800;font-size:16px;color:var(--c-white);background:linear-gradient(140deg,color-mix(in srgb,var(--amber) 75%,var(--c-white)),var(--amber-deep))">1</span>
+                    <span class="tile-c sm h-orange" style="width:52px;height:52px;border-radius:15px"><svg class="ic" style="width:25px;height:25px"><use href="#i-bowl"/></svg></span>
+                    <div style="flex:1;min-width:0"><div style="font-size:18px;font-weight:800">兰州拉面（北门）</div><div class="mini" style="margin-top:2px">现拉现煮，牛肉给得实在</div></div>
+                    <button class="pill on h-pink" style="min-height:40px;padding:6px 13px;font-family:var(--font-mono);font-size:13.5px" aria-label="点赞 兰州拉面"><svg class="ic"><use href="#i-heart"/></svg>326</button>
+                  </div>
+                  <div class="lrow">
+                    <span style="width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;font-family:var(--font-mono);font-weight:800;font-size:16px;color:var(--c-white);background:linear-gradient(140deg,color-mix(in srgb,var(--ink) 40%,var(--surface)),var(--ink-2))">2</span>
+                    <span class="tile-c sm h-amber" style="width:52px;height:52px;border-radius:15px"><svg class="ic" style="width:25px;height:25px"><use href="#i-cookie"/></svg></span>
+                    <div style="flex:1;min-width:0"><div style="font-size:18px;font-weight:800">姐妹饭卷</div><div class="mini" style="margin-top:2px">酸甜酱是灵魂，五点就排队</div></div>
+                    <button class="pill" style="min-height:40px;padding:6px 13px;font-family:var(--font-mono);font-size:13.5px;color:var(--pink-deep)" aria-label="点赞 姐妹饭卷"><svg class="ic"><use href="#i-heart"/></svg>289</button>
+                  </div>
+                  <div class="lrow">
+                    <span style="width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;font-family:var(--font-mono);font-weight:800;font-size:16px;color:var(--c-white);background:linear-gradient(140deg,color-mix(in srgb,var(--orange) 62%,var(--c-white)),var(--orange-deep))">3</span>
+                    <span class="tile-c sm h-cyan" style="width:52px;height:52px;border-radius:15px"><svg class="ic" style="width:25px;height:25px"><use href="#i-cup"/></svg></span>
+                    <div style="flex:1;min-width:0"><div style="font-size:18px;font-weight:800">柿家砂锅鸡</div><div class="mini" style="margin-top:2px">四人一锅刚好，建议提前订座</div></div>
+                    <button class="pill" style="min-height:40px;padding:6px 13px;font-family:var(--font-mono);font-size:13.5px;color:var(--pink-deep)" aria-label="点赞 柿家砂锅鸡"><svg class="ic"><use href="#i-heart"/></svg>241</button>
+                  </div>
+                  <div class="lrow">
+                    <span style="width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;font-family:var(--font-mono);font-weight:800;font-size:16px;color:var(--ink-2);background:color-mix(in srgb,var(--ink) 7%,var(--surface))">4</span>
+                    <span class="tile-c sm h-pink" style="width:52px;height:52px;border-radius:15px"><svg class="ic" style="width:25px;height:25px"><use href="#i-flower"/></svg></span>
+                    <div style="flex:1;min-width:0"><div style="font-size:18px;font-weight:800">青枫咖啡</div><div class="mini" style="margin-top:2px">安静有插座，适合写论文</div></div>
+                    <button class="pill" style="min-height:40px;padding:6px 13px;font-family:var(--font-mono);font-size:13.5px;color:var(--pink-deep)" aria-label="点赞 青枫咖啡"><svg class="ic"><use href="#i-heart"/></svg>198</button>
+                  </div>
+                </div>
+                <div class="dashed h-purple" style="margin-top:13px;padding:14px 16px;display:flex;gap:12px;align-items:center" data-component="Empty Board Note">
+                  <svg class="ic" style="width:21px;height:21px;flex:none;color:var(--purple-deep)"><use href="#i-star"/></svg>
+                  <div><div style="font-size:16px;font-weight:700">玩乐 / 生活榜还没有内容</div><div class="mini">第一个上榜的，可能就是你常去的那家</div></div>
+                </div>
+                <div class="card g-purple" style="margin-top:13px;padding:20px;border:0;color:var(--c-white);box-shadow:0 16px 34px -18px color-mix(in srgb,var(--purple) 70%,transparent)" data-component="Upload Entry">
+                  <p class="eyebrow" style="color:color-mix(in srgb,var(--c-white) 78%,transparent)">Contribute</p>
+                  <div style="font-size:22px;font-weight:900;margin-top:6px">上传校园地点</div>
+                  <div style="font-size:15px;opacity:.88;margin-top:5px">好去处不该被埋没 · 审核通过后上榜</div>
+                  <button class="btn" style="margin-top:14px;background:var(--c-white);color:var(--purple-deep)"><svg class="ic"><use href="#i-upload"/></svg>上传地点</button>
+                </div>
+              </div>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx mono">04</span><span class="name">榜单</span><span class="note">奖牌名次 · 粉色点赞 · 紫色上传</span></figcaption>
+      </figure>
+
+      <!-- 05 我的 -->
+      <figure class="shot" data-component="Screen 05 Profile" data-od-id="screen-05">
+        <div class="device"><span class="island"></span>
+          <div class="screen">
+            <div class="sb-slot"></div>
+            <div class="content" style="padding-bottom:16px">
+              <div class="pad" style="padding-top:6px" data-component="Masthead">
+                <p class="eyebrow">Profile</p>
+                <h1 class="h1">我的</h1>
+              </div>
+              <div class="pad" style="margin-top:14px">
+                <div class="card g-blue" style="padding:20px;border:0;color:var(--c-white);box-shadow:0 16px 34px -18px color-mix(in srgb,var(--primary) 70%,transparent)" data-component="Identity Card">
+                  <div class="row" style="gap:14px">
+                    <span class="avatar lg" style="background:linear-gradient(140deg,color-mix(in srgb,var(--c-white) 36%,var(--primary-hi)),var(--primary-deep));border:2.5px solid color-mix(in srgb,var(--c-white) 60%,transparent)">陈</span>
+                    <div>
+                      <div style="font-size:24px;font-weight:900">陈屿</div>
+                      <div style="font-size:14.5px;opacity:.88;margin-top:3px">唐山学院 · 主校区 · 2023 级</div>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top:14px;gap:8px;flex-wrap:wrap">
+                    <span class="chip w"><svg class="ic"><use href="#i-wechat"/></svg>微信会话身份</span>
+                    <span class="chip w-solid"><svg class="ic"><use href="#i-shield"/></svg>校内已认证</span>
+                  </div>
+                </div>
+                <div class="card" style="margin-top:12px;padding:14px 10px;display:grid;grid-template-columns:repeat(4,1fr)" data-component="Quick Entries">
+                  <button style="display:flex;flex-direction:column;align-items:center;gap:9px;background:none;border:0;cursor:pointer"><span class="tile-c h-orange"><svg class="ic"><use href="#i-box"/></svg></span><span style="font-size:14.5px;font-weight:700;color:var(--ink-2)">我的订单</span></button>
+                  <button style="display:flex;flex-direction:column;align-items:center;gap:9px;background:none;border:0;cursor:pointer"><span class="tile-c h-blue"><svg class="ic"><use href="#i-send"/></svg></span><span style="font-size:14.5px;font-weight:700;color:var(--ink-2)">我的发布</span></button>
+                  <button style="display:flex;flex-direction:column;align-items:center;gap:9px;background:none;border:0;cursor:pointer"><span class="tile-c h-pink"><svg class="ic"><use href="#i-heart"/></svg></span><span style="font-size:14.5px;font-weight:700;color:var(--ink-2)">收藏</span></button>
+                  <button style="display:flex;flex-direction:column;align-items:center;gap:9px;background:none;border:0;cursor:pointer"><span class="tile-c h-purple"><svg class="ic"><use href="#i-tag"/></svg></span><span style="font-size:14.5px;font-weight:700;color:var(--ink-2)">优惠券</span></button>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="Recent Activity">
+                <div class="sec-row"><div><span class="eyebrow">Activity</span><div class="h2">最近动态</div></div></div>
+                <div class="card stk" style="gap:0;margin-top:14px;padding:4px 0">
+                  <div class="lrow"><span class="tile-c sm h-pink"><svg class="ic"><use href="#i-circle"/></svg></span><div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">发布了「四楼自习室新添靠窗座位…」</div><div class="mini">2 小时前 · 校园圈</div></div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile-c sm h-orange"><svg class="ic"><use href="#i-trophy"/></svg></span><div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:700">点赞了「兰州拉面（北门）」</div><div class="mini">昨天 · 美食榜</div></div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile-c sm h-green"><svg class="ic"><use href="#i-calcheck"/></svg></span><div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:700">报名「校园开放日志愿者」</div><div class="mini">周二 · 活动</div></div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                </div>
+              </div>
+              <div class="pad" style="margin-top:13px" data-component="Trust Chips">
+                <div class="row" style="gap:8px;flex-wrap:wrap">
+                  <span class="chip h h-green"><svg class="ic"><use href="#i-shield"/></svg>身份已核验</span>
+                  <span class="chip h h-blue"><svg class="ic"><use href="#i-check"/></svg>信用良好</span>
+                </div>
+              </div>
+              <div class="pad sec-gap" data-component="Settings">
+                <div class="sec-row"><div><span class="eyebrow">Account</span><div class="h2">账号与设置</div></div></div>
+                <div class="card stk" style="gap:0;margin-top:14px;padding:4px 0">
+                  <div class="lrow"><span class="tile-c sm h-slate"><svg class="ic"><use href="#i-lock"/></svg></span><div style="flex:1;font-size:16.5px;font-weight:700">账号与安全</div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile-c sm h-slate"><svg class="ic"><use href="#i-bell"/></svg></span><div style="flex:1;font-size:16.5px;font-weight:700">通知设置</div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile-c sm h-slate"><svg class="ic"><use href="#i-pin"/></svg></span><div style="flex:1;font-size:16.5px;font-weight:700">校区与高校信息</div><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                  <div class="lrow"><span class="tile-c sm h-blue"><svg class="ic"><use href="#i-spark"/></svg></span><div style="flex:1;font-size:16.5px;font-weight:700">关于星尘校园圈</div><span class="chip mono" style="padding:4px 9px;font-size:12.5px">v3.0</span><span class="chev"><svg class="ic"><use href="#i-chev"/></svg></span></div>
+                </div>
+              </div>
+            </div>
+            <nav class="tabbar" aria-label="底部导航" data-component="Tab Bar">
+              <a class="tab"><svg class="ic"><use href="#i-home"/></svg><span>首页</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-grid"/></svg><span>服务</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-circle"/></svg><span>圈子</span></a>
+              <a class="tab"><svg class="ic"><use href="#i-trophy"/></svg><span>榜单</span></a>
+              <a class="tab active" aria-current="page"><svg class="ic"><use href="#i-user"/></svg><span>我的</span></a>
+            </nav>
+          </div>
+        </div>
+        <figcaption><span class="idx mono">05</span><span class="name">我的</span><span class="note">渐变身份卡 · 四色入口 · 彩色动态</span></figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<section id="group-b" class="group" data-component="Group B Service Screens" data-od-id="group-b">
+  <div class="wrap">

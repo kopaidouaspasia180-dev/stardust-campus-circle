@@ -1,1 +1,1 @@
-export default definePageConfig({navigationBarTitleText: "问校园 AI"})
+export default definePageConfig({navigationBarTitleText: "星尘校园助手"})

@@ -1,0 +1,60 @@
+.lunch-orders-page {
+  --blue: #2879f3;
+  --ink: #152238;
+  min-height: 100vh;
+  padding: 20PX 20PX calc(42PX + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, #f7fbff, #eff6ff);
+  color: var(--ink);
+  box-sizing: border-box;
+}
+
+.orders-heading { margin-bottom: 18PX; display: grid; gap: 5PX; }
+.orders-heading text:first-child { font-size: 27PX; font-weight: 950; letter-spacing: -1PX; }
+.orders-heading text:last-child { color: #8290a4; font-size: 12PX; }
+
+.orders-state {
+  min-height: 330PX;
+  padding: 28PX;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16PX;
+  color: #7d899b;
+  font-size: 14PX;
+  text-align: center;
+}
+
+.orders-state button { margin: 0; padding: 0 24PX; border: 0; border-radius: 13PX; background: var(--blue); color: #fff; font-size: 13PX; }
+.orders-state button::after { border: 0; }
+
+.order-card {
+  margin-bottom: 14PX;
+  padding: 18PX;
+  border: 1PX solid #e2ebf7;
+  border-radius: 20PX;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 10PX 28PX rgba(35, 87, 150, .07);
+}
+
+.order-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12PX; }
+.order-top > view { min-width: 0; display: grid; gap: 4PX; }
+.merchant-name { overflow: hidden; font-size: 17PX; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
+.order-number { color: #929daf; font-size: 10PX; }
+.status { flex: none; padding: 6PX 9PX; border-radius: 999PX; background: #eef5ff; color: #216de8; font-size: 11PX; font-weight: 850; }
+.status-delivered, .status-completed { background: #eaf8ee; color: #2f8148; }
+.status-cancelled, .status-rejected { background: #f1f3f6; color: #7f8895; }
+
+.status-detail { margin: 14PX 0; padding: 11PX 12PX; border-radius: 12PX; background: #f3f7fd; color: #586980; font-size: 12PX; line-height: 1.55; }
+.refund-detail { margin: -5PX 0 14PX; padding: 10PX 12PX; border-radius: 11PX; background: #edf8f1; color: #297044; font-size: 11PX; line-height: 1.5; }
+.service-row { padding-bottom: 12PX; border-bottom: 1PX solid #e9eff7; display: flex; justify-content: space-between; color: #68778c; font-size: 11PX; }
+.order-lines { padding: 11PX 0; display: grid; gap: 8PX; }
+.order-lines > view { display: flex; justify-content: space-between; font-size: 13PX; }
+.order-lines > view text:last-child { color: #8b96a6; }
+.order-bottom { padding-top: 11PX; border-top: 1PX solid #e9eff7; display: flex; align-items: center; justify-content: space-between; gap: 12PX; }
+.order-bottom text:first-child { color: #99a3b2; font-size: 10PX; }
+.order-bottom text:last-child { flex: none; font-size: 16PX; font-weight: 900; }
+.order-actions { margin-top: 15PX; display: flex; justify-content: flex-end; gap: 10PX; }
+.pay-button, .cancel-button { height: 42PX; margin: 0; padding: 0 18PX; border-radius: 12PX; font-size: 13PX; line-height: 40PX; }
+.pay-button { border: 1PX solid var(--blue); background: var(--blue); color: #fff; }
+.cancel-button { border: 1PX solid #dbe5f1; background: #fff; color: #5d6b7d; }
+.pay-button::after, .cancel-button::after { border: 0; }

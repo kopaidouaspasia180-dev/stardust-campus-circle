@@ -7,3 +7,7 @@ qa-*.png
 server/.env
 server/data/
 
+dist/
+dist-h5/
+deploy/*.tar.gz
+deploy/*.zip

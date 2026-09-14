@@ -1,0 +1,6 @@
+.admin-daily-menu{display:grid;gap:9px;margin-top:18px;padding-top:16px;border-top:1px solid #e8ece7}
+.admin-subtitle{font-size:21px;font-weight:800;color:#2b3c2f}
+.admin-daily-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;border-radius:10px;background:#f7f9f6}
+.admin-daily-item>view:first-child{display:grid;gap:4px;min-width:0}
+.admin-daily-item text:first-child{font-size:21px;font-weight:800}
+.admin-daily-item text:last-child{color:#7f887f;font-size:18px}

@@ -1,0 +1,314 @@
+from pathlib import Path
+import json, re, hashlib, zipfile, subprocess
+from docx import Document
+from docx.shared import Inches, Pt, RGBColor
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
+
+ROOT = Path('/Users/a/.codex/worktrees/7417/校园ai助手')
+OUT = ROOT / '.codex-artifacts/handoff-20260913'
+OUT.mkdir(parents=True, exist_ok=True)
+STEM = '星尘校园圈项目交接文档20260913'
+pages = [
+('星尘校园圈项目交接文档', '''
+整理日期 2026年9月14日（代码与运行检查于9月13日完成）
+交接对象 后续开发负责人及运营接手人
+
+原负责人暂停本项目后，由接手人继续维护现有小程序、服务端与运营后台。接手应先接管账号与运行环境，完成备份和关键功能复验，再安排新需求。本次交接不关闭线上服务、不变更支付配置，也不替代双方的资产交接确认。
+
+项目识别
+| 项目 | 当前记录 |
+| 名称 | 星尘校园圈 Stardust |
+| 小程序 AppID | wx6968dcda3c5fb627 |
+| 主体 | 星思人工智能科技（唐山）有限公司，接手时与公众平台复核 |
+| 工程 | stardust-campus-circle，包名 stardust-campus-ecosystem-miniapp |
+| 技术 | Taro 4.2.1、React 18、TypeScript；Node.js、Express 5、PostgreSQL |
+| 对应学校 | 唐山学院、唐山师范学院 |
+
+交付范围
+本包包含本交接文档的 Word 和 Markdown 版本、当前工作区的源码快照、文件校验清单。源码包括未提交和未跟踪的业务文件；不含依赖目录、Git 历史、构建产物、数据库、用户上传数据、真实环境文件或支付私钥。下一位可据此安装依赖并重新构建。
+
+最重要的状态
+当前工作区含大量未提交修改，Git 的 HEAD 为 59dcf8e（2026年7月27日首次导入）。只拉取该提交无法获得当前功能。旧 README、TRANSFER-README 和 HANDOFF-CONTEXT 中仍有 touristappid、设备登录、匿名匹配及校区隔离等过时描述，接手以本说明、当前路由和实际代码为准。
+线上首页和健康接口本次可访问；最新微信发布版本、服务器实际配置、迁移执行记录和商业运营状态尚需接手人登录各平台核验。文档中的历史问题不等于当前全部可复现。
+'''),
+('功能范围与开放入口', '''
+当前小程序注册22个页面，底部导航为：首页、校园圈、校园服务、榜单、我的。校园服务页面当前只提供校园外卖入口。页面注册以 src/app.config.ts 为准；有源码不代表已开放，也不代表已经通过平台审核。
+
+| 模块 | 当前本地实现 | 接手时重点验收 |
+| 首页与天气 | 公开首页、学校校区选择、课表和快递摘要；天气服务有运营数据回退 | 游客无私人课程、天气来源和更新状态 |
+| 手机号账号 | 微信登录、手机号绑定、会话恢复、退出及注销接口 | 新旧用户、令牌到期、切账号与游客状态 |
+| 个人课表 | 增删、图片识别、预览和导入，服务端保存 | 完整课程格、周次、单双周、跨日和账号隔离 |
+| 快递 | 复制文字解析、图片识别、取件记录；服务商到件推送接口 | 不捏造物流；无服务商时不能承诺自动同步 |
+| 校园论坛 | 发帖、9张图、评论回复、点赞、举报、后台处置 | 回复对象显示、公开状态、敏感词及违规内容 |
+| 主页与私信 | 自定义头像背景照片、简介兴趣、公开ID、关注和聊天 | 保存后重进、他人主页、互关限制和历史消息 |
+| 校园榜单 | 榜单、地点、投稿、学生建榜、审核及举报 | 图片加载、真实点赞数、同校范围和后台审核 |
+| 校园外卖 | 菜单、购物车、配送订单、订单列表及支付接口 | 10:30截单、未来菜单、库存、付款及退款闭环 |
+| 运营后台 | admin/ 静态管理端，内容、用户角色、商品、菜单和订单接口 | 登录授权及学校数据权限 |
+
+保留源码但未注册开放的模块
+二手闲置、跑腿、兼职、活动、失物招领、校园商店、多多快递网页入口、商家端、骑手端及外卖管理页等仍留在 src/pages/ 和服务端。匿名匹配也有历史源码，曾因匿名交友被驳回，不能直接重新开放。二手闲置是暂停前讨论的后续模块，需重新确认产品范围和验收条件。
+'''),
+('产品规则与数据边界', '''
+学校与校区
+| 学校标识 | 校区显示名 | 保留的校区标识 |
+| tangshan 唐山学院 | 南院、北院、华岩路、东院 | daxuexidao、beiyuan、huayanbeilu、longze |
+| tstc 唐山师范学院 | 大学道校区、学院路校区 | daxuedao、xueyuanlu |
+
+用户明确要求：两个学校之间信息隔离；唐山学院南院、北院等属于同一学校，同校论坛等社交信息互通。不要将校区显示名变化误作数据库主键变化。订单、配送等业务仍有校区字段，应按业务逐项验证，不能把所有 SQL 的校区过滤统一删除。stdu、lyit 目前为 preparing 状态。
+
+登录与个人数据
+游客可以浏览首页和公开内容；发布、导入个人课表等操作再要求登录。退出后不得展示上一账号的课程、快递、联系方式或个人草稿。账号会话与个人资料在 src/api/client.ts 管理，私人存储使用 accountStorageKey；后端必须按已验证身份鉴权，不能仅信任客户端的设备号或 tenant 参数。
+
+论坛和个人主页
+帖子最多9张图片。用户希望正常内容无需等待人工审核，但文本和图片内容安全、举报、管理员处置仍需保留。内置屏蔽词为兼职、钱、微信、微、jz、v、r；可通过 COMMUNITY_BLOCKED_WORDS 配置。单字母 v 和 r 会误拦部分普通英文，若要调整需先确认运营规则。
+主页支持昵称、头像、背景、照片、简介及兴趣；先展示主页，编辑由单独入口进入。每人有六位公开ID；000001 和 666666 有历史指定诉求，迁移031以昵称或管理员角色寻找初始账号，并非可靠的人工身份核验。接手需核验归属，不能凭昵称直接授予管理员权限。
+未互关前只能发送一条消息，互关后继续聊天。评论回复需明确显示回复谁。默认主页也应允许进入、关注和发起合规的一条私信。
+
+外卖与设计
+保留首页简洁性，外卖放在底部校园服务中；只支持外送，上午10:30前下单。菜单和价格库存由实际商家运营，图片优先使用已获授权的真实照片。源码包含历史自提处理接口，不能据此在当前前端重新开启自提。
+'''),
+('代码入口与接口定位', '''
+| 路径 | 接手用途 |
+| src/app.config.ts 与 project.config.json | 页面、导航、小程序AppID及 dist 导入配置 |
+| src/api/client.ts | API地址、微信会话、手机号状态、上传、资料合并及私人缓存 |
+| src/store/tenant.ts 与 src/data/tenants.ts | 学校校区选择和本地租户配置 |
+| src/pages/profile-edit 与 user-profile | 资料编辑和公开主页 |
+| src/pages/community 与 post-detail 与 chat | 论坛列表、回复及聊天 |
+| server/src/server.js | Express主入口、鉴权、业务路由及后台接口 |
+| server/src/schedule-ai.js 与 express-notice.js | 课表视觉识别和快递通知解析 |
+| server/src/security.js 与 payment-validation.js | 数据加密和支付退款回调校验 |
+| server/src/profile.js 与 community-policy.js | 主页字段、互关消息限制和屏蔽词 |
+| server/schema.sql 与 server/migrations | 初始数据库结构和增量迁移 |
+| admin/ 与 ops/ | 运营后台源码、部署模板和备份恢复脚本 |
+
+接口定位
+默认API根地址为 https://stardust.sale/campus-circle/api/v1 。请求携带学校、校区及会话上下文。常用接口包括 /auth/wechat、/auth/phone、/me、/home/summary、/schedule、/schedule/import-image、/community/profiles/:publicId、/community/profiles/:publicId/follow、/conversations、/orders 和 /orders/:id/payment-intent。完整方法和字段应以 server/src/server.js 与前端调用为准，docs/api-contract.md 是辅助资料。
+
+迁移注意事项
+通过 server/scripts/migrate.mjs 执行，先处理 schema.sql，再按文件标识排序处理匹配“数字_名称.sql”的迁移，并保存校验和。已应用文件不得修改。目录中同时存在日期加短横线的历史 SQL，迁移器不会自动发现这些文件；0026_legacy_catalog_timestamps.sql 则符合规则，应核对实际排序。
+即使 migrate:dry-run 也会连接数据库、取锁并确保 schema_migrations 表存在，不是绝对无写入操作。迁移中可能包含种子商品、历史数据调整或删除去重，先在独立测试库验证，再审批生产变更。
+'''),
+('新电脑启动与本地验证', '''
+准备环境
+安装 Node.js 20或以上版本、npm、PostgreSQL及微信开发者工具。建议从锁文件安装依赖。解压交接包后在 code/ 目录执行以下命令；示例为终端命令，不包含真实凭据。
+```bash
+npm ci
+npm --prefix server ci
+npm run typecheck
+npm --prefix server run check
+npm --prefix server test
+```
+后端独立测试环境
+复制 server/.env.example 为 server/.env，填写独立测试库 DATABASE_URL。选择本地 CHECKOUT_MODE=offline，不使用线上数据库或线上支付密钥。生产内容安全模式与微信登录依赖真实平台配置，不能用开发开关代替正式接入。
+```bash
+cd server
+npm run migrate
+npm start
+```
+dotenv 默认从进程工作目录加载配置；启动前确认位于 server/，或由部署器显式注入变量。另开终端在 code/ 构建前端：
+```bash
+TARO_APP_API_ROOT=http://127.0.0.1:4310/v1 npm run build:h5
+npm run build:weapp
+npm run check:weapp-package
+```
+H5适合布局检查，微信登录和手机号授权仍需真机与开发者工具验证。手机无法通过自身的127.0.0.1访问电脑API；真机测试要配置可访问的测试HTTPS域名，并核对合法域名和上传域名。微信开发者工具导入 code/ 根目录，miniprogramRoot 已指向 dist/。
+
+本次交接验证结果
+| 检查 | 2026年9月13日结果 |
+| TypeScript与服务端语法 | 均通过 |
+| server 单元测试 | 64通过，0失败；1项数据库集成套件跳过 |
+| 现有 dist 包检查 | 22页、5导航，1.300 MiB，错误0；媒体总量586.2 KiB有优化警告 |
+| 线上首页及 API健康 | 首页HTTP 200；/health 返回 ok=true |
+
+本次没有重建 dist、运行数据库集成测试、验证真实OCR或支付、上传微信版本、部署或修改线上数据。现有产物检查不能证明它与最新源码完全一致，接手后必须重新构建。
+'''),
+('配置与部署交接', '''
+| 配置组 | 关键变量或资源 |
+| API与数据库 | PORT、HOST、DATABASE_URL、CORS_ORIGINS、TRUST_PROXY |
+| 上传与加密 | UPLOAD_DIR、UPLOAD_PUBLIC_ORIGIN、PII_ENCRYPTION_KEY、IDENTITY_HASH_SECRET |
+| 微信身份与内容安全 | WECHAT_APPID、WECHAT_APPSECRET、SESSION_TTL_DAYS、WECHAT_CONTENT_SAFETY_MODE |
+| 支付 | CHECKOUT_MODE、WECHATPAY_APPID、MCHID、证书序列号、私钥路径、公钥ID及路径、API_V3_KEY、回调地址 |
+| 识别 | DEEPSEEK_API_BASE / KEY / MODEL、DEEPSEEK_OCR_API_URL / KEY / MODEL、SCHEDULE_VISION_API_URL / KEY / MODEL |
+| 天气和到件通知 | QWEATHER_API_HOST / KEY、EXPRESS_WEBHOOK_SECRET、NOTIFY_WEBHOOK_URL / SECRET |
+
+完整名称见 server/.env.example。生产服务器的当前值未在本次交接中读取。示例中的模型名只是本地默认值，不证明供应商当前支持或生产已经配置。课表识别组合整图视觉理解、分栏/单元格识别和结构化解析，单改文字模型名称不能替代图片识别服务。
+
+历史部署位置
+H5：https://stardust.sale/campus-circle/
+后台：https://stardust.sale/campus-circle/admin/
+API健康：https://stardust.sale/campus-circle/api/health
+历史静态目录：/var/www/stardust-campus-circle
+历史服务目录：/opt/stardust-campus-circle-api
+历史上传目录：/var/lib/stardust-campus-circle/uploads
+历史进程名：stardust-campus-circle-api，端口4310；数据库名 stardust_campus_circle。
+上述服务器目录及PM2信息来自旧运维记录，应登录主机核对。ops/ 另提供Docker部署模板，不代表当前线上使用Docker，不能重复创建一套数据库后误以为已完成迁移。
+
+更新顺序
+先取得主机及数据库权限，备份数据库、用户上传文件、环境配置与旧构建，再在测试环境迁移和验收。生产只更新本项目路径，核对待执行迁移后更新API及H5，检查健康、就绪、日志和关键页面。微信小程序需另行上传开发版、选择体验版、提审、审核通过后发布；H5部署不会自动更新手机里的小程序。
+回滚需同时考虑代码与数据库兼容性。备份脚本及恢复演练见 ops/README.md。切勿丢弃原 PII_ENCRYPTION_KEY 和 IDENTITY_HASH_SECRET，否则旧加密数据或身份索引可能无法继续使用。
+'''),
+('未完成事项与已知问题', '''
+首先处理隐私审核
+最后可见的公众平台通知显示：2026年9月10日12:41:54提交的用户隐私保护指引未通过，理由是“收集昵称、头像接口”说明不符合接口使用场景。后续虽已提供修正文案，但没有通过截图或状态证据。接手需要核对最终提交内容、type=nickname 的使用、头像选择上传方式及平台实际识别的接口，不能只反复换同义词后宣称已解决。
+拟用用途说明为“用于用户自主完善个人资料，在个人主页、校园论坛帖子和评论中展示昵称、头像，便于同校用户辨认发言者”。这只是待复审文案。还需核实识别服务供应商披露、联系方式、保存期限和用途变更提示与真实行为一致。此前通知要求2026年10月10日前完善指引；当前剩余要求以公众平台最新通知为准。
+
+| 优先级 | 问题或风险 | 接手动作 |
+| P0 | 登录后仍提示游客、退出自动恢复旧账号、私人课表串号，历史上多次反馈 | 两个微信账号加游客状态，覆盖冷启动、重新授权、令牌过期、切学校和退出 |
+| P0 | 主页保存后丢失、上传照片清空其他字段、他人主页打不开 | 验证保存、离开重进、图片上传后草稿及服务端字段返回 |
+| P0 | OCR宽课表漏识别，曾只得到2至3门 | 用真实密集课表核对全部非空格、周次和重复课程，不把单元测试当准确率 |
+| P0 | 外卖白屏、按钮点不动、菜单同步中、支付不通 | 真机验证菜单日期校区、库存截单、JS异常、接口和商户关联；实际付退各测一次 |
+| P1 | 回复对象、关注与私信历史故障 | 验证回复目标文本和双账号互关限制 |
+| P1 | 榜单图片、虚假热度或重复排名 | 核对资源访问、图片授权及数据库真实点赞 |
+| P1 | 历史迁移和文档不一致 | 测试库完整迁移，核对生产schema_migrations后再更新 |
+
+商业与平台审核
+过去曾因匿名交友、测试内容、餐饮/食品类目、强制首次登录及默认同意协议遭驳回。正式开放功能前核对当前类目资质和可供审核的真实内容。支付代码、公钥ID或已关联商户号都不能单独证明外卖完整交易可用。本次没有发起支付或退款。
+'''),
+('接收清单与下一步', '''
+账号和资产单独交接
+| 资产 | 原负责人交出 | 接手人确认 |
+| 微信公众平台 | 小程序管理员及开发者权限、当前版本和审核状态 | 能登录、预览、提审及查看隐私指引 |
+| 微信支付商户平台 | 授权角色、商户关联、回调配置、证书及密钥保管方式 | 能查订单、对账和退款；权限归属明确 |
+| 服务器与域名 | 云主机、SSH授权、DNS、HTTPS证书及续费责任 | 能备份、看日志、更新和回滚 |
+| 数据库与上传文件 | 最近一致性备份、恢复流程、加密/索引原密钥 | 在独立环境恢复成功，用户数据归属正确 |
+| OCR与天气等供应商 | API服务归属、账单、配额、模型权限及回调密钥 | 能验证真实接口并设置告警 |
+| 运营后台及内容 | 管理员角色、店铺菜单、素材授权和客服渠道 | 校际权限隔离、内容可编辑且无无主账号 |
+
+上述密码和真实密钥不在交付包内，通过受控密码管理器或双方确认的安全渠道移交。保留旧数据解密所需密钥，其他凭据在确认依赖后再轮换。不得直接公开转发生产数据库及学生照片、手机号、课程和私信记录。
+
+建议接手顺序
+1. 解压资料包，核验文件清单和哈希；保存原始包，另建开发分支。
+2. 接管公众平台、主机、域名和供应商；确认服务是否继续运营及费用承担人。
+3. 建立独立测试环境并恢复必要的脱敏测试数据，重新构建小程序。
+4. 优先解决隐私审核和账号数据隔离，再验证OCR、论坛、主页、关注私信。
+5. 外卖在真实商家、类目、菜单和付退闭环确认后运营；之后再评估二手闲置。
+6. 接手双方记录已移交资产、未移交资产、待修问题及最终微信发布版本。
+
+交付文件说明
+code/ 为2026年9月13日本地源码快照，保留未开放模块以便继续开发。docs/ 与根目录历史README供追溯，存在过时描述；不要直接把它们当当前验收结果。FILE-MANIFEST.json 列出包内源码的SHA-256。排除了 .env 实值、私钥证书、node_modules、dist、dist-h5、.git、tmp、历史部署归档和用户数据。
+
+接收记录
+接手负责人：________________    接收日期：________________
+已收到账号和资产：______________________________________
+仍缺少的资料及责任人：__________________________________
+已复验的版本及环境：____________________________________
+''')
+]
+
+doc = Document()
+sec = doc.sections[0]
+sec.page_width, sec.page_height = Inches(8.5), Inches(11)
+sec.top_margin, sec.bottom_margin = Inches(.65), Inches(.65)
+sec.left_margin = sec.right_margin = Inches(.7)
+for name in ['Normal','Title','Heading 1','Heading 2']:
+    sty=doc.styles[name]; sty.font.name='Arial'; sty.font.color.rgb=RGBColor(0,0,0)
+    sty.element.get_or_add_rPr().rFonts.set(qn('w:eastAsia'),'Songti SC')
+for sty in doc.styles:
+    for border in list(sty.element.iter(qn('w:pBdr'))):
+        border.getparent().remove(border)
+doc.styles['Normal'].font.size=Pt(10.5)
+doc.styles['Normal'].paragraph_format.line_spacing=Pt(14)
+doc.styles['Normal'].paragraph_format.space_after=Pt(5)
+doc.styles['Normal'].paragraph_format.space_before=Pt(0)
+for grid in list(sec._sectPr.iter(qn('w:docGrid'))):
+    grid.getparent().remove(grid)
+doc.styles['Title'].font.size=Pt(25)
+doc.styles['Heading 1'].font.size=Pt(19)
+doc.styles['Heading 1'].paragraph_format.space_after=Pt(12)
+foot=sec.footer.paragraphs[0];foot.alignment=2
+field=OxmlElement('w:fldSimple'); field.set(qn('w:instr'),'PAGE');foot._p.append(field)
+def table(rows):
+    t=doc.add_table(rows=1, cols=len(rows[0]));t.autofit=False
+    n=len(rows[0]); widths=([3.2,3.9] if rows[0][0]=='路径' else [1.7,5.4]) if n==2 else [1.1,2.8,3.2]
+    for c,w in zip(t.columns,widths):c.width=Inches(w)
+    for idx,row in enumerate(rows):
+        cells=t.rows[0].cells if idx==0 else t.add_row().cells
+        for c,w,txt in zip(cells,widths,row):
+            c.width=Inches(w); c.text=txt
+            pr=c._tc.get_or_add_tcPr()
+            margins=OxmlElement('w:tcMar')
+            for edge in ['top','left','bottom','right']:
+                e=OxmlElement('w:'+edge);e.set(qn('w:w'),'80');e.set(qn('w:type'),'dxa');margins.append(e)
+            pr.append(margins)
+            borders=OxmlElement('w:tcBorders')
+            for edge in ['top','left','bottom','right']:
+                e=OxmlElement('w:'+edge);e.set(qn('w:val'),'single');e.set(qn('w:sz'),'4');e.set(qn('w:color'),'D9D9D9');borders.append(e)
+            pr.append(borders)
+            for p in c.paragraphs:
+                p.paragraph_format.space_after=Pt(2);p.paragraph_format.line_spacing=Pt(13)
+                for r in p.runs:r.font.size=Pt(9.5);r.bold=idx==0
+            if idx==0:
+                shade=OxmlElement('w:shd');shade.set(qn('w:fill'),'E7EDF3');pr.append(shade)
+        trpr=t.rows[idx]._tr.get_or_add_trPr();trpr.append(OxmlElement('w:cantSplit'))
+        if idx==0:trpr.append(OxmlElement('w:tblHeader'))
+    doc.add_paragraph().paragraph_format.space_after=Pt(0)
+
+md=[]
+for num,(title,body) in enumerate(pages):
+    if num:doc.add_page_break()
+    doc.add_paragraph(title, 'Title' if num==0 else 'Heading 1')
+    md_body=[]; was_table=False
+    for ln in body.strip().splitlines():
+        is_table=ln.strip().startswith('|')
+        md_body.append(ln)
+        if is_table and not was_table:
+            md_body.append('| '+' | '.join(['---']*len(ln.strip().strip('|').split('|')))+' |')
+        was_table=is_table
+    md.append('# '+title+'\n'+'\n'.join(md_body))
+    lines=body.strip().splitlines();i=0;code=False
+    while i<len(lines):
+        line=lines[i].strip()
+        if not line:i+=1;continue
+        if line.startswith('|'):
+            rows=[]
+            while i<len(lines) and lines[i].strip().startswith('|'):
+                rows.append([c.strip() for c in lines[i].strip().strip('|').split('|')]);i+=1
+            table(rows);continue
+        if line.startswith('```'):code=not code;i+=1;continue
+        p=doc.add_paragraph(line)
+        if code:
+            p.paragraph_format.space_after=Pt(2)
+            for r in p.runs:r.font.name='Courier New';r.font.size=Pt(9)
+        elif len(line)<24 and not line[0].isdigit() and '：' not in line:
+            p.runs[0].bold=True;p.paragraph_format.keep_with_next=True
+        i+=1
+doc.core_properties.title=pages[0][0]
+doc.core_properties.author='项目交接'
+doc.core_properties.subject='星尘校园圈代码与运营接管'
+for p in doc.element.iter(qn('w:p')):
+    pr=p.find(qn('w:pPr'))
+    if pr is None:
+        pr=OxmlElement('w:pPr');p.insert(0,pr)
+    snap=OxmlElement('w:snapToGrid');snap.set(qn('w:val'),'0');pr.append(snap)
+doc.save(OUT/(STEM+'.docx'))
+(OUT/(STEM+'.md')).write_text('\n\n---\n\n'.join(md),encoding='utf-8')
+print('Document generated:',OUT/(STEM+'.docx'))
+
+# Package allowlisted source only; never include environment secrets or live data.
+allowed_dirs=['src','config','admin','server/src','server/scripts','server/migrations','server/test','ops','docs']
+root_files=['package.json','package-lock.json','project.config.json','tsconfig.json','babel.config.js','.gitignore','README.md','TRANSFER-README.md','HANDOFF-CONTEXT.md','server/package.json','server/package-lock.json','server/schema.sql','server/.env.example','server/Dockerfile','server/.dockerignore','ops/.env.production.example']
+sources=set()
+for d in allowed_dirs:
+    for p in (ROOT/d).rglob('*'):
+        if p.is_file() and not p.is_symlink():sources.add(p)
+for f in root_files:
+    if (ROOT/f).is_file():sources.add(ROOT/f)
+sources=[p for p in sources if not any(x in p.parts for x in ['node_modules','.git','uploads','__pycache__']) and (not p.name.startswith('.env') or p.name.endswith('.example')) and p.suffix.lower() not in ['.pem','.key','.p12','.pfx','.log','.dump','.zip','.gz']]
+flags=[]
+for p in sources:
+    if p.suffix.lower() in ['.js','.ts','.tsx','.json','.mjs','.md','.sql','.yml']:
+        txt=p.read_text(encoding='utf-8',errors='ignore')
+        if re.search(r'-----BEGIN (?:RSA |EC )?PRIVATE KEY-----|\bsk-[A-Za-z0-9_-]{24,}\b|\bAKIA[A-Z0-9]{16}\b',txt):flags.append(str(p.relative_to(ROOT)))
+if flags:raise RuntimeError('Credential-like content requires review in: '+str(flags))
+manifest=[{'path':'code/'+str(p.relative_to(ROOT)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(sources)]
+(OUT/'FILE-MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
+archive=OUT/'星尘校园圈交接资料包20260913.zip'
+with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
+    for p,item in zip(sorted(sources),manifest):z.write(p,item['path'])
+    for name in [STEM+'.docx',STEM+'.md','FILE-MANIFEST.json']:z.write(OUT/name,name)
+with zipfile.ZipFile(archive) as z:
+    assert z.testzip() is None
+    for item in manifest:assert hashlib.sha256(z.read(item['path'])).hexdigest()==item['sha256']
+(OUT/(archive.name+'.sha256')).write_text(hashlib.sha256(archive.read_bytes()).hexdigest()+'  '+archive.name+'\n',encoding='utf-8')
+print(json.dumps({'source_files':len(manifest),'source_bytes':sum(x['bytes'] for x in manifest),'zip_bytes':archive.stat().st_size,'zip_verified':True},ensure_ascii=False))

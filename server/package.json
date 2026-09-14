@@ -5,7 +5,16 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "check": "node --check src/server.js"
+    "check": "node --check src/server.js && node --check src/security.js && node --check src/payment-validation.js && node --check src/schedule-ai.js && node --check src/weather.js && node --check src/upload-security.js && node --check src/wechat-content-safety.js && node --check src/wechat-identity.js && node --check src/wechat-phone.js && node --check src/express-sync.js && node --check src/express-notice.js && node --check src/store-order.js && node --check src/marketplace.js && node --check src/profile.js && node --check scripts/migrate.mjs && node --check scripts/preflight-production.mjs && node --check scripts/verify-wechat-credentials.mjs && node --check scripts/verify-content-security.mjs",
+    "test": "node --test",
+    "test:integration": "RUN_INTEGRATION_TESTS=true node --test test/integration.test.js",
+    "migrate": "node scripts/migrate.mjs",
+    "migrate:dry-run": "node scripts/migrate.mjs --dry-run",
+    "preflight:production": "node scripts/preflight-production.mjs",
+    "verify:wechat-credentials": "node scripts/verify-wechat-credentials.mjs",
+    "verify:content-security": "node scripts/verify-content-security.mjs",
+    "smoke:upload-security": "node scripts/smoke-upload-security.mjs",
+    "audit:readiness": "node scripts/audit-production-readiness.mjs"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -13,6 +22,7 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "multer": "^2.0.2",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "sharp": "^0.35.3"
   }
 }

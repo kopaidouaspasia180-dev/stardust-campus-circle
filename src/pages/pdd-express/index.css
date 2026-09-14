@@ -1,0 +1,96 @@
+.pdd-guide-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 92px 34px 46px;
+  background: linear-gradient(180deg, #ecfbf3 0%, #f6fcf8 52%, #fff 100%);
+  color: #183d2d;
+  text-align: center;
+}
+
+.pdd-guide-icon {
+  width: 116px;
+  height: 116px;
+  margin: 0 auto 28px;
+  border-radius: 34px;
+  background: linear-gradient(145deg, #39c989, #16a864);
+  color: #fff;
+  font-size: 48px;
+  font-weight: 900;
+  box-shadow: 0 18px 38px rgba(31, 174, 107, .23);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdd-guide-title {
+  color: #173d2c;
+  font-size: 31px;
+  font-weight: 900;
+  line-height: 1.4;
+  display: block;
+}
+
+.pdd-guide-copy {
+  max-width: 620px;
+  margin: 18px auto 0;
+  color: #678072;
+  font-size: 20px;
+  line-height: 1.75;
+  display: block;
+}
+
+.pdd-guide-note {
+  margin: 28px 0 24px;
+  padding: 22px;
+  border: 1px solid #dcece3;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .88);
+  text-align: left;
+  display: grid;
+  gap: 10px;
+}
+
+.pdd-guide-note text:first-child {
+  color: #244a38;
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.pdd-guide-note text:not(:first-child) {
+  color: #71857a;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.pdd-guide-page button {
+  min-height: 84px;
+  margin: 14px 0 0;
+  border-radius: 18px;
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 84px;
+}
+
+.pdd-guide-page button::after {
+  border: 0;
+}
+
+.pdd-primary {
+  background: linear-gradient(135deg, #36c886, #17aa65);
+  color: #fff;
+  box-shadow: 0 12px 25px rgba(31, 174, 107, .20);
+}
+
+.pdd-secondary {
+  background: #fff;
+  color: #42715a;
+  border: 1px solid #dbe9e1;
+}
+
+.pdd-privacy {
+  margin-top: 27px;
+  color: #90a298;
+  font-size: 16px;
+  line-height: 1.6;
+  display: block;
+}

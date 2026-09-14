@@ -1,14 +1,34 @@
-.school-kicker { display: block; margin-top: 15px; color: #0f6a50; font-size: 20px; font-weight: 900; letter-spacing: 3px; }
-.school-title { display: block; margin-top: 12px; font-size: 44px; font-weight: 900; }
+.school-kicker { display:block; margin-top:15px; color:#e76649; font-size:19px; font-weight:750; letter-spacing:3px; }
+.school-title { display:block; margin-top:12px; font-size:42px; font-weight:750; }
 .school-copy { display: block; margin-top: 12px; color: #78827b; font-size: 23px; line-height: 1.6; }
-.school-search { margin-top: 28px; padding: 20px 24px; display: flex; align-items: center; gap: 14px; }
+.school-search { margin-top:28px; padding:20px 24px; border:1px solid #e3e8e5; box-shadow:0 8px 22px rgba(74,36,29,.04); display:flex; align-items:center; gap:14px; }
 .school-search text { color: #7e8781; font-size: 32px; }
 .school-search input { flex: 1; font-size: 24px; }
 .school-list { margin-top: 20px; display: grid; gap: 14px; }
-.school-item { padding: 22px; display: flex; align-items: center; gap: 18px; }
-.school-item.current { border: 2px solid #7ab59e; }
-.school-mark { width: 76px; height: 76px; flex: 0 0 auto; border-radius: 24px; color: #fff; display: grid; place-items: center; font-size: 31px; font-weight: 900; }
+.school-item { padding:22px; display:flex; align-items:center; gap:18px; }
+.school-item.current { border:2px solid #75ac92; background:#f8fcfa; }
+.school-item.selected { border-color:#2f9ed2; background:#f4fbff; box-shadow:0 10px 24px rgba(37,143,201,.12); }
+.school-item.preparing { opacity:.66; background:#fafbfb; }
+.school-item.preparing .school-mark { filter:saturate(.45); }
+.school-item.preparing .school-state { color:#8a948d; }
+.school-mark { width:76px; height:76px; flex:0 0 auto; border-radius:20px; color:#fff; display:grid; place-items:center; font-size:31px; font-weight:750; box-shadow:0 7px 17px rgba(74,36,29,.11); }
 .school-info { min-width: 0; flex: 1; display: grid; gap: 7px; }
-.school-info text:first-child { overflow: hidden; font-size: 28px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+.school-info text:first-child { overflow:hidden; font-size:28px; font-weight:700; text-overflow:ellipsis; white-space:nowrap; }
 .school-info text:last-child { color: #89918c; font-size: 20px; }
 .school-state { display: grid; justify-items: end; gap: 5px; color: #0f6a50; font-size: 20px; }
+.school-item.selected .school-state { color:#198ac0; }
+.school-campus-panel { margin-top:18px; padding:22px; border:1px solid #d9e8f2; background:#fff; }
+.school-campus-heading { display:grid; gap:6px; }
+.school-campus-heading text:first-child { color:#17334b; font-size:25px; font-weight:750; }
+.school-campus-heading text:last-child { color:#8294a2; font-size:18px; line-height:1.5; }
+.school-campus-options { margin-top:16px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.school-campus-options view { min-height:64px; padding:0 16px; border:1px solid #dce8ef; border-radius:16px; background:#f7fafc; display:flex; align-items:center; justify-content:space-between; gap:8px; box-sizing:border-box; }
+.school-campus-options view.selected { border-color:#58b7df; background:#edf9ff; box-shadow:0 7px 18px rgba(39,143,195,.1); }
+.school-campus-options text:first-child { color:#355065; font-size:20px; font-weight:700; }
+.school-campus-options text:last-child { color:#8798a4; font-size:17px; }
+.school-campus-options view.selected text { color:#2187b9; }
+.school-confirm-wrap { position:sticky; bottom:0; margin:28px -24px 0; padding:18px 24px calc(18px + env(safe-area-inset-bottom)); border-top:1px solid #dceaf1; background:rgba(255,255,255,.96); box-shadow:0 -8px 24px rgba(25,82,113,.08); display:grid; gap:12px; }
+.school-confirm-wrap text { color:#527084; font-size:20px; }
+.school-confirm { height:76px; border:0; border-radius:18px; background:linear-gradient(135deg,#29aee4,#3977dc); color:#fff; font-size:25px; font-weight:700; line-height:76px; box-shadow:0 9px 20px rgba(41,137,212,.22); }
+.school-confirm::after { border:0; }
+.school-confirm[disabled] { opacity:.55; box-shadow:none; }

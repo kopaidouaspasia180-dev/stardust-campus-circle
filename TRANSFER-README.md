@@ -55,4 +55,7 @@ $env:QA_BASE='https://stardust.sale/campus-circle/'
 node docs/qa-mobile.mjs
 ```
 
+两套 QA 脚本会自动查找 Chrome、Edge 或 Chromium。若浏览器安装在非标准位置，
+可通过 `QA_BROWSER` 指定可执行文件；通过 `QA_BASE` 指定待测 H5 地址。
+
 不要覆盖工作区里的其他学校项目。不要把其他学校的二维码、API、内容或后台数据接入本项目。
